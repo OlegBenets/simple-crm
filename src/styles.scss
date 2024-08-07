@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@mixin position($p: absolute, $t: 0, $l: 0, $r: 0, $b: 0) {
+  position: $p;
+  top: $t;
+  left: $l;
+  right: $r;
+  bottom: $b;
+}
+
+@mixin dFlex($jc: center, $ai: center, $g: 0) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+    gap: $g;
+  }
+
+  .mr-16 {
+    margin-right: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
