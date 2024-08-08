@@ -1,7 +1,17 @@
 <mat-card class="user-detail-header">
-    <img class="profile-image" src="./../../assets/image/profile.png">
+  <div class="user-detail-container">
+    <img class="profile-image" src="./../../assets/image/profile.png" />
     <div class="user-details">
-        <h2>Max-mustermann</h2>
-        ajfkdsjlkfks
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
     </div>
+  </div>
+</mat-card>
+
+<mat-card class="mt-32 user-detail-data">
+  <mat-card-title>Address</mat-card-title>
+  <mat-card-content>
+    {{ user.street }} <br />
+    {{ user.zipCode }} {{ user.city }}
+  </mat-card-content>
 </mat-card>

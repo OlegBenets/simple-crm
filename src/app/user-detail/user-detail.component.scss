@@ -4,15 +4,19 @@
 .user-detail-header {
     @include dFlex($ai: flex-start, $jc: flex-end);
     min-height: 250px;
-    background-color: rgba($color: #ff0000, $alpha: 1.0);
+    background-color: rgba($color: #007f99, $alpha: 1.0);
     color: white;
     padding: 16px;
 
-    .profile-image {
-        width: 100px;
-        height: auto;
-        border-radius: 50%;
-        object-fit: cover;
+    .user-detail-container {
+        @include dFlex($ai: center, $jc: flex-start);
+
+        .profile-image {
+            width: 100px;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     }
 }
 
@@ -24,4 +28,17 @@
     h2 {
         margin-bottom: 0;
     }
+
+    a {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }  
+}
+
+.user-detail-data {
+    padding: 16px;
 }

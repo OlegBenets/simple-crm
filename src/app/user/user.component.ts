@@ -58,10 +58,6 @@ export class UserComponent {
     return collection(this.firestore, 'users');
   }
 
-  getSingleDocRef(colId: string, docId: string) {
-    return doc(collection(this.firestore, colId), docId);
-  }
-
   openDialog() {
     this.dialog.open(DialogAddUserComponent)
   }
