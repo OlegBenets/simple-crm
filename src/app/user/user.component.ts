@@ -5,10 +5,11 @@ import { MatTooltipModule, TooltipComponent } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import {MatCardModule} from '@angular/material/card';
-import { Firestore, collection } from '@angular/fire/firestore';
+import { Firestore, collection, doc } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import { onSnapshot } from "firebase/firestore";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +20,8 @@ import { onSnapshot } from "firebase/firestore";
     TooltipComponent,
     MatTooltipModule,
     MatCardModule,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
@@ -39,7 +41,11 @@ export class UserComponent {
       this.allUsers = [];
       list.forEach((element: any) => {
         console.log(element);
-        this.allUsers.push(new User(element.data()));
+        let userData = element.data();
+        let userId = element.id;
+        let user = new User({...userData, id: userId});
+        this.allUsers.push(user);
+        // Spread-Operator ...userData copies all properties from userData
       });
     });
   }
@@ -50,6 +56,10 @@ export class UserComponent {
 
   getUserRef() {
     return collection(this.firestore, 'users');
+  }
+
+  getSingleDocRef(colId: string, docId: string) {
+    return doc(collection(this.firestore, colId), docId);
   }
 
   openDialog() {

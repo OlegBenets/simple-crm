@@ -1,0 +1,27 @@
+@import './../../styles.scss';
+
+
+.user-detail-header {
+    @include dFlex($ai: flex-start, $jc: flex-end);
+    min-height: 250px;
+    background-color: rgba($color: #ff0000, $alpha: 1.0);
+    color: white;
+    padding: 16px;
+
+    .profile-image {
+        width: 100px;
+        height: auto;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.user-details {
+    margin-left: 32px;
+    @include dFlex($ai: flex-start, $jc: center);
+    flex-direction: column;
+
+    h2 {
+        margin-bottom: 0;
+    }
+}
