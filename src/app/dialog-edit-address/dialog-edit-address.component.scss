@@ -1,0 +1,13 @@
+@import './../../styles.scss';
+
+.dialog-container {
+    position: relative;
+
+    mat-progress-bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100%;
+    }
+}

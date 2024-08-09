@@ -25,6 +25,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-top: 32px;
   }
 
+  .mb-0 {
+    margin-bottom: 0;
+  }
+
+  .p-16 {
+    padding: 16px;
+  }
+
+  .pt-20 {
+    padding-top: 20px !important;
+  }
+
   .full-width {
     width: 100%;
   }

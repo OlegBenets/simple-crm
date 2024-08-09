@@ -41,9 +41,7 @@ export class UserComponent {
       this.allUsers = [];
       list.forEach((element: any) => {
         console.log(element);
-        let userData = element.data();
-        let userId = element.id;
-        let user = new User({...userData, id: userId});
+        let user = new User({...element.data(), id: element.id});
         this.allUsers.push(user);
         // Spread-Operator ...userData copies all properties from userData
       });
