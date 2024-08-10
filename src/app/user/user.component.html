@@ -13,6 +13,12 @@
   </table>
 </mat-card>
 
+@if (this.allUsers.length === 0) {
+  <div class="no-users-message">
+    <h3>No Users in the List</h3>
+  </div>
+}
+
 <button (click)="openDialog()" class="add-user-button" mat-fab color="primary" matTooltip="add user">
     <mat-icon>add</mat-icon>
   </button>

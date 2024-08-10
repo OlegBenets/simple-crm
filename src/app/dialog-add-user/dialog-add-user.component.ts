@@ -37,7 +37,6 @@ export class DialogAddUserComponent {
 
   async saveUser() {
     this.user.birthDate = this.birthDate.getTime();
-    console.log('user', this.user);
     this.loading = true;
 
       await addDoc(this.getUserRef(), this.user.toJSON()).catch(

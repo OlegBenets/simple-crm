@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { collection, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
 import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.class';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -27,12 +27,11 @@ export class UserDetailComponent {
   userId = '';
   user = new User();
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe( paramMap => {
       this.userId = paramMap.get('id') || '';
-      console.log('got', this.userId);
 
       this.getUser();
     })
@@ -42,9 +41,7 @@ export class UserDetailComponent {
     onSnapshot(this.getSingleDocRef(), (doc) => {
       if (doc.exists()) {
         this.user = new User({ id: doc.id, ...doc.data() });
-        console.log('User data:', this.user);
       } else {
-        console.log('No such document!');
         this.user = new User(); 
       }
     });
@@ -64,5 +61,12 @@ export class UserDetailComponent {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
+  }
+
+  async deleteUser() {
+    await deleteDoc(this.getSingleDocRef()).catch(
+      (err) => {console.log(err)}
+    )
+    this.router.navigate(['/user']);
   }
 }

@@ -31,20 +31,19 @@ export class UserComponent {
   user = new User();
   allUsers: User[] = [];
   unsubUserList;
+  showNoUserMessage: boolean = false;
 
   constructor(public dialog: MatDialog) {
     this.unsubUserList = this.subUserList();
   }
 
   subUserList() {
-    return onSnapshot(this.getUserRef(), (list: any) => {
-      this.allUsers = [];
-      list.forEach((element: any) => {
-        console.log(element);
-        let user = new User({...element.data(), id: element.id});
-        this.allUsers.push(user);
-        // Spread-Operator ...userData copies all properties from userData
-      });
+      return onSnapshot(this.getUserRef(), (list: any) => {
+        this.allUsers = [];
+        list.forEach((element: any) => {
+          let user = new User({...element.data(), id: element.id});
+          this.allUsers.push(user);
+        });
     });
   }
 

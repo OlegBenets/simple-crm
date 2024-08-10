@@ -57,3 +57,22 @@ mat-toolbar, mat-toolbar-row {
 .router-container {
     padding: 16px 56px 0 56px;
 }
+
+.legals {
+    @include position($t: none, $l: 0, $r: 0, $b: 0);
+    @include dFlex($ai: center, $jc: space-between);
+    padding: 32px;
+    width: calc(100% - 64px);
+
+    a {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba($color: #007f99, $alpha: 1.0);
+        text-decoration: none;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
