@@ -5,7 +5,7 @@ import { MatTooltipModule, TooltipComponent } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import {MatCardModule} from '@angular/material/card';
-import { Firestore, collection, doc } from '@angular/fire/firestore';
+import { Firestore, collection } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import { onSnapshot } from "firebase/firestore";
