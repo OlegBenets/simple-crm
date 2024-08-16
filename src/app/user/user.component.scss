@@ -69,3 +69,16 @@
         text-align: start;
     }
 }
+
+.filter-container {
+    @include dFlex($ai: flex-start, $jc: space-between);
+    flex-direction: column;
+}
+
+.button-container {
+    @include dFlex($ai: center, $jc: center, $g: 12px);
+
+    button {
+        border-radius: 24px;
+    }
+}

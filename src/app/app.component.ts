@@ -14,7 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../models/user.class';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
@@ -35,7 +35,8 @@ export class DialogAddUserComponent {
 
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {}
 
-  async saveUser() {
+  async saveUser(userForm: NgForm) {
+    if (userForm.form.valid) {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
 
@@ -43,8 +44,9 @@ export class DialogAddUserComponent {
         (err) => {
         console.log(err);
       });
-      this.loading = false;
       this.dialogRef.close();
+      this.loading = false;
+     }
     }
 
   getUserRef() {

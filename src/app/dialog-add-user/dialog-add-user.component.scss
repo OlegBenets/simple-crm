@@ -9,3 +9,10 @@
         width: 100%;
     }
 }
+
+form {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}

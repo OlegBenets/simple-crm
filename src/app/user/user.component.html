@@ -1,3 +1,20 @@
+<div class="filter-container mb-32">
+  <mat-form-field class="full-width mb-32">     
+    <input matInput (keyup)="applyFilter($event)" 
+    placeholder="Search Name or City" autocomplete="off">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <section>
+    <div class="example-button-row button-container">
+      <button (click)="sortName()" mat-flat-button color="primary">First Name</button>
+      <button mat-flat-button color="primary">Revenue Ascending</button>
+      <button mat-flat-button color="primary">Revenue Descending</button>
+    </div>
+  </section>
+</div>
+
+
 <mat-card>
   <table class="full-width user-table">
     <tr>
@@ -5,7 +22,7 @@
       <th>E-mail</th>
       <th>City</th>
     </tr>
-        <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user.id]">
+        <tr *ngFor="let user of filteredUsers" [routerLink]="['/user/' + user.id]">
           <td>{{user.firstName}} {{user.lastName}}</td>
           <td>{{user.email}}</td>
           <td>{{user.city}}</td>
@@ -13,7 +30,7 @@
   </table>
 </mat-card>
 
-@if (this.allUsers.length === 0) {
+@if (this.filteredUsers.length === 0) {
   <div class="no-users-message">
     <h3>No Users in the List</h3>
   </div>

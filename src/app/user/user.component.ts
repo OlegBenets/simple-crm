@@ -10,6 +10,8 @@ import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
 import { onSnapshot } from "firebase/firestore";
 import { RouterModule } from '@angular/router';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user',
@@ -21,7 +23,9 @@ import { RouterModule } from '@angular/router';
     MatTooltipModule,
     MatCardModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatFormField,
+    MatInputModule
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
@@ -30,8 +34,10 @@ export class UserComponent {
   firestore: Firestore = inject(Firestore);
   user = new User();
   allUsers: User[] = [];
+  filteredUsers: User[] = [];
   unsubUserList;
   showNoUserMessage: boolean = false;
+  sortAscending: boolean = true;
 
   constructor(public dialog: MatDialog) {
     this.unsubUserList = this.subUserList();
@@ -44,6 +50,7 @@ export class UserComponent {
           let user = new User({...element.data(), id: element.id});
           this.allUsers.push(user);
         });
+        this.filteredUsers = this.allUsers;
     });
   }
 
@@ -58,4 +65,23 @@ export class UserComponent {
   openDialog() {
     this.dialog.open(DialogAddUserComponent)
   }
-}
+
+   applyFilter(event: Event) {
+    const filterVal = (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
+    this.filteredUsers = this.allUsers.filter( user => 
+      user.firstName.toLowerCase().includes(filterVal) ||
+      user.lastName.toLowerCase().includes(filterVal) ||
+      user.city.toLowerCase().includes(filterVal) 
+    );
+    }
+
+    sortName() {
+      this.filteredUsers = this.filteredUsers.sort((a, b) => {
+        const firstNameComparison = a.firstName.localeCompare(b.firstName);
+        
+        return this.sortAscending ? firstNameComparison : -firstNameComparison;
+      });
+  
+      this.sortAscending = !this.sortAscending;
+    }
+  }
