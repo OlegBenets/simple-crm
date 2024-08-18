@@ -36,9 +36,8 @@ export class UserDetailComponent {
     })
   }
 
-  getUser() {
-    this.userService.getSingleUser(this.userId);
-    this.user = this.userService.user;
+  async getUser() {
+    this.user = await this.userService.getSingleUser(this.userId);
   }
 
   editUserDetail() {

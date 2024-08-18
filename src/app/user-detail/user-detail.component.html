@@ -11,8 +11,8 @@
   <div class="user-detail-container">
     <img class="profile-image" src="./../../assets/image/profile.png" />
     <div class="user-details">
-      <h2>{{ userService.user.firstName }} {{ userService.user.lastName }}</h2>
-      <a href="mailto:{{ userService.user.email }}">{{ userService.user.email }}</a>
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
     </div>
   </div>
 </mat-card>
@@ -28,7 +28,7 @@
 
   <mat-card-title>Address</mat-card-title>
   <mat-card-content>
-    {{ userService.user.street }} <br />
-    {{ userService.user.zipCode }} {{ userService.user.city }}
+    {{ user.street }} <br />
+    {{ user.zipCode }} {{ user.city }}
   </mat-card-content>
 </mat-card>

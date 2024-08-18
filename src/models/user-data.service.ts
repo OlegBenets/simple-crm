@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 
 @Injectable({
@@ -28,15 +28,14 @@ subUserList() {
   });
 }
 
-getSingleUser(userId: string) {
-    return onSnapshot(this.getSingleDocRef(userId), (doc) => {
+async getSingleUser(userId: string) {
+    const doc = await getDoc(this.getSingleDocRef(userId));
       if (doc.exists()) {
-        this.user = new User({ id: doc.id, ...doc.data() });
+        return new User({ id: doc.id, ...doc.data() });
       } else {
-        this.user = new User(); 
+        return new User()
       }
-    });
-  }
+    }
 
   async addUser(user: User) {
       await addDoc(this.getUserRef(), user.toJSON()).catch(

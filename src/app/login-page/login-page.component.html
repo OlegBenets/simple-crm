@@ -1,0 +1,47 @@
+<div class="animate-container">
+    <h1>SIMPLE CRM</h1>
+</div>
+
+
+<mat-card class="login" appearance="outlined" class="login-container">
+        <h2>Login</h2>
+        <form #userForm="ngForm">
+            <div >
+              <mat-form-field class="mr-16" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input
+                  minlength="3"
+                  maxlength="10"
+                  type="text"
+                  name="firstName"
+                  matInput
+                  placeholder="First Name"
+                  required/>
+      
+                @if('') {
+                <mat-error>Email is required</mat-error>
+                }
+              </mat-form-field>
+      
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input
+
+                  minlength="3"
+                  maxlength="14"
+                  type="text"
+                  name="lastName"
+                  matInput
+                  placeholder="Last Name"
+                  required/>
+      
+                  @if('') {
+                    <mat-error>Password is required</mat-error>
+                    }
+              </mat-form-field>
+            </div>
+        <button mat-flat-button color="primary" (click)="login()">Log in</button>
+      </form>
+  </mat-card>
+
+

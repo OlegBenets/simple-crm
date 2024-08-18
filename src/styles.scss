@@ -1,6 +1,14 @@
+$turkis: #007f99;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  overflow: hidden;
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
 
 @mixin position($p: absolute, $t: 0, $l: 0, $r: 0, $b: 0) {
   position: $p;
