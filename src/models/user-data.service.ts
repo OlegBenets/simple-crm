@@ -1,58 +1,73 @@
-// import { Injectable, inject } from '@angular/core';
-// import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
-// import { User } from '../models/user.class';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
+import { User } from '../models/user.class';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class UserService {
-//   private firestore: Firestore = inject(Firestore);
-//   allUsers: User[] = [];
-//   filteredUsers: User[] = [];
+@Injectable({
+  providedIn: 'root',
+})
 
-//   async addUser(user: User): Promise<void> {
-//     try {
-//       const docRef = await addDoc(this.getUserRef(), user.toJSON());
-//       console.log('User added with ID:', docRef.id);
-//     } catch (err) {
-//       console.error('Failed to add user:', err);
-//     }
-//   }
+export class UserService {
+  private firestore: Firestore = inject(Firestore);
+  allUsers: User[] = [];
+  filteredUsers: User[] = [];
+  user = new User();
+  unsubUserList;
 
-//   async updateUser(userId: string, user: User): Promise<void> {
-//     try {
-//       const docRef = this.getSingleDocRef(userId);
-//       await updateDoc(docRef, user.toJSON());
-//     } catch (err) {
-//       console.error('Failed to update user:', err);
-//     }
-//   }
+  constructor() {
+    this.unsubUserList = this.subUserList();
+  }
 
-//   async deleteUser(userId: string): Promise<void> {
-//     try {
-//       await deleteDoc(this.getSingleDocRef(userId));
-//       console.log(`User ${userId} deleted successfully.`);
-//     } catch (err) {
-//       console.error(`Failed to delete user ${userId}:`, err);
-//     }
-//   }
+subUserList() {
+    return onSnapshot(this.getUserRef(), (snapshot) => {
+      this.allUsers = [];
+      snapshot.forEach((doc) => {
+        let user = new User({...doc.data(), id: doc.id});
+        this.allUsers.push(user);
+      });
+      this.filteredUsers = this.allUsers;
+  });
+}
 
-//   subUserList() {
-//     return onSnapshot(this.getUserRef(), (list: any) => {
-//       this.allUsers = [];
-//       list.forEach((element: any) => {
-//         let user = new User({...element.data(), id: element.id});
-//         this.allUsers.push(user);
-//       });
-//       this.filteredUsers = this.allUsers;
-//   });
-// }
+getSingleUser(userId: string) {
+    return onSnapshot(this.getSingleDocRef(userId), (doc) => {
+      if (doc.exists()) {
+        this.user = new User({ id: doc.id, ...doc.data() });
+      } else {
+        this.user = new User(); 
+      }
+    });
+  }
 
-//   private getUserRef() {
-//     return collection(this.firestore, 'users');
-//   }
+  async addUser(user: User) {
+      await addDoc(this.getUserRef(), user.toJSON()).catch(
+        (err) => {
+        console.log(err);
+      });
+  }
 
-//   private getSingleDocRef(userId: string) {
-//     return doc(this.getUserRef(), userId);
-//   }
-// }
+  async updateUser(userId: string, user: User) {
+      await updateDoc(this.getSingleDocRef(userId), user.toJSON()).catch(
+        (err) => {
+        console.log(err);
+      });
+    }
+
+  async deleteUser(userId: string) {
+    await deleteDoc(this.getSingleDocRef(userId)).catch(
+        (err) => {
+        console.log(err);
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubUserList();
+  }
+
+  private getUserRef() {
+    return collection(this.firestore, 'users');
+  }
+
+  private getSingleDocRef(userId: string) {
+    return doc(this.getUserRef(), userId);
+  }
+}

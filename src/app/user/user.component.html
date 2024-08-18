@@ -22,7 +22,7 @@
       <th>E-mail</th>
       <th>City</th>
     </tr>
-        <tr *ngFor="let user of filteredUsers" [routerLink]="['/user/' + user.id]">
+        <tr *ngFor="let user of userService.filteredUsers" [routerLink]="['/user/' + user.id]">
           <td>{{user.firstName}} {{user.lastName}}</td>
           <td>{{user.email}}</td>
           <td>{{user.city}}</td>
@@ -30,7 +30,7 @@
   </table>
 </mat-card>
 
-@if (this.filteredUsers.length === 0) {
+@if (this.userService.filteredUsers.length === 0) {
   <div class="no-users-message">
     <h3>No Users in the List</h3>
   </div>

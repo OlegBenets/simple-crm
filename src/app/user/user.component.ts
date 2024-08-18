@@ -1,17 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule, TooltipComponent } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import {MatCardModule} from '@angular/material/card';
-import { Firestore, collection } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
 import { CommonModule } from '@angular/common';
-import { onSnapshot } from "firebase/firestore";
 import { RouterModule } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { UserService } from '../../models/user-data.service';
 
 @Component({
   selector: 'app-user',
@@ -31,35 +30,15 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  firestore: Firestore = inject(Firestore);
   user = new User();
   allUsers: User[] = [];
-  filteredUsers: User[] = [];
-  unsubUserList;
   showNoUserMessage: boolean = false;
   sortAscending: boolean = true;
 
-  constructor(public dialog: MatDialog) {
-    this.unsubUserList = this.subUserList();
-  }
+  constructor(public dialog: MatDialog, public userService: UserService) {}
 
-  subUserList() {
-      return onSnapshot(this.getUserRef(), (list: any) => {
-        this.allUsers = [];
-        list.forEach((element: any) => {
-          let user = new User({...element.data(), id: element.id});
-          this.allUsers.push(user);
-        });
-        this.filteredUsers = this.allUsers;
-    });
-  }
-
-  ngOnDestroy() {
-    this.unsubUserList();
-  }
-
-  getUserRef() {
-    return collection(this.firestore, 'users');
+  getUserList() {
+      this.allUsers = this.userService.allUsers;
   }
 
   openDialog() {
@@ -68,7 +47,7 @@ export class UserComponent {
 
    applyFilter(event: Event) {
     const filterVal = (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
-    this.filteredUsers = this.allUsers.filter( user => 
+    this.userService.filteredUsers = this.userService.allUsers.filter( user => 
       user.firstName.toLowerCase().includes(filterVal) ||
       user.lastName.toLowerCase().includes(filterVal) ||
       user.city.toLowerCase().includes(filterVal) 
@@ -76,7 +55,7 @@ export class UserComponent {
     }
 
     sortName() {
-      this.filteredUsers = this.filteredUsers.sort((a, b) => {
+      this.userService.filteredUsers = this.userService.filteredUsers.sort((a, b) => {
         const firstNameComparison = a.firstName.localeCompare(b.firstName);
         
         return this.sortAscending ? firstNameComparison : -firstNameComparison;

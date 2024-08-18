@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { collection, deleteDoc, doc, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user.class';
@@ -9,6 +8,7 @@ import {MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { UserService } from '../../models/user-data.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -23,32 +23,22 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent {
-  firestore: Firestore = inject(Firestore);
   userId = '';
   user = new User();
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, private router: Router) {}
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private router: Router, public userService: UserService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe( paramMap => {
       this.userId = paramMap.get('id') || '';
 
-      this.getUser();
+       this.getUser();
     })
   }
 
   getUser() {
-    onSnapshot(this.getSingleDocRef(), (doc) => {
-      if (doc.exists()) {
-        this.user = new User({ id: doc.id, ...doc.data() });
-      } else {
-        this.user = new User(); 
-      }
-    });
-  }
-
-  getSingleDocRef() {
-    return doc(collection(this.firestore, 'users'), this.userId);
+    this.userService.getSingleUser(this.userId);
+    this.user = this.userService.user;
   }
 
   editUserDetail() {
@@ -63,10 +53,8 @@ export class UserDetailComponent {
     dialog.componentInstance.userId = this.userId;
   }
 
-  async deleteUser() {
-    await deleteDoc(this.getSingleDocRef()).catch(
-      (err) => {console.log(err)}
-    )
+  deleteUser() {
+    this.userService.deleteUser(this.userId);
     this.router.navigate(['/user']);
   }
 }
