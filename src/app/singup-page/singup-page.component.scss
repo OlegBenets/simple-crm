@@ -20,6 +20,8 @@
     height: 100%;
     background-color: #f4f4f4;
 
+
+
     h1 {
       font-size: 76px;
       font-weight: 700;
@@ -27,12 +29,12 @@
     }
   }
 
-  .login-container {
-    @include dFlex($ai: center, $jc: flex-start, $g: 60px);
+  .signup-container {
+    @include dFlex($ai: center, $jc: flex-start, $g: 20px);
     flex-direction: column;
-    width: calc(560px - 48px);
+    width: calc(560px - 24px);
     height: calc(680px - 64px);
-    padding: 32px 24px;
+    padding: 32px 12px;
     border-radius: 10px;
 
     h2 {
@@ -42,12 +44,22 @@
 
     form {
       width: calc(100% - 48px);
+      height: 400px;
       padding: 0 24px;
-      @include dFlex($ai: center, $jc: none, $g: 60px);
+      @include dFlex($ai: center, $jc: none);
       flex-direction: column;
 
+      .input-fields-one-line {
+        @include dFlex($ai: none, $jc: space-between,);
+        width: 100%;
+
+        input {
+          width: 50%;
+        }
+      }
+      
       .input-fields {
-        @include dFlex($ai: none, $jc: none);
+        @include dFlex($ai: none, $jc: none,);
         flex-direction: column;
         width: 100%;
   
@@ -62,7 +74,7 @@
       }
     }
 
-    .sing-up-container {
+    .login-container {
       @include dFlex($ai: center, $jc: none);
       flex-direction: column;
 

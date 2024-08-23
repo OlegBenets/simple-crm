@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { gsap } from 'gsap';
 import {  MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import { AdminService } from '../../models/admin-data.service';
+import { Admin } from '../../models/admin.class';
 
 @Component({
   selector: 'app-login-page',
@@ -17,21 +19,33 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    RouterModule,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
-  constructor(private router: Router) {}
+  constructor(private adminService: AdminService, private router: Router) {}
+  email: string = '';
+  password: string = '';
+  admin = new Admin();
 
   ngOnInit(): void {
     this.startAnimation();
   }
 
-  login() {
-    localStorage.setItem('userToken', 'dummy-token'); 
-    this.router.navigate(['/dashboard']);  
+  login(adminForm: NgForm) {
+    if(adminForm.form.valid) {
+    this.adminService.validateAdmin(this.email, this.password).then(admin => {
+      if (admin) {
+        localStorage.setItem('userToken', 'dummy-token'); 
+        this.router.navigate(['/dashboard']);  
+      } else {
+        alert('Invalid credentials');
+      }
+    });
+  }
   }
 
   startAnimation() {

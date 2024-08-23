@@ -3,22 +3,23 @@
 </div>
 
 
-<mat-card class="login" appearance="outlined" class="login-container">
+<mat-card appearance="outlined" class="login-container">
         <h2>Login</h2>
-        <form #userForm="ngForm">
-            <div >
-              <mat-form-field class="mr-16" appearance="outline">
+        <form #adminForm="ngForm" (ngSubmit)="login(adminForm)">
+            <div class="input-fields">
+              <mat-form-field appearance="outline">
                 <mat-label>E-mail</mat-label>
                 <input
-                  minlength="3"
-                  maxlength="10"
                   type="text"
-                  name="firstName"
+                  name="email"
+                  #email="ngModel"
+                  [(ngModel)]="admin.email"
                   matInput
                   placeholder="First Name"
+                  pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                   required/>
       
-                @if('') {
+                @if(email.invalid && email.touched) {
                 <mat-error>Email is required</mat-error>
                 }
               </mat-form-field>
@@ -30,18 +31,25 @@
                   minlength="3"
                   maxlength="14"
                   type="text"
-                  name="lastName"
+                  name="password"
+                  #password="ngModel"
+                  [(ngModel)]="admin.password"
                   matInput
                   placeholder="Last Name"
                   required/>
       
-                  @if('') {
+                  @if(email.invalid && email.touched) {
                     <mat-error>Password is required</mat-error>
                     }
               </mat-form-field>
             </div>
-        <button mat-flat-button color="primary" (click)="login()">Log in</button>
+        <button mat-flat-button color="primary" type="submit">Log in</button>
       </form>
+
+      <div class="sing-up-container">
+      <h3 class="mb-0">Not a User ?</h3>
+      <a [routerLink]="['/signup']">sing up</a>
+    </div>
   </mat-card>
 
 

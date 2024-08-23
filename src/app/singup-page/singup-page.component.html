@@ -1,0 +1,151 @@
+<mat-card appearance="outlined" class="signup-container">
+    <h2>Sign Up</h2>
+    <form #signupForm="ngForm">
+      <div class="input-fields-one-line">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input
+            minlength="3"
+            maxlength="10"
+            type="text"
+            name="firstName"
+            matInput
+            placeholder="First Name"
+            required/>
+
+          @if('') {
+          <mat-error>First Name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input
+            minlength="3"
+            maxlength="14"
+            type="text"
+            name="lastName"
+            matInput
+            placeholder="Last Name"
+            required/>
+
+            @if('') {
+              <mat-error>Last Name is required</mat-error>
+              }
+        </mat-form-field>
+      </div>
+
+      <div class="input-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>E-Mail</mat-label>
+          <input
+            name="email"
+            matInput
+            placeholder="E-Mail"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            required/>
+
+            @if('') {
+              <mat-error>Email is required</mat-error>
+              }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            name="password"
+            matInput
+            placeholder="Password"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            required/>
+
+            @if('') {
+              <mat-error>Password is required</mat-error>
+              }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password confirm</mat-label>
+          <input
+            name="passwordConfirm"
+            matInput
+            placeholder="Password confirm"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            required/>
+
+            @if('') {
+              <mat-error>Please confirm your Password</mat-error>
+              }
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Birth Date</mat-label>
+          <input
+            name="birthDate"
+            matInput
+            placeholder="Birthdate"
+            [matDatepicker]="datepicker"
+            required/>
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+
+          @if('') {
+            <mat-error>Birth Date is required</mat-error>
+            }
+        </mat-form-field> -->
+      </div>
+
+      <!-- <div class="input-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Street + House No.</mat-label>
+          <input
+            pattern="^[a-zA-Z0-9\s\-\.]+ \d{1,3}$"
+            name="street"
+            matInput
+            placeholder="Placeholder"
+            required/>
+
+            @if('') {
+              <mat-error>Street is required</mat-error>
+              }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Zip code</mat-label>
+          <input
+            minlength="5"
+            maxlength="9"
+            name="zipCode"
+            matInput
+            placeholder="Placeholder"
+            required/>
+
+            @if('') {
+              <mat-error>Zip Code is required</mat-error>
+              }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input
+            minlength="3"
+            maxlength="32"
+            name="city"
+            matInput
+            placeholder="Placeholder"
+            required/>
+
+            @if('') {
+              <mat-error>City is required</mat-error>
+              }
+        </mat-form-field>
+      </div> -->
+
+      <button mat-flat-button color="primary" (click)="signup()">Sign Up</button>
+    </form>
+  
+    <div class="login-container">
+      <h3 class="mb-0">Already a User?</h3>
+      <a [routerLink]="['/login']">Log in</a>
+    </div>
+  </mat-card>

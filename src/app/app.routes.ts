@@ -6,6 +6,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthGuard } from '../models/auth-guard.class';
+import { SingupPageComponent } from './singup-page/singup-page.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: 'user/:id', component: UserDetailComponent, canActivate: [AuthGuard] },
     { path: 'imprint', component: ImprintComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
+    { path: 'signup', component: SingupPageComponent },
 ];
