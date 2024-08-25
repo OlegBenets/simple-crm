@@ -27,8 +27,6 @@ import { Admin } from '../../models/admin.class';
 })
 export class LoginPageComponent {
   constructor(private adminService: AdminService, private router: Router) {}
-  adminId: string = '';
-  password: string = '';
   admin = new Admin();
 
   ngOnInit(): void {
@@ -37,15 +35,14 @@ export class LoginPageComponent {
 
   async login(adminForm: NgForm) {
     if(adminForm.form.valid) {
-    this.adminService.validateAdmin(this.adminId, this.password).then(admin => {
+      const admin = await this.adminService.validateAdmin(this.admin.email, this.admin.password);
       if (admin) {
         localStorage.setItem('userToken', 'dummy-token'); 
-        this.router.navigate(['/dashboard']);  
+        this.router.navigate(['/dashboard']);
       } else {
         alert('Invalid credentials');
       }
-    });
-  }
+    }
   }
 
   startAnimation() {

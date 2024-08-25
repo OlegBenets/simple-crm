@@ -30,26 +30,19 @@ import { Admin } from '../../models/admin.class';
 })
 
 export class SingupPageComponent {
-
   admin = new Admin();
-  email: string = '';
-  password: string = '';
-  firstName: string = '';
-  lastName: string = '';
+
 
   constructor(private adminService: AdminService, private router: Router) {}
 
   signup(signupForm: NgForm) {
     if(signupForm.form.valid) {
-
-      this.admin.email = this.email;
-      this.admin.password = this.password;
-      this.admin.firstName = this.firstName;
-      this.admin.lastName = this.lastName;
-
-    this.adminService.addAdmin(this.admin).then(() => {
-      this.router.navigate(['/login']);
-    });
+  
+      this.adminService.addAdmin(this.admin).then(() => {
+        this.router.navigate(['/login']);
+      }).catch(err => {
+        console.error(err);
+      });
+    }
   }
-}
 }

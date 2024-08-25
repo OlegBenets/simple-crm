@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, doc, addDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Admin } from './admin.class';
-import * as bcrypt from 'bcryptjs';
+import { Auth } from '@angular/fire/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +11,7 @@ import * as bcrypt from 'bcryptjs';
 
 export class AdminService {
   private firestore: Firestore = inject(Firestore);
+  private firebaseAuth: Auth = inject(Auth);
   allAdmins: Admin[] = [];
   unsubAdminList;
 
@@ -26,31 +29,46 @@ export class AdminService {
     });
   }
 
-  async addAdmin(admin: Admin) {
-    const salt = bcrypt.genSaltSync(10);
-    admin.password = bcrypt.hashSync(admin.password, salt);
-
-    await addDoc(this.getAdminRef(), admin.toJSON()).catch(
-      (err) => {
-        console.log(err);
-      }
-    );
+  async addAdmin(admin: Admin): Promise<void> {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.firebaseAuth, admin.email, admin.password);
+      const userId = userCredential.user.uid;
+      admin.id = userId;
+  
+      const adminRef = doc(this.firestore, `admins/${userId}`);
+      await setDoc(adminRef, admin.toJSON()); 
+    } catch (error) {
+      console.error('Error adding admin: ', error);
+    }
   }
 
   async validateAdmin(email: string, password: string): Promise<Admin | null> {
-    const admin = await this.getAdminByEmail(email);
-    if (admin && bcrypt.compareSync(password, admin.password)) {
-      return admin;
-    } else {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.firebaseAuth, email, password);
+      const userId = userCredential.user.uid;
+
+      const adminDoc = await this.getAdminById(userId);
+      return adminDoc ? adminDoc : null;
+    } catch (error) {
+      console.error('Error validating admin: ', error);
       return null;
     }
   }
 
-  async getAdminByEmail(email: string): Promise<Admin | null> {
-    const adminDoc = await getDoc(doc(this.getAdminRef(), email));
-    if (adminDoc.exists()) {
-      return new Admin({ id: adminDoc.id, ...adminDoc.data() });
-    } else {
+  async getAdminById(userId: string): Promise<Admin | null> {
+    try {
+      const adminRef = doc(this.firestore, `admins/${userId}`);
+      const adminDoc = await getDoc(adminRef);
+      
+      if (adminDoc.exists()) {
+        console.log('Admin data exists:', adminDoc.data());
+        return new Admin({ id: adminDoc.id, ...adminDoc.data() });
+      } else {
+        console.log('No admin data found for this user.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching admin by ID: ', error);
       return null;
     }
   }
@@ -62,9 +80,5 @@ export class AdminService {
 
   private getAdminRef() {
     return collection(this.firestore, 'admins');
-  }
-
-  private getSingleDocRef(userId: string) {
-    return doc(this.getAdminRef(), userId);
   }
 }
