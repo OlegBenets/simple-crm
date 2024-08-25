@@ -15,7 +15,7 @@
                   #email="ngModel"
                   [(ngModel)]="admin.email"
                   matInput
-                  placeholder="First Name"
+                  placeholder="Email"
                   pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                   required/>
       
@@ -35,10 +35,10 @@
                   #password="ngModel"
                   [(ngModel)]="admin.password"
                   matInput
-                  placeholder="Last Name"
+                  placeholder="Password"
                   required/>
       
-                  @if(email.invalid && email.touched) {
+                  @if(password.invalid && password.touched) {
                     <mat-error>Password is required</mat-error>
                     }
               </mat-form-field>

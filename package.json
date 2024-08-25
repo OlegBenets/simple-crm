@@ -26,6 +26,7 @@
     "@angular/router": "^17.0.0",
     "bcryptjs": "^2.4.3",
     "cypress": "^13.13.3",
+    "firebase": "^10.13.0",
     "gsap": "^3.12.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

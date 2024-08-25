@@ -63,4 +63,8 @@ export class AdminService {
   private getAdminRef() {
     return collection(this.firestore, 'admins');
   }
+
+  private getSingleDocRef(userId: string) {
+    return doc(this.getAdminRef(), userId);
+  }
 }

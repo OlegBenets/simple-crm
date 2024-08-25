@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -31,6 +31,7 @@ import { Admin } from '../../models/admin.class';
 
 export class SingupPageComponent {
 
+  admin = new Admin();
   email: string = '';
   password: string = '';
   firstName: string = '';
@@ -38,16 +39,17 @@ export class SingupPageComponent {
 
   constructor(private adminService: AdminService, private router: Router) {}
 
-  signup() {
-    const newAdmin = new Admin({
-      email: this.email,
-      password: this.password,
-      firstName: this.firstName,
-      lastName: this.lastName,
-    });
+  signup(signupForm: NgForm) {
+    if(signupForm.form.valid) {
 
-    this.adminService.addAdmin(newAdmin).then(() => {
+      this.admin.email = this.email;
+      this.admin.password = this.password;
+      this.admin.firstName = this.firstName;
+      this.admin.lastName = this.lastName;
+
+    this.adminService.addAdmin(this.admin).then(() => {
       this.router.navigate(['/login']);
     });
   }
+}
 }
