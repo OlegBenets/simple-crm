@@ -35,7 +35,7 @@
 
             @if(lastName.invalid && lastName.touched) {
               <mat-error>Last Name is required</mat-error>
-              }
+              } 
         </mat-form-field>
       </div>
 
@@ -51,15 +51,18 @@
             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
             required/>
 
-            @if(email.invalid && email.touched) {
+            @if(signupForm.invalid && email.touched) {
               <mat-error>Email is required</mat-error>
+              } 
+
+              @if(emailExists) {
+                <mat-error>{{emailExists}}</mat-error>
               }
-        </mat-form-field>
+            </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
           <input
-            minlength="3"
             maxlength="14"
             name="password"
             matInput
@@ -70,7 +73,12 @@
 
             @if(password.invalid && password.touched) {
               <mat-error>Password is required</mat-error>
-              }
+            }
+
+            @if(weakPassword) {
+              <mat-error>{{weakPassword}}</mat-error>
+            }
+            
         </mat-form-field>
       </div>
       <button mat-flat-button color="primary" type="submit">Sign Up</button>
@@ -78,6 +86,6 @@
   
     <div class="login-container">
       <h3 class="mb-0">Already a User?</h3>
-      <a [routerLink]="['/login']">Log in</a>
+      <a [routerLink]="['/']">Log in</a>
     </div>
   </mat-card>

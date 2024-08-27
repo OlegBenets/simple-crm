@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { User } from '../../models/user.class';
-import { UserService } from '../../models/user-data.service';
+import { UserService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-dialog-edit-user',

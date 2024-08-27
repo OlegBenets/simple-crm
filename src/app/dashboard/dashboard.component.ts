@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { User } from '../../models/user.class';
-import { UserService } from '../../models/user-data.service';
+import { UserService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-dashboard',

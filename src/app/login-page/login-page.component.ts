@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { gsap } from 'gsap';
 import {  MatFormFieldModule } from '@angular/material/form-field';
@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { AdminService } from '../../models/admin-data.service';
+import { AdminService } from '../../services/admin-data.service';
 import { Admin } from '../../models/admin.class';
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginPageComponent {
   constructor(private adminService: AdminService, private router: Router) {}
   admin = new Admin();
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.startAnimation();
   }
 
@@ -54,7 +54,7 @@ export class LoginPageComponent {
     gsap
       .timeline()
       .fromTo(startElement, { y: '100%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1.5 })
-      .to(startElement, { opacity: 1, duration: 2 })
+      .to(startElement, { opacity: 1, duration: 1 })
       .to(startElement, { opacity: 0, duration: 1 })
       .fromTo(loginElement, { y: '0%', opacity: 0 }, { y: '0%', opacity: 1, duration: 1 });
   }

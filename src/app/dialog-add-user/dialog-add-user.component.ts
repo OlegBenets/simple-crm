@@ -8,7 +8,7 @@ import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material
 import { User } from '../../models/user.class';
 import { FormsModule, NgForm } from '@angular/forms';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { UserService } from '../../models/user-data.service';
+import { UserService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-dialog-add-user',

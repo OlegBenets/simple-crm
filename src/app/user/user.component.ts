@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { UserService } from '../../models/user-data.service';
+import { UserService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-user',

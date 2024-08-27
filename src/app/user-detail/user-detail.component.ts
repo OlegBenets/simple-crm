@@ -8,7 +8,7 @@ import {MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
-import { UserService } from '../../models/user-data.service';
+import { UserService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-user-detail',
