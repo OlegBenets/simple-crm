@@ -2,54 +2,74 @@
   <h1>SIMPLE CRM</h1>
 </div>
 
-
 <mat-card appearance="outlined" class="login-container">
-        <h2>Login</h2>
-        <form #adminForm="ngForm" (ngSubmit)="login(adminForm)">
-            <div class="input-fields">
-              <mat-form-field appearance="outline">
-                <mat-label>E-mail</mat-label>
-                <input
-                  type="text"
-                  name="email"
-                  #email="ngModel"
-                  [(ngModel)]="admin.email"
-                  matInput
-                  placeholder="Email"
-                  pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-                  required/>
-      
-                @if(email.invalid && email.touched) {
-                <mat-error>Email is required</mat-error>
-                }
-              </mat-form-field>
-      
-              <mat-form-field appearance="outline">
-                <mat-label>Password</mat-label>
-                <input
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="input-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email"
+          type="text"
+          (input)="onInput()"
+        />
+        @if(emailControl && emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+          <mat-error>
+            Email is required
+          </mat-error>
+        }
 
-                  minlength="3"
-                  maxlength="14"
-                  type="text"
-                  name="password"
-                  #password="ngModel"
-                  [(ngModel)]="admin.password"
-                  matInput
-                  placeholder="Password"
-                  required/>
-      
-                  @if(password.invalid && password.touched) {
-                    <mat-error>Password is required</mat-error>
-                    }
-              </mat-form-field>
-            </div>
-        <button mat-flat-button color="primary" type="submit">Log in</button>
-      </form>
+        @if (wrongEmail) {
+          <mat-error>
+            {{ wrongEmail }}
+          </mat-error>
+        }
 
-      <div class="sing-up-container">
-      <h3 class="mb-0">Not a User ?</h3>
-      <a [routerLink]="['/signup']">sing up</a>
+        <!-- @if (wrongEmail) {
+          <span>
+            {{ wrongEmail }}
+          </span>
+        } -->
+
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Password"
+          type="password"
+          (input)="onInput()"
+        />
+
+        @if(passwordControl && passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+          <mat-error>
+            Password is required
+          </mat-error>
+        }
+
+        @if(wrongPassword) {
+          <mat-error>
+            {{ wrongPassword }}
+          </mat-error>
+        }
+
+         <!-- @if(wrongPassword) {
+          <span>
+            {{ wrongPassword }}
+          </span>
+        }  -->
+      </mat-form-field>
     </div>
-  </mat-card>
+    <button mat-flat-button color="primary" type="submit">Log in</button>
+  </form>
 
-
+  <div class="sing-up-container">
+    <h3 class="mb-0">Not a User?</h3>
+    <a [routerLink]="['/signup']">Sign up</a>
+  </div>
+</mat-card>

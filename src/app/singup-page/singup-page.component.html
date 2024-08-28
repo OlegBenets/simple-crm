@@ -49,15 +49,20 @@
             [(ngModel)]="admin.email"
             placeholder="E-Mail"
             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            (input)="onEmailInput()"
             required/>
 
             @if(signupForm.invalid && email.touched) {
               <mat-error>Email is required</mat-error>
               } 
 
-              @if(emailExists) {
+              <!-- @if(emailExists) {
                 <mat-error>{{emailExists}}</mat-error>
-              }
+                }  -->
+
+            @if(emailExists) {
+              <span style="color: red;">{{emailExists}}</span>
+            }
             </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -73,6 +78,10 @@
 
             @if(password.invalid && password.touched) {
               <mat-error>Password is required</mat-error>
+            }
+
+            @if(password.dirty) {
+              <mat-error>Wrong pattern for password</mat-error>
             }
 
             @if(weakPassword) {

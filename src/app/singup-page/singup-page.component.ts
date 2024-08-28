@@ -43,14 +43,20 @@ export class SingupPageComponent {
     this.adminService.subAdminList();
   }
 
+  async onEmailInput() {
+    let emailTaken = this.adminService.allAdmins.some(admin => admin.email === this.admin.email);
+    if (emailTaken) {
+      this.emailExists = 'This email is already in use';
+    } else {
+      this.emailExists = null;
+    }
+  }
+
   async signup(signupForm: NgForm) {
     if (signupForm.valid) {
       try {
         console.log('Admin list during signup:', this.adminService.allAdmins);
-
-        let emailTaken = this.adminService.allAdmins.some(admin => admin.email === this.admin.email);
-        if (emailTaken) {
-          this.emailExists = 'This email is already in use';
+        if (this.emailExists) {
           return;
         }
 
