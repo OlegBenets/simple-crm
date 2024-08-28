@@ -14,26 +14,23 @@
           placeholder="Email"
           type="text"
           (input)="onInput()"
-        />
-        @if(emailControl && emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+          (focus)="onFocus('email')"/>
+
+        @if(emailControl.hasError('required') && (emailControl.dirty || emailControl.touched)) {
           <mat-error>
-            Email is required
+            You must enter an email
           </mat-error>
         }
-
-        @if (wrongEmail) {
+        @if(emailControl.hasError('email') && (emailControl.dirty || emailControl.touched)) {
           <mat-error>
-            {{ wrongEmail }}
+            Not a valid email
           </mat-error>
         }
-
-        <!-- @if (wrongEmail) {
-          <span>
-            {{ wrongEmail }}
-          </span>
-        } -->
-
-
+        @if(emailControl.hasError('emailNotExists') && !emailControl.hasError('required') && !emailControl.hasError('email') && (emailControl.dirty || emailControl.touched)) {
+          <mat-error>
+            No account found with this email
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -42,30 +39,32 @@
           matInput
           formControlName="password"
           placeholder="Password"
-          type="password"
+          [type]="hide() ? 'password' : 'text'"
           (input)="onInput()"
-        />
+          (focus)="onFocus('password')"/>
 
-        @if(passwordControl && passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+          <button class="visibility-button"
+          mat-icon-button
+          matSuffix
+          (click)="togglePassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()">
+          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+
+        @if(passwordControl.hasError('required') && (passwordControl.dirty || passwordControl.touched)) {
           <mat-error>
             Password is required
           </mat-error>
         }
-
-        @if(wrongPassword) {
+        @if(passwordControl.hasError('invalidPassword') && (passwordControl.dirty || passwordControl.touched)) {
           <mat-error>
-            {{ wrongPassword }}
+            wrong password
           </mat-error>
         }
-
-         <!-- @if(wrongPassword) {
-          <span>
-            {{ wrongPassword }}
-          </span>
-        }  -->
       </mat-form-field>
     </div>
-    <button mat-flat-button color="primary" type="submit">Log in</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">Log in</button>
   </form>
 
   <div class="sing-up-container">
