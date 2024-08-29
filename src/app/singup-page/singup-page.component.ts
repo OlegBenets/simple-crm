@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './singup-page.component.html',
   styleUrl: './singup-page.component.scss'
@@ -33,46 +34,107 @@ import { CommonModule } from '@angular/common';
 
 export class SingupPageComponent {
   admin = new Admin();
-  emailExists:string | null = null;
-  weakPassword:string | null = null;
+  signupForm: FormGroup;
 
+  constructor(private fb: FormBuilder, private adminService: AdminService, private router: Router) {
 
-  constructor(private adminService: AdminService, private router: Router) {}
+    let emailPattern = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+    this.signupForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+      lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(14)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(emailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   ngOnInit(): void {
     this.adminService.subAdminList();
   }
 
-  async onEmailInput() {
-    let emailTaken = this.adminService.allAdmins.some(admin => admin.email === this.admin.email);
-    if (emailTaken) {
-      this.emailExists = 'This email is already in use';
+  get firstNameControl() {
+    return this.signupForm.get('firstName') as FormControl;
+  }
+
+  get lastNameControl() {
+    return this.signupForm.get('lastName') as FormControl;
+  }
+
+  get emailControl() {
+    return this.signupForm.get('email') as FormControl;
+  }
+
+  get passwordControl() {
+    return this.signupForm.get('password') as FormControl;
+  }
+
+  getErrorMessage(controlName: string) {
+    let control: any = this.signupForm.get(controlName);
+    if (control.hasError('required')) {
+      return `${controlName} is required`;
+    }
+    if (control.hasError('minlength')) {
+      return `${controlName} must be min. ${control.errors?.['minlength'].requiredLength} characters long`;
+    }
+    if (control.hasError('maxlength')) {
+      return `${controlName.replace(/([A-Z])/g, ' $1')} must be max. ${control.errors?.['maxlength'].requiredLength} characters long`;
+    }
+    if (this.emailControl.hasError('email')) {
+      return 'Not a valid email';
+    }
+    if (this.emailControl.hasError('pattern')) {
+      return 'Email does not match the required pattern';
+    }
+    if (this.emailControl.hasError('emailExists')) {
+      return 'This email is already in use';
+    }
+    if (this.passwordControl.hasError('invalidPassword')) {
+      return 'Wrong password';
+    }
+    return '';
+  }
+
+  private validateEmail() {
+    let email = this.emailControl.value;
+    let admin = this.adminService.allAdmins.find(admin => admin.email === email);
+
+    if (this.emailControl.hasError('required') || this.emailControl.hasError('email')) {
+      return; 
+    }
+
+    if (admin) {
+      this.emailControl.setErrors({ 'emailExists': true });
     } else {
-      this.emailExists = null;
+      this.emailControl.setErrors(null);
     }
   }
 
-  async signup(signupForm: NgForm) {
-    if (signupForm.valid) {
-      try {
-        console.log('Admin list during signup:', this.adminService.allAdmins);
-        if (this.emailExists) {
-          return;
-        }
+  private validatePassword() {
+    let password = this.passwordControl.value;
+  }
 
-        await this.adminService.addAdmin(this.admin);
+  async onInput() {
+    this.validateEmail();
+    this.validatePassword();
+  }
+
+  onFocus(field: string) {
+    let control = this.signupForm.get(field) as FormControl;
+    control.markAsTouched();
+    control.updateValueAndValidity();
+  }
+
+  async signup() {
+    this.validateEmail();
+    this.validatePassword();
+
+    if (!this.emailControl.errors && !this.passwordControl.errors && !this.firstNameControl.errors && !this.lastNameControl.errors) {
+        const admin = new Admin(this.signupForm.value);
+        await this.adminService.addAdmin(admin);
         this.router.navigate(['/']);
-      } catch (err) {
-        const error = err as any;
-        if (error.code === 'auth/email-already-in-use') {
-          this.emailExists = 'This email is already in use';
-        } else if (error.code === 'auth/weak-password') {
-          this.weakPassword = 'The password is too weak';
-        } else {
-          console.error('Signup error:', error);
-        }
+      } else {
+        this.emailControl.markAsTouched();
+        this.passwordControl.markAsTouched();
       }
-    }
   }
-
 }
