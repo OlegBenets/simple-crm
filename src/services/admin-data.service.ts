@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Admin } from '../models/admin.class';
 import { Auth } from '@angular/fire/auth';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
 
 @Injectable({
@@ -14,9 +14,21 @@ export class AdminService {
   private firebaseAuth: Auth = inject(Auth);
   allAdmins: Admin[] = [];
   unsubAdminList;
+  authStateListener: (() => void) | undefined;
 
   constructor() {
     this.unsubAdminList = this.subAdminList();
+    this.initializeAuthStateListener();
+  }
+
+  private initializeAuthStateListener() {
+    this.authStateListener = onAuthStateChanged(this.firebaseAuth, (user) => {
+      if (user) {
+        console.log('User is signed in:', user.uid);
+      } else {
+        console.log('No user is signed in.');
+      }
+    });
   }
 
   subAdminList() {
@@ -41,6 +53,16 @@ export class AdminService {
     } catch (error) {
       console.error('Error checking email:', error);
       throw error;
+    }
+  }
+
+  async logOut(): Promise<void> {
+    try {
+      await signOut(this.firebaseAuth);
+      console.log('User signed out');
+    } catch (err) {
+      console.error('Error during logout:', err);
+      throw err;
     }
   }
 

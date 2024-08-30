@@ -4,6 +4,8 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { AdminService } from '../services/admin-data.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
   imports: [
     CommonModule, 
     RouterOutlet, 
+    MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
@@ -22,7 +25,16 @@ import {MatIconModule} from '@angular/material/icon';
 export class AppComponent {
   title = 'simple-crm';
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private adminService: AdminService,) {}
+
+  async logOut() {
+    try {
+      await this.adminService.logOut();
+      this.router.navigate(['/login']);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   isLoginPage(): boolean {
     return this.router.url === '/' || this.router.url === '/signup' || this.router.url === '/login';

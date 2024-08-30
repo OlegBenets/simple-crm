@@ -35,16 +35,16 @@ import { CommonModule } from '@angular/common';
 export class SingupPageComponent {
   admin = new Admin();
   signupForm: FormGroup;
+  passwordPattern: string = '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@!#\\$%^&*])[A-Za-z\\d@!#\\$%^&*]{8,}$';
+  emailPattern: string = '^[a-z]+(\.[a-z]+)?@[a-z]{1,10}\.[a-z]{2,3}$';
 
   constructor(private fb: FormBuilder, private adminService: AdminService, private router: Router) {
-
-    let emailPattern = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
-
+  
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(14)]],
-      email: ['', [Validators.required, Validators.email, Validators.pattern(emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
+      password: ['', [Validators.required, Validators.pattern(this.passwordPattern)]]
     });
   }
 
@@ -71,25 +71,22 @@ export class SingupPageComponent {
   getErrorMessage(controlName: string) {
     let control: any = this.signupForm.get(controlName);
     if (control.hasError('required')) {
-      return `${controlName} is required`;
+      return `${controlName.replace(/([A-Z])/g, ' $1')} is required`;
     }
     if (control.hasError('minlength')) {
-      return `${controlName} must be min. ${control.errors?.['minlength'].requiredLength} characters long`;
+      return `${controlName.replace(/([A-Z])/g, ' $1')} must be min. ${control.errors?.['minlength'].requiredLength} characters long`;
     }
     if (control.hasError('maxlength')) {
       return `${controlName.replace(/([A-Z])/g, ' $1')} must be max. ${control.errors?.['maxlength'].requiredLength} characters long`;
     }
-    if (this.emailControl.hasError('email')) {
-      return 'Not a valid email';
-    }
     if (this.emailControl.hasError('pattern')) {
-      return 'Email does not match the required pattern';
+      return 'Invalid email format (e.g., user@example.com).';
     }
     if (this.emailControl.hasError('emailExists')) {
       return 'This email is already in use';
     }
-    if (this.passwordControl.hasError('invalidPassword')) {
-      return 'Wrong password';
+    if (this.passwordControl.hasError('passwordPattern')) {
+      return 'Invalid password format (e.g., Password1@).';
     }
     return '';
   }
@@ -98,7 +95,7 @@ export class SingupPageComponent {
     let email = this.emailControl.value;
     let admin = this.adminService.allAdmins.find(admin => admin.email === email);
 
-    if (this.emailControl.hasError('required') || this.emailControl.hasError('email')) {
+    if (this.emailControl.hasError('required') || this.emailControl.hasError('pattern')) {
       return; 
     }
 
@@ -111,6 +108,17 @@ export class SingupPageComponent {
 
   private validatePassword() {
     let password = this.passwordControl.value;
+    let pattern = new RegExp(this.passwordPattern);
+
+    if (this.passwordControl.hasError('required')) {
+      return; 
+    }
+
+    if (!pattern.test(password)) {
+      this.passwordControl.setErrors({ 'passwordPattern': true });
+    } else {
+      this.passwordControl.setErrors(null);
+    }
   }
 
   async onInput() {
@@ -131,7 +139,7 @@ export class SingupPageComponent {
     if (!this.emailControl.errors && !this.passwordControl.errors && !this.firstNameControl.errors && !this.lastNameControl.errors) {
         const admin = new Admin(this.signupForm.value);
         await this.adminService.addAdmin(admin);
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       } else {
         this.emailControl.markAsTouched();
         this.passwordControl.markAsTouched();

@@ -9,7 +9,8 @@ import { AuthGuard } from '../models/auth-guard.class';
 import { SingupPageComponent } from './singup-page/singup-page.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginPageComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginPageComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
     { path: 'user/:id', component: UserDetailComponent, canActivate: [AuthGuard] },

@@ -44,27 +44,8 @@
             (input)="onInput()"
             (focus)="onFocus('email')"/>
 
-            @if(emailControl.hasError('required')) {
-              <mat-error>
-                You must enter an email
-              </mat-error>
-            }
-            @if(emailControl.hasError('email')) {
-              <mat-error>
-                Not a valid email
-              </mat-error>
-            }
-
-            @if (this.emailControl.hasError('pattern')) {
-              <mat-error>
-              Email does not match the required pattern
-            </mat-error>
-            }
-
-            @if(emailControl.hasError('emailExists') && !emailControl.hasError('required') && !emailControl.hasError('email') && (emailControl.dirty || emailControl.touched)) {
-              <mat-error>
-                This email is already in use
-              </mat-error>
+            @if(emailControl.invalid && emailControl.touched) {
+              <mat-error>{{ getErrorMessage('email') }}</mat-error>
             }
 
             </mat-form-field>
@@ -80,10 +61,6 @@
             (focus)="onFocus('password')"/>
 
             @if(passwordControl.invalid && passwordControl.touched) {
-              <mat-error>Password is required</mat-error>
-            }
-
-            @if(passwordControl.dirty && passwordControl.invalid) {
               <mat-error>{{ getErrorMessage('password') }}</mat-error>
             }
         </mat-form-field>
