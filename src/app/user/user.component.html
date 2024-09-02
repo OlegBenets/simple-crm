@@ -14,7 +14,7 @@
   </section>
 </div>
 
-
+@if(userService.filteredUsers.length > 0) {
 <mat-card>
   <table class="full-width user-table">
     <tr>
@@ -29,8 +29,7 @@
         </tr>
   </table>
 </mat-card>
-
-@if (this.userService.filteredUsers.length === 0) {
+} @else {
   <div class="no-users-message">
     <h3>No Users in the List</h3>
   </div>

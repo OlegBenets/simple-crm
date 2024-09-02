@@ -4,6 +4,7 @@ import { Admin } from '../models/admin.class';
 import { Auth } from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AdminService {
   unsubAdminList;
   authStateListener: (() => void) | undefined;
 
-  constructor() {
+  constructor(private router: Router) {
     this.unsubAdminList = this.subAdminList();
     this.initializeAuthStateListener();
   }
@@ -24,6 +25,7 @@ export class AdminService {
   private initializeAuthStateListener() {
     this.authStateListener = onAuthStateChanged(this.firebaseAuth, (user) => {
       if (user) {
+        this.router.navigate(['/dashboard']);
         console.log('User is signed in:', user.uid);
       } else {
         console.log('No user is signed in.');

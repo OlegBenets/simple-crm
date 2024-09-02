@@ -104,14 +104,9 @@ export class LoginPageComponent {
 
   private validateEmail() {
     let email = this.emailControl.value;
-    let admin = this.adminService.allAdmins.find(
-      (admin) => admin.email === email
-    );
+    let admin = this.adminService.allAdmins.find((admin) => admin.email === email);
 
-    if (
-      this.emailControl.hasError('required') ||
-      this.emailControl.hasError('email')
-    ) {
+    if (this.emailControl.hasError('required') || this.emailControl.hasError('email')) {
       return;
     }
 

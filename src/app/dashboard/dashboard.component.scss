@@ -1,11 +1,79 @@
-mat-grid-list {
-    width: 100%;
+@import './../../styles.scss';
 
-    mat-grid-tile {
-        border: 0.1px solid rgb(247, 247, 247);
-        border-radius: 4px;
-        box-shadow: 0.2px 1px grey;
-        background-color: white;
+.dashboard-container {
+  @include dFlex($ai: start, $jc: start, $g: 36px);
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+section {
+  @include dFlex($ai: none, $jc: none, $g: 16px);
+  flex-direction: column;
+  width: 100%;
+
+  @media (max-width: 920px) {
+    width: 100%;
+  }
+
+  header {
+    @include dFlex($ai: center, $jc: center);
+    width: 100%;
+    min-height: 60px;
+    max-height: 150px;
+    border: 0.1px solid rgb(247, 247, 247);
+    border-radius: 8px;
+    box-shadow: 0.2px 1px grey;
+    background-color: $turkis;
+    color: white;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 0;
+  }
+
+  span {
+      font-size: 20px;
+      font-weight: 500;
+  }
+  }
+
+  .datas-container {
+    @include dFlex($ai: center, $jc: space-evenly, $g: 36px);
+
+    @media (max-width: 920px) {
+      flex-direction: column;
     }
+    
+  article {
+        @include dFlex($ai: center, $jc: center, $g: 12px);
+        flex-direction: column;
+        width: 300px;
+        min-height: 100px;
+        max-height: 300px;
+        border: 0.1px solid rgb(247, 247, 247);
+        border-radius: 8px;
+        box-shadow: 0.2px 1px grey;
+        background-color: $turkis;
+        color: white;
+
+        h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        span {
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+  }
+}
+
+.canvas-container {
+  width: 100%;
+  height: auto;
 }
 

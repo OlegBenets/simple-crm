@@ -1,15 +1,41 @@
-<mat-grid-list cols="2" rowHeight="2:1" gutterSize="10px">
-    <mat-grid-tile>
-        <h2>All Users</h2>
-        <span>{{userService.allUsers.length}}</span>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <h2>Users</h2>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <h2>Users</h2>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <h2>Users</h2>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="dashboard-container">
+  <section>
+    <header>
+      <h2>Data 2024</h2>
+    </header>
+    <div class="datas-container">
+      <article>
+        <h2>Total Accounts</h2>
+        <span>{{ userService.allUsers.length }}</span>
+      </article>
+      <article>
+        <h2>Total target</h2>
+        <span>150,700 €</span>
+      </article>
+      <article>
+        <h2>Total value</h2>
+        <span>148,210 €</span>
+      </article>
+      <article>
+        <h2>Total deals</h2>
+        <span>109</span>
+      </article>
+    </div>
+  </section>
+
+  <div class="canvas-container">
+    <div>
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="'bar'"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+      ></canvas>
+    </div>
+    <button (click)="randomize()">Update</button>
+  </div>
+</div>

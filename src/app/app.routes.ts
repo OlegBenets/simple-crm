@@ -7,6 +7,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthGuard } from '../models/auth-guard.class';
 import { SingupPageComponent } from './singup-page/singup-page.component';
+import { ProductComponent } from './product/product.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,6 +16,8 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
     { path: 'user/:id', component: UserDetailComponent, canActivate: [AuthGuard] },
+    { path: 'products/:id', component: ProductDetailComponent, canActivate: [AuthGuard] },
+    { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
     { path: 'imprint', component: ImprintComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
     { path: 'signup', component: SingupPageComponent },
