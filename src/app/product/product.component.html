@@ -9,12 +9,12 @@
   
   @if(productService.filteredProducts.length > 0) {
   <mat-card>
-    <table class="full-width user-table">
+    <table class="full-width product-table">
       <tr>
         <th>Name</th>
         <th>Price</th>
       </tr>
-          <tr *ngFor="let user of productService.filteredProducts" [routerLink]="['/products/' + user.id]">
+          <tr *ngFor="let product of productService.filteredProducts" [routerLink]="['/products/' + product.id]">
             <td>{{product.name}}</td>
             <td>{{product.price}}</td>
           </tr>

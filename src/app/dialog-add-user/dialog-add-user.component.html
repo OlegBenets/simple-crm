@@ -7,7 +7,7 @@
   <mat-dialog-content>
     <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
       <div>
-        <mat-form-field class="mr-16" appearance="outline">
+        <mat-form-field class="mr-16 mt-32" appearance="outline">
           <mat-label>First Name</mat-label>
           <input
             [disabled]="loading"
@@ -26,7 +26,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="mt-32" appearance="outline">
           <mat-label>Last Name</mat-label>
           <input
             [disabled]="loading"

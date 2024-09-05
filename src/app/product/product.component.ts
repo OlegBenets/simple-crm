@@ -40,12 +40,10 @@ export class ProductComponent {
   }
 
   applyFilter(event: Event) {
-    // const filterVal = (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
-    // this.userService.filteredUsers = this.userService.allUsers.filter( user => 
-    //   user.firstName.toLowerCase().includes(filterVal) ||
-    //   user.lastName.toLowerCase().includes(filterVal) ||
-    //   user.city.toLowerCase().includes(filterVal) 
-    // );
+    const filterVal = (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
+    this.productService.filteredProducts = this.productService.allProducts.filter( product => 
+      product.name.toLowerCase().includes(filterVal)
+    );
     }
 
 }

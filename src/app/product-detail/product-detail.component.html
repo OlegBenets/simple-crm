@@ -1,1 +1,39 @@
-<p>product-detail works!</p>
+<mat-card class="user-detail-header">
+    <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="editProduct()">Edit</button>
+      <button mat-menu-item (click)="deleteProduct()">Delete Product</button>
+    </mat-menu>
+  
+    <div class="user-detail-container">
+      <img class="profile-image" src="./../../assets/image/profile.png" />
+      <div class="user-details">
+        <h2>{{ product.name }}</h2>
+        <b>{{ product.price }}</b>
+      </div>
+    </div>
+  </mat-card>
+  
+  <mat-card class="mt-32 user-detail-data">
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="userAddress">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  
+    <mat-menu #userAddress="matMenu">
+      <button mat-menu-item (click)="editDescription()">Edit</button>
+    </mat-menu>
+  
+    <mat-card-title>Description</mat-card-title>
+    <mat-card-content>
+      {{ product.description }}
+    </mat-card-content>
+
+    <mat-card-title class="mt-32">Details</mat-card-title>
+    <mat-card-content>
+      {{ product.detail }}
+    </mat-card-content>
+  </mat-card>
+  

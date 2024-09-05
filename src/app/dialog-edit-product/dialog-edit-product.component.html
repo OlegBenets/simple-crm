@@ -1,0 +1,26 @@
+<div class="dialog-container">
+    @if(loading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+  
+  <h2 mat-dialog-title>Edit Product</h2>
+  <mat-dialog-content class="pt-20">
+    <div>
+        <mat-form-field class="mr-16" appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input [disabled]="loading" [(ngModel)]="product.name" matInput placeholder="Product Name" >
+            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input [disabled]="loading" [(ngModel)]="product.price" matInput placeholder="Price" >
+            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+          </mat-form-field>
+        </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
+    <button [disabled]="loading" mat-button (click)="saveProduct()" cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+  </div>
