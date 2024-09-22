@@ -5,7 +5,7 @@ import { User } from '../../models/user.class';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule } from '@angular/material/menu';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { UserService } from '../../services/user-data.service';
@@ -31,8 +31,7 @@ export class UserDetailComponent {
   ngOnInit() {
     this.route.paramMap.subscribe( paramMap => {
       this.userId = paramMap.get('id') || '';
-
-       this.getUser();
+      this.getUser();
     })
   }
 
@@ -44,16 +43,24 @@ export class UserDetailComponent {
     const dialog = this.dialog.open(DialogEditUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
+    this.handleDialogClose(dialog);
   }
 
   editMenu() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
+    this.handleDialogClose(dialog);
   }
 
-  deleteUser() {
-    this.userService.deleteUser(this.userId);
+  handleDialogClose(dialogRef: MatDialogRef<any>) {
+    dialogRef.afterClosed().subscribe(() => {
+      this.getUser();
+    });
+  }
+
+ async deleteUser() {
+  await this.userService.deleteUser(this.userId);
     this.router.navigate(['/user']);
   }
 }

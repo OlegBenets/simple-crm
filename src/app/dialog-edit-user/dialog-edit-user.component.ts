@@ -35,11 +35,11 @@ export class DialogEditUserComponent {
   loading: boolean = false;
   birthDate: Date = new Date();
 
-  saveUser() {
+  async saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
 
-    this.userService.updateUser(this.userId, this.user);
+    await this.userService.updateUser(this.userId, this.user);
       this.loading = false;
       this.dialogRef.close();
     }

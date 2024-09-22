@@ -73,7 +73,19 @@ section {
 }
 
 .canvas-container {
+  width: 45%;
+  height: auto;
+}
+
+.charts-container {
+  display: flex;
   width: 100%;
   height: auto;
+  justify-content: space-between;
+
+  @media (max-width: 920px) {
+    flex-direction: column;
+    @include dFlex($ai: center, $jc: center, $g: 32px);
+  }
 }
 

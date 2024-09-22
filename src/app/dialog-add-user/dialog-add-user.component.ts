@@ -34,12 +34,12 @@ export class DialogAddUserComponent {
 
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>, public userService: UserService) {}
 
-  saveUser(userForm: NgForm) {
+  async saveUser(userForm: NgForm) {
     if (userForm.form.valid) {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
 
-    this.userService.addUser(this.user);
+   await this.userService.addUser(this.user);
       this.dialogRef.close();
       this.loading = false;
      }

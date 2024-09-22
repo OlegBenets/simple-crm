@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Product } from '../../models/product.class';
 import { ProductDataService } from '../../services/product-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
 import { DialogEditDescriptionComponent } from '../dialog-edit-description/dialog-edit-description.component';
 
@@ -44,16 +44,24 @@ export class ProductDetailComponent {
     const dialog = this.dialog.open(DialogEditProductComponent);
     dialog.componentInstance.product = new Product(this.product.toJSON());
     dialog.componentInstance.productId = this.productId;
+    this.handleDialogClose(dialog);
   }
 
   editDescription() {
     const dialog = this.dialog.open(DialogEditDescriptionComponent);
     dialog.componentInstance.product = new Product(this.product.toJSON());
     dialog.componentInstance.productId = this.productId;
+    this.handleDialogClose(dialog);
   }
 
-  deleteProduct() {
-    this.productService.deleteProduct(this.productId);
+  handleDialogClose(dialogRef: MatDialogRef<any>) {
+    dialogRef.afterClosed().subscribe(() => {
+      this.getProduct();
+    });
+  }
+
+  async deleteProduct() {
+   await this.productService.deleteProduct(this.productId);
     this.router.navigate(['/products']);
   }
 }

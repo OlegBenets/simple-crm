@@ -33,11 +33,11 @@ export class DialogAddProductComponent {
   product = new Product();
   loading: boolean = false;
 
-  addProduct(productForm: NgForm) {
+ async addProduct(productForm: NgForm) {
     if (productForm.form.valid) {
       this.loading = true;
   
-      this.productService.addProduct(this.product);
+    await this.productService.addProduct(this.product);
         this.dialogRef.close();
         this.loading = false;
   }

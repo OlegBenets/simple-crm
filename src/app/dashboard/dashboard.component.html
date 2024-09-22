@@ -1,5 +1,5 @@
 <div class="dashboard-container">
-  <section>
+  <section class="mt-32 mb-32">
     <header>
       <h2>Data 2024</h2>
     </header>
@@ -23,6 +23,7 @@
     </div>
   </section>
 
+  <div class="charts-container">
   <div class="canvas-container">
     <div>
       <canvas
@@ -38,4 +39,21 @@
     </div>
     <button (click)="randomize()">Update</button>
   </div>
+
+  <div class="canvas-container">
+    <div>
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="'bar'"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+      ></canvas>
+    </div>
+    <button (click)="randomize()">Update</button>
+  </div>
+</div>
 </div>

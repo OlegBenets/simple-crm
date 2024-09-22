@@ -32,7 +32,7 @@ export class DialogEditAddressComponent {
   async saveUser() {
     this.loading = true;
 
-    this.userService.updateUser(this.userId, this.user);
+   await this.userService.updateUser(this.userId, this.user);
       this.loading = false;
       this.dialogRef.close();
     }

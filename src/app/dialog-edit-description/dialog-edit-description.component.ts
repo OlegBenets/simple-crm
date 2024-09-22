@@ -29,10 +29,10 @@ export class DialogEditDescriptionComponent {
   productId = '';
   loading: boolean = false;
 
-  saveProduct() {
+ async saveProduct() {
     this.loading = true;
 
-    this.productService.updateProduct(this.productId, this.product);
+  await this.productService.updateProduct(this.productId, this.product);
       this.loading = false;
       this.dialogRef.close();
     }
