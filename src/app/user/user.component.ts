@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule, TooltipComponent } from '@angular/material/tooltip';
@@ -29,16 +29,14 @@ import { UserService } from '../../services/user-data.service';
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   user = new User();
-  allUsers: User[] = [];
-  showNoUserMessage: boolean = false;
   sortAscending: boolean = true;
 
   constructor(public dialog: MatDialog, public userService: UserService) {}
 
-  getUserList() {
-      this.allUsers = this.userService.allUsers;
+  ngOnInit() {
+    this.userService.filteredUsers = this.userService.allUsers;
   }
 
   openDialog() {

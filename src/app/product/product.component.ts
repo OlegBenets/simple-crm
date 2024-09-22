@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField } from '@angular/material/form-field';
@@ -29,11 +29,14 @@ import { Product } from '../../models/product.class';
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
-export class ProductComponent {
-
+export class ProductComponent implements OnInit {
   product = new Product();
 
   constructor(public dialog: MatDialog, public productService: ProductDataService) {}
+
+  ngOnInit() {
+    this.productService.filteredProducts = this.productService.allProducts;
+  }
 
   openDialog() {
     this.dialog.open(DialogAddProductComponent)

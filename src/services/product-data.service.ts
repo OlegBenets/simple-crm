@@ -7,7 +7,6 @@ import { Product } from '../models/product.class';
   providedIn: 'root'
 })
 export class ProductDataService {
-
   private firestore: Firestore = inject(Firestore);
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];

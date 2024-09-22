@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user-data.service';
 import { BaseChartDirective } from 'ng2-charts';
+import { ProductDataService } from '../../services/product-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,7 @@ export class DashboardComponent {
     {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
   ];
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, public productService: ProductDataService) {}
 
   chartClicked(e:any):void {
     console.log(e);
