@@ -5,22 +5,53 @@
   
   <h2 mat-dialog-title>Edit Product</h2>
   <mat-dialog-content class="pt-20">
+    <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm)">
     <div>
         <mat-form-field class="mr-16" appearance="outline">
             <mat-label>Product Name</mat-label>
-            <input [disabled]="loading" [(ngModel)]="product.name" matInput placeholder="Product Name" >
-            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+            <input 
+            [disabled]="loading"
+            minlength="3"
+            maxlength="25"
+            type="text"
+            #productName="ngModel"
+            name="productName"
+            [(ngModel)]="product.name"
+            matInput
+            placeholder="Product Name"
+            required/>
+
+            @if(productName.invalid && productName.touched) {
+              <mat-error>Product Name is required</mat-error>
+              }
           </mat-form-field>
     
           <mat-form-field appearance="outline">
             <mat-label>Price</mat-label>
-            <input [disabled]="loading" [(ngModel)]="product.price" matInput placeholder="Price" >
-            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+            <input 
+            [disabled]="loading"
+            #price="ngModel"
+            name="price"
+            [(ngModel)]="product.price"
+            matInput
+            placeholder="Price"
+            (blur)="formatPrice()"
+            type="text"
+            required/>
+
+            @if(price.invalid && price.touched) {
+              <mat-error>Price is required</mat-error>
+              }
+            
           </mat-form-field>
         </div>
-  </mat-dialog-content>
+
   <mat-dialog-actions>
     <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
-    <button [disabled]="loading" mat-button (click)="saveProduct()" cdkFocusInitial>Save</button>
+    <button [disabled]="loading || !productForm.form.valid"
+    mat-button
+    type="submit">Save</button>
   </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
   </div>

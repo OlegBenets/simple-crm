@@ -1,18 +1,15 @@
+@import './../../styles.scss';
+
 .dialog-container {
     position: relative;
 
     mat-progress-bar {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
+        @include position($t: 0, $l: 0, $r: 0, $b: none);
         width: 100%;
     }
 }
 
 form {
-    height: auto;
-    display: flex;
+    @include dFlex($ai: none, $jc: none, $g: 12px);
     flex-direction: column;
-    gap: 12px;
 }

@@ -42,4 +42,15 @@ export class DialogAddProductComponent {
         this.loading = false;
   }
 }
+
+formatPrice() {
+  let value = this.product.price.toString().replace(/[^\d.,]/g, '');
+  value = value.replace(',', '.');
+
+  if (value && !isNaN(parseFloat(value))) {
+    this.product.price = parseFloat(value).toFixed(2) + ' €';
+  } else {
+    this.product.price = '';
+  }
+}
 }

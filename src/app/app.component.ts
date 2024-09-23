@@ -6,6 +6,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminService } from '../services/admin-data.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { AdminService } from '../services/admin-data.service';
     RouterOutlet, 
     MatButtonModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatSidenavModule,
     MatIconModule,
     RouterModule,

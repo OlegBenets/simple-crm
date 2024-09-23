@@ -1,4 +1,5 @@
 $turkis: #007f99;
+$blue: #3f51b4;
 
 html, body { 
   height: 100%; 
@@ -35,6 +36,10 @@ body {
 
   .mb-32 {
     margin-bottom: 32px;
+  }
+
+  .mb-12 {
+    margin-bottom: 12px;
   }
 
   .mb-0 {

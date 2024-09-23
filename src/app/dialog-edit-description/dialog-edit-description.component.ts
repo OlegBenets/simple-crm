@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,11 +29,13 @@ export class DialogEditDescriptionComponent {
   productId = '';
   loading: boolean = false;
 
- async saveProduct() {
+ async saveProduct(productForm: NgForm) {
+  if (productForm.form.valid) {
     this.loading = true;
 
   await this.productService.updateProduct(this.productId, this.product);
       this.loading = false;
       this.dialogRef.close();
     }
+  }
 }

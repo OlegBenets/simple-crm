@@ -1,0 +1,21 @@
+@import './../../styles.scss';
+
+.dialog-container {
+    position: relative;
+
+    mat-progress-bar {
+        @include position($t: 0, $l: 0, $r: 0, $b: none);
+        width: 100%;
+    }
+}
+
+form {
+    @include dFlex($ai: none, $jc: none, $g: 12px);
+    flex-direction: column;
+    height: auto;
+    width: 320px;
+
+    textarea {
+        height: 150px;
+    }
+}
