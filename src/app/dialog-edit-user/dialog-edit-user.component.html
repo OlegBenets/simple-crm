@@ -5,38 +5,86 @@
   
   <h2 mat-dialog-title>Edit User</h2>
   <mat-dialog-content class="pt-20">
+    <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
     <div>
         <mat-form-field class="mr-16" appearance="outline">
             <mat-label>First Name</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First Name" >
-            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+            <input
+            [disabled]="loading"
+            minlength="3"
+            maxlength="10"
+            type="text"
+            #firstName="ngModel"
+            name="firstName"
+            [(ngModel)]="user.firstName"
+            matInput
+            placeholder="First Name"
+            required/>
+
+            @if(firstName.invalid && firstName.touched) {
+              <mat-error>First Name is required</mat-error>
+              }
           </mat-form-field>
     
           <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Last Name" >
-            <!-- <mat-hint>Please enter a Name</mat-hint> -->
+            <input
+            [disabled]="loading"
+            minlength="3"
+            maxlength="14"
+            type="text"
+            #lastName="ngModel"
+            name="lastName"
+            [(ngModel)]="user.lastName"
+            matInput
+            placeholder="Last Name"
+            required/>
+
+            @if(lastName.invalid && lastName.touched) {
+              <mat-error>Last Name is required</mat-error>
+              }
           </mat-form-field>
         </div>
         <div>
           <mat-form-field class="mr-16 full-width" appearance="outline">
             <mat-label>E-Mail</mat-label>
-            <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-Mail">
-            <!-- <mat-hint>Please enter a E-mail</mat-hint> -->
+            <input
+            [disabled]="loading"
+            #email="ngModel"
+            name="email"
+            [(ngModel)]="user.email"
+            matInput
+            placeholder="E-Mail"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            required/>
+
+            @if(email.invalid && email.touched) {
+              <mat-error>Email is required</mat-error>
+              }
           </mat-form-field>
         </div>
         <div>
           <mat-form-field class="mr-16 full-width" appearance="outline">
             <mat-label>Birth Date</mat-label>
-            <input [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Birthdate" [matDatepicker]="datepicker" >
+            <input 
+            [disabled]="loading"
+            name="birthDate"
+            [(ngModel)]="birthDate"
+            matInput
+            placeholder="Birthdate"
+            [matDatepicker]="datepicker"
+            required>
             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker></mat-datepicker>
-            <!-- <mat-hint>Please enter a Date</mat-hint> -->
           </mat-form-field>
         </div>
-  </mat-dialog-content>
   <mat-dialog-actions>
     <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
-    <button [disabled]="loading" mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
-  </mat-dialog-actions>
+    <button
+    [disabled]="loading || !userForm.form.valid"
+    mat-button
+    type="submit">Save</button>
+</mat-dialog-actions>
+</form>
+</mat-dialog-content>
   </div>

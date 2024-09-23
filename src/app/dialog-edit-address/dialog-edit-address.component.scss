@@ -10,4 +10,10 @@
         top: 0;
         width: 100%;
     }
+
+    form {
+    @include dFlex($ai: none, $jc: none, $g: 12px);
+    flex-direction: column;
+    height: auto;
+    }
 }

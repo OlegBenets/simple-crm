@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -35,12 +35,14 @@ export class DialogEditUserComponent {
   loading: boolean = false;
   birthDate: Date = new Date();
 
-  async saveUser() {
+  async saveUser(userForm: NgForm) {
+    if (userForm.form.valid) {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
 
     await this.userService.updateUser(this.userId, this.user);
       this.loading = false;
       this.dialogRef.close();
+    }
     }
 }
