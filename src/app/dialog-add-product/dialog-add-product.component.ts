@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Product } from '../../models/product.class';
 import { ProductDataService } from '../../services/product-data.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dialog-add-product',
@@ -16,6 +17,7 @@ import { ProductDataService } from '../../services/product-data.service';
   imports: [
     MatDialogModule,
     MatButtonModule,
+    MatIcon,
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
@@ -31,6 +33,7 @@ export class DialogAddProductComponent {
   constructor(public dialogRef: MatDialogRef<DialogAddProductComponent>, public productService: ProductDataService){}
 
   product = new Product();
+  details:string[] = [];
   loading: boolean = false;
 
  async addProduct(productForm: NgForm) {
@@ -40,6 +43,20 @@ export class DialogAddProductComponent {
     await this.productService.addProduct(this.product);
         this.dialogRef.close();
         this.loading = false;
+  }
+}
+
+addDetail(detail: string) {
+  if (detail.trim() !== '' && !this.details.includes(detail)) {
+    this.details.push(detail);
+    this.product.detail = '';
+    }
+}
+
+deleteDetail(detail: string) {
+  let index = this.details.indexOf(detail);
+  if (index !== -1) {
+    this.details.splice(index, 1);
   }
 }
 
