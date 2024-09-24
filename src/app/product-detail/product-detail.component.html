@@ -33,7 +33,11 @@
 
     <mat-card-title class="mt-32">Details</mat-card-title>
     <mat-card-content>
-      {{ product.detail }}
+      <ul>
+          @for (detail of product.detail; track detail) {
+          <li>{{ detail }}</li>
+          }
+        </ul>
     </mat-card-content>
   </mat-card>
   

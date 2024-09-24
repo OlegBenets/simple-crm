@@ -3,14 +3,14 @@ export class Product {
     name: string;
     price: number | string;
     description: string;
-    detail: string;
+    detail: string[];
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : '';
         this.name = obj ? obj.name : '';
         this.price = obj ? obj.price : '';
         this.description = obj ? obj.description : '';
-        this.detail = obj ? obj.detail : '';
+        this.detail = Array.isArray(obj?.detail) ? obj.detail : [];
     }
 
     public toJSON() {

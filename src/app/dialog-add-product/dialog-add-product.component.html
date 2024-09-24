@@ -69,34 +69,20 @@
               <div class="detail-input">
               <input 
                 [disabled]="loading"
-                type="text"
                 minlength="3"
                 maxlength="50"
                 #detail="ngModel"
                 name="detail"
-                [(ngModel)]="product.detail"
+                [(ngModel)]="currentDetail"
                 matInput
-                placeholder="Detail"
-                required>
+                placeholder="Add Detail">
 
-                <button [disabled]="loading || detail.invalid" mat-button type="button" (click)="addDetail(product.detail)">Add</button>
+                <button [disabled]="loading" mat-button type="button" (click)="addDetail(currentDetail)">Add</button>
               </div>
-
-                @if(detail.invalid) {
-                  <mat-error>Details are required</mat-error>
-                  }
-
-                  @if(details.includes(product.detail) && product.detail) {
-                    <mat-error>This detail already exists</mat-error>
-                  }
-
-                  @if(details.length === 0 && productForm.submitted) {
-                    <mat-error>You must add at least one detail</mat-error>
-                  }
             </mat-form-field>
 
             <div class="detail-list">
-            @for (detail of details; track detail) {
+            @for (detail of product.detail; track detail) {
               <ul>
                 <li>
                     {{detail}}

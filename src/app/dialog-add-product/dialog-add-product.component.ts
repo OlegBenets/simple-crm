@@ -33,7 +33,7 @@ export class DialogAddProductComponent {
   constructor(public dialogRef: MatDialogRef<DialogAddProductComponent>, public productService: ProductDataService){}
 
   product = new Product();
-  details:string[] = [];
+  currentDetail: string = '';
   loading: boolean = false;
 
  async addProduct(productForm: NgForm) {
@@ -43,20 +43,21 @@ export class DialogAddProductComponent {
     await this.productService.addProduct(this.product);
         this.dialogRef.close();
         this.loading = false;
+        console.log(' added product ',this.product)
   }
 }
 
-addDetail(detail: string) {
-  if (detail.trim() !== '' && !this.details.includes(detail)) {
-    this.details.push(detail);
-    this.product.detail = '';
+addDetail(currentDetail: string) {
+  if (currentDetail.trim() !== '' && !this.product.detail.includes(currentDetail)) {
+    this.product.detail.push(currentDetail);
+    this.currentDetail = '';
     }
 }
 
 deleteDetail(detail: string) {
-  let index = this.details.indexOf(detail);
+  let index = this.product.detail.indexOf(detail);
   if (index !== -1) {
-    this.details.splice(index, 1);
+    this.product.detail.splice(index, 1);
   }
 }
 

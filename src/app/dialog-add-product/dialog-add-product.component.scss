@@ -27,7 +27,7 @@ form {
 
     .detail-list {
         width: 100%;
-        max-height: 96px;
+        max-height: 100px;
         overflow-y: auto;
         scrollbar-width: thin;
         scrollbar-color: $turkis #f1f1f1;
@@ -41,6 +41,11 @@ form {
 
             mat-icon {
                 cursor: pointer;
+
+                &:hover {
+                    border-radius: 50%;
+                    background-color: #f5f5f5;
+                }
             }
         }
     }

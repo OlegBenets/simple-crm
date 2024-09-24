@@ -25,24 +25,39 @@
         }
     </mat-form-field>
 
-    <mat-form-field class="mr-16 full-width" appearance="outline">
-      <mat-label>Details</mat-label>
-      <textarea 
-      [disabled]="loading"
-      type="text"
-      minlength="3"
-      maxlength="300"
-      #detail="ngModel"
-      name="detail"
-      [(ngModel)]="product.detail"
-      matInput
-      placeholder="Detail"
-      required></textarea>
+    <div class="detail-container">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Details</mat-label>
+        <div class="detail-input">
+        <input 
+          [disabled]="loading"
+          minlength="3"
+          maxlength="50"
+          #detail="ngModel"
+          name="detail"
+          [(ngModel)]="currentDetail"
+          matInput
+          placeholder="Add Detail">
 
-      @if(detail.invalid && detail.touched) {
-        <mat-error>Details are required</mat-error>
-        }
-    </mat-form-field>
+          <button [disabled]="loading" mat-button type="button" (click)="addDetail()">Add</button>
+        </div>
+      </mat-form-field>
+
+      <div class="detail-list">
+      @for (detail of product.detail; track detail) {
+        <ul>
+          <li>
+              {{detail}}
+              <div>
+                <mat-icon (click)="editDetail(detail)">edit</mat-icon>
+                <mat-icon (click)="deleteDetail(detail)">delete</mat-icon>
+              </div>
+          </li>
+      </ul>
+      }
+    </div>
+    </div>
+
 
 <mat-dialog-actions>
   <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
