@@ -32,7 +32,7 @@
         <input 
           [disabled]="loading"
           minlength="3"
-          maxlength="50"
+          maxlength="30"
           #detail="ngModel"
           name="detail"
           [(ngModel)]="currentDetail"
@@ -44,18 +44,34 @@
       </mat-form-field>
 
       <div class="detail-list">
-      @for (detail of product.detail; track detail) {
-        <ul>
-          <li>
-              {{detail}}
-              <div>
-                <mat-icon (click)="editDetail(detail)">edit</mat-icon>
-                <mat-icon (click)="deleteDetail(detail)">delete</mat-icon>
-              </div>
-          </li>
-      </ul>
-      }
-    </div>
+          @for (detail of temporaryDetails; track detail) {
+            <ul>
+              <li>
+                  @if (editingDetail !== detail) {
+                      {{ detail }}
+                      <div class="icons-container">
+                          <mat-icon (click)="setEditing(detail)">edit</mat-icon>
+                          <mat-icon (click)="deleteDetail(detail)">delete</mat-icon>
+                      </div>
+                  } @else {
+                      <input
+                          class="edit-detail-input" 
+                          [(ngModel)]="editingValue" 
+                          #editDetail="ngModel"
+                          name="editDetail"
+                          minlength="3"
+                          maxlength="30"
+                          matInput>
+                          <div class="icons-container">
+                      <mat-icon (click)="finishEditing(detail)">check</mat-icon>
+                      <mat-icon (click)="cancelEditing()">cancel</mat-icon>
+                    </div>
+                  }
+              </li>
+            </ul>
+          }
+
+  </div>
     </div>
 
 
