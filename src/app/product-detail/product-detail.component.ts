@@ -38,8 +38,6 @@ export class ProductDetailComponent {
 
   async getProduct() {
     this.product = await this.productService.getSingleProduct(this.productId);
-    console.log('Loaded product:', this.product);  // Überprüfen, ob das Produkt korrekt geladen wird
-    console.log('Product details:', this.product.detail);
   }
 
   editProduct() {

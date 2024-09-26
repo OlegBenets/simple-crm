@@ -1,15 +1,18 @@
 @import './../../styles.scss';
 
 
-.user-detail-header {
+.product-detail-header {
     position: relative;
     @include dFlex($ai: flex-start, $jc: flex-end);
-    min-height: 250px;
-    background-color: rgba($color: #007f99, $alpha: 1.0);
+    min-height: 350px;
+    background-image: url('./../../assets/image/laptop.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     color: white;
     padding: 16px;
 
-    .user-detail-container {
+    .product-detail-container {
         @include dFlex($ai: center, $jc: flex-start);
 
         .profile-image {
@@ -25,7 +28,7 @@
     }
 }
 
-.user-details {
+.product-details {
     margin-left: 32px;
     @include dFlex($ai: flex-start, $jc: center);
     flex-direction: column;
@@ -44,7 +47,7 @@
     }  
 }
 
-.user-detail-data {
+.product-detail-data {
     position: relative;
     padding: 16px;
 

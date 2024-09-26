@@ -1,27 +1,27 @@
-<mat-card class="user-detail-header">
-    <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="userMenu">
+<mat-card class="product-detail-header">
+    <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="productMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
   
-    <mat-menu #userMenu="matMenu">
+    <mat-menu #productMenu="matMenu">
       <button mat-menu-item (click)="editProduct()">Edit</button>
       <button mat-menu-item (click)="deleteProduct()">Delete Product</button>
     </mat-menu>
   
-    <div class="user-detail-container">
-      <div class="user-details">
+    <div class="product-detail-container">
+      <div class="product-details">
         <h2>{{ product.name }}</h2>
         <b>{{ product.price }}</b>
       </div>
     </div>
   </mat-card>
   
-  <mat-card class="mt-32 user-detail-data">
-    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="userAddress">
+  <mat-card class="mt-32 product-detail-data">
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="productAddress">
       <mat-icon>more_vert</mat-icon>
     </button>
   
-    <mat-menu #userAddress="matMenu">
+    <mat-menu #productAddress="matMenu">
       <button mat-menu-item (click)="editDescription()">Edit</button>
     </mat-menu>
   

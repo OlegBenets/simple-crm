@@ -12,10 +12,15 @@
 form {
     @include dFlex($ai: none, $jc: none, $g: 12px);
     flex-direction: column;
+    width: 424px;
     height: auto;
 
     textarea {
         height: 100px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: $turkis #f1f1f1;
+        resize: none;
     }
 }
 

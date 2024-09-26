@@ -26,9 +26,7 @@ export class AdminService {
     this.authStateListener = onAuthStateChanged(this.firebaseAuth, (user) => {
       if (user) {
         this.router.navigate(['/dashboard']);
-        console.log('User is signed in:', user.uid);
       } else {
-        console.log('No user is signed in.');
       }
     });
   }
@@ -40,7 +38,6 @@ export class AdminService {
         let admin = new Admin({...doc.data(), id: doc.id});
         this.allAdmins.push(admin);
       });
-      console.log('Admin list updated:', this.allAdmins);
     });
   }
 
@@ -61,9 +58,7 @@ export class AdminService {
   async logOut(): Promise<void> {
     try {
       await signOut(this.firebaseAuth);
-      console.log('User signed out');
     } catch (err) {
-      console.error('Error during logout:', err);
       throw err;
     }
   }
@@ -86,7 +81,6 @@ export class AdminService {
       let adminDoc = await getDoc(this.getSingleRef(userId));
       
       if (adminDoc.exists()) {
-        console.log('Admin data exists:', adminDoc.data());
         return new Admin({ id: adminDoc.id, ...adminDoc.data() });
       } else {
         return null;

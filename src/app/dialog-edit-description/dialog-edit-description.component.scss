@@ -17,6 +17,10 @@ form {
 
     textarea {
         height: 150px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: $turkis #f1f1f1;
+        resize: none;
     }
 }
 

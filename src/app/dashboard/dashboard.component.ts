@@ -29,11 +29,11 @@ export class DashboardComponent {
   constructor(public userService: UserService, public productService: ProductDataService) {}
 
   chartClicked(e:any):void {
-    console.log(e);
+
   }
  
   chartHovered(e:any):void {
-    console.log(e);
+
   }
  
   randomize():void {
