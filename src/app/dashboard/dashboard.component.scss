@@ -1,14 +1,14 @@
 @import './../../styles.scss';
 
 .dashboard-container {
-  @include dFlex($ai: start, $jc: start, $g: 36px);
+  @include dFlex($ai: start, $jc: start, $g: 56px);
   flex-direction: column;
   width: 100%;
   height: 100%;
 }
 
 section {
-  @include dFlex($ai: none, $jc: none, $g: 16px);
+  @include dFlex($ai: none, $jc: none, $g: 48px);
   flex-direction: column;
   width: 100%;
 
@@ -41,10 +41,33 @@ section {
   }
 
   .datas-container {
-    @include dFlex($ai: center, $jc: space-evenly, $g: 36px);
+    @include dFlex($ai: center, $jc: space-evenly, $g: 32px);
+    flex-direction: column;
+    width: 100%;
 
     @media (max-width: 920px) {
       flex-direction: column;
+    }
+
+    .top-container {
+      @include dFlex($ai: center, $jc: space-evenly, $g: 56px);
+      width: 100%;
+
+      article {
+        @include dFlex($ai: center, $jc: space-evenly, $g: 12px);
+        flex-direction: row;
+        width: 50%;
+
+        div {
+          @include dFlex($ai: center, $jc: center, $g: 8px);
+          flex-direction: column;
+        }
+      }
+    }
+
+    .second-container {
+      @include dFlex($ai: center, $jc: space-evenly, $g: 36px);
+      width: 100%;
     }
     
   article {
@@ -53,12 +76,18 @@ section {
         text-align: center;
         width: 300px;
         min-height: 100px;
+        height: 100px;
         max-height: 300px;
         border: 0.1px solid rgb(247, 247, 247);
         border-radius: 8px;
         box-shadow: 0.2px 1px grey;
         background-color: $blue;
         color: white;
+
+        .border {
+          border: 0.5px solid white;
+          height: 70%;
+        }
 
         h2 {
             font-size: 24px;

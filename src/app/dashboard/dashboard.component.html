@@ -4,14 +4,33 @@
       <h2>Data 2024</h2>
     </header>
     <div class="datas-container">
+      <div class="top-container"> 
       <article>
+        <div>
         <h2>All Users</h2>
         <span>{{ userService.allUsers.length }}</span>
-      </article>
-      <article>
+      </div>
+      <div class="border"></div>
+      <div>
         <h2>All Products</h2>
         <span>{{ productService.allProducts.length }}</span>
+      </div>
       </article>
+
+      <article>
+        <div>
+        <h2>Top selling product</h2>
+        <span>ASUS TUF</span>
+      </div>
+      <div class="border"></div>
+      <div>
+        <h2>Top buyer</h2>
+        <span>Oleg</span>
+      </div>
+      </article>
+    </div>
+
+    <div class="second-container">
       <article>
         <h2>Total target</h2>
         <span>150,700 €</span>
@@ -25,6 +44,7 @@
         <span>109</span>
       </article>
     </div>
+  </div>
   </section>
 
   <div class="charts-container">
@@ -52,7 +72,7 @@
         [labels]="barChartLabels"
         [options]="barChartOptions"
         [legend]="barChartLegend"
-        [type]="'bar'"
+        [type]="'doughnut'"
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"
       ></canvas>
