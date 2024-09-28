@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user-data.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductDataService } from '../../services/product-data.service';
+import { data } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,9 +23,42 @@ export class DashboardComponent {
   barChartLegend:boolean = true;
  
   barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    {
+      data: [65, 59, 80, 81, 56, 55, 40], 
+      label: 'Series A',
+      backgroundColor: '#007f99', 
+    },
+    {
+      data: [28, 48, 40, 19, 86, 27, 90], 
+      label: 'Series B',
+      backgroundColor: '#00d4ff', 
+    }
   ];
+
+
+  doughnutChartData = {
+    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    datasets: [
+      {
+        data: [65, 59, 80, 81, 56, 55, 40],
+        label: 'Sales Percent',
+        backgroundColor: [
+          '#007f99',
+          '#00839e',
+          '#0094b2', 
+          '#00a5c6', 
+          '#00b6db',
+          '#00c5ed',
+          '#00d4ff'
+        ],
+        cutout: '60%',
+      }
+    ]
+  }
+
+  doughnutChartOptions = {
+    responsive: true
+  }
 
   constructor(public userService: UserService, public productService: ProductDataService) {}
 
@@ -37,22 +71,16 @@ export class DashboardComponent {
   }
  
   randomize():void {
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
+    // let data = [
+    //   Math.round(Math.random() * 100),
+    //   59,
+    //   80,
+    //   (Math.random() * 100),
+    //   56,
+    //   (Math.random() * 100),
+    //   40];
+    // let clone = JSON.parse(JSON.stringify(this.barChartData));
+    // clone[0].data = data;
+    // this.barChartData = clone;
   }
 }

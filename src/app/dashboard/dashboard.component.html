@@ -49,8 +49,7 @@
 
   <div class="charts-container">
   <div class="canvas-container">
-    <div>
-      <canvas
+      <canvas class="bar"
         baseChart
         [datasets]="barChartData"
         [labels]="barChartLabels"
@@ -60,23 +59,18 @@
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"
       ></canvas>
-    </div>
     <button (click)="randomize()">Update</button>
   </div>
 
   <div class="canvas-container">
-    <div>
-      <canvas
+      <canvas class="doughnut"
         baseChart
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [legend]="barChartLegend"
+        [data]="doughnutChartData"
+        [options]="doughnutChartOptions"
         [type]="'doughnut'"
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"
       ></canvas>
-    </div>
     <button (click)="randomize()">Update</button>
   </div>
 </div>

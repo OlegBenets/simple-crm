@@ -104,18 +104,29 @@ section {
 }
 
 .canvas-container {
-  width: 45%;
+  @include dFlex($ai: center, $jc: space-between, $g: 16px);
+  flex-direction: column;
+  width: 100%;
   height: auto;
+
+  .bar {
+    width: 90% !important;
+    height: auto !important;
+  }
+
+  .doughnut {
+    width: 50% !important; 
+    height: auto !important;
+  }
 }
 
 .charts-container {
-  display: flex;
+  @include dFlex($ai: center, $jc: space-between, $g: 48px);
+  flex-direction: column;
   width: 100%;
   height: auto;
-  justify-content: space-between;
 
   @media (max-width: 920px) {
-    flex-direction: column;
     @include dFlex($ai: center, $jc: center, $g: 32px);
   }
 }
