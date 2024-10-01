@@ -38,10 +38,15 @@ async getSingleProduct(productId: string) {
     }
 
   async addProduct(product: Product) {
-      await addDoc(this.getProductRef(), product.toJSON()).catch(
-        (err) => {
-        console.log(err);
-      });
+    try {
+      let productRef = await addDoc(this.getProductRef(), product.toJSON());
+      let generatedId = productRef.id;
+
+      product.id = generatedId;
+      await updateDoc(productRef, { id: generatedId });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async updateProduct(productId: string, product: Product) {
@@ -59,7 +64,9 @@ async getSingleProduct(productId: string) {
   }
 
   ngOnDestroy() {
-    this.unsubProductList();
+    if(this.unsubProductList) {
+      this.unsubProductList();
+    }
   }
 
   private getProductRef() {

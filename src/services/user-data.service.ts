@@ -38,10 +38,15 @@ async getSingleUser(userId: string) {
     }
 
   async addUser(user: User) {
-      await addDoc(this.getUserRef(), user.toJSON()).catch(
-        (err) => {
+    try {
+     let userRef = await addDoc(this.getUserRef(), user.toJSON());
+     let generatedId = userRef.id;
+     
+     user.id = generatedId;
+     await updateDoc(userRef, { id: generatedId });
+    } catch (err) {
         console.log(err);
-      });
+    }
   }
 
   async updateUser(userId: string, user: User) {
@@ -59,7 +64,9 @@ async getSingleUser(userId: string) {
   }
 
   ngOnDestroy() {
-    this.unsubUserList();
+    if(this.unsubUserList) {
+      this.unsubUserList();
+    }
   }
 
   private getUserRef() {

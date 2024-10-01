@@ -3,6 +3,7 @@ import { UserService } from '../../services/user-data.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ProductDataService } from '../../services/product-data.service';
 import { data } from 'cypress/types/jquery';
+import { PurchaseService } from '../../services/purchase-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,8 @@ import { data } from 'cypress/types/jquery';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+
+  
 
   barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -60,7 +63,42 @@ export class DashboardComponent {
     responsive: true
   }
 
-  constructor(public userService: UserService, public productService: ProductDataService) {}
+  constructor(public purchaseService: PurchaseService,public userService: UserService, public productService: ProductDataService) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.loadData(); 
+    this.generatePurchases();
+  }
+
+  async loadData(): Promise<void> {
+    try {
+      await Promise.all([
+        this.userService.subUserList(), 
+        this.productService.subProductList()
+      ]);
+
+      if (this.userService.allUsers.length === 0) {
+        console.error('Keine Benutzer gefunden!');
+      }
+
+      if (this.productService.allProducts.length === 0) {
+        console.error('Keine Produkte gefunden!');
+      }
+
+    } catch (error) {
+      console.error('Fehler beim Laden der Daten:', error);
+    }
+  }
+
+  async generatePurchases() {
+    if (this.userService.allUsers.length > 0 && this.productService.allProducts.length > 0) {
+      const user = this.userService.allUsers[0]; // Beispiel: Nimm den ersten Benutzer
+      const products = this.productService.allProducts; // Alle Produkte
+      await this.purchaseService.generateAndSavePurchases(user, products);
+    } else {
+      console.error('Keine Benutzer oder Produkte gefunden!');
+    }
+  }
 
   chartClicked(e:any):void {
 
@@ -83,4 +121,16 @@ export class DashboardComponent {
     // clone[0].data = data;
     // this.barChartData = clone;
   }
+
+  //  getQuarter(d) {
+//     d = d || new Date();
+//     let m = Math.floor(d.getMonth() / 3) + 2;
+//     m -= m > 4 ? 4 : 0;
+//     let y = d.getFullYear() + (m == 1? 1 : 0);
+//     return [y,m];
+//   }
+  
+//   console.log(`The current US fiscal quarter is ${getQuarter().join('Q')}`);
+//   console.log(`1 July 2018 is ${getQuarter(new Date(2018,6,1)).join('Q')}`);
+
 }
