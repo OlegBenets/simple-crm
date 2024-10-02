@@ -20,12 +20,12 @@
       <article>
         <div>
         <h2>Top selling product</h2>
-        <span>ASUS TUF</span>
+        <span>{{ topSellingProduct }}</span>
       </div>
       <div class="border"></div>
       <div>
         <h2>Top buyer</h2>
-        <span>Oleg</span>
+        <span>{{ topBuyer }}</span>
       </div>
       </article>
     </div>
@@ -33,19 +33,21 @@
     <div class="second-container">
       <article>
         <h2>Total target</h2>
-        <span>150,700 €</span>
+        <span>{{ totalTarget }}</span>
       </article>
       <article>
         <h2>Total value</h2>
-        <span>148,210 €</span>
+        <span>{{ totalValue }}</span>
       </article>
       <article>
         <h2>Total deals</h2>
-        <span>109</span>
+        <span>{{purchaseService.allPurchases.length}}</span>
       </article>
     </div>
   </div>
   </section>
+
+  <button (click)="triggerPurchase()">Kauf tätigen</button>
 
   <div class="charts-container">
   <div class="canvas-container">

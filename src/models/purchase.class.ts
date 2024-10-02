@@ -1,5 +1,5 @@
 export class Purchase {
-    id: string;
+    id?: string;
     userId: string;
     productId: string;
     price: number;
@@ -8,10 +8,15 @@ export class Purchase {
     purchaseDate: Date;
 
     constructor(obj?: any) {
-        this.id = obj ? obj.id : '';
+        this.id = obj.id || ''; 
         this.userId = obj ? obj.userId : '';
         this.productId = obj ? obj.productId : '';
-        this.price = obj ? obj.price : 0;
+
+        let priceAsNumber = typeof obj?.price === 'string' 
+        ? parseFloat(obj.price.replace('€', '').trim())
+        : obj?.price || 0;
+
+        this.price = priceAsNumber;
         this.quantity = obj ? obj.quantity : 0;
         this.totalValue = this.price * this.quantity; 
         this.purchaseDate = obj ? obj.purchaseDate : new Date(); 
@@ -19,7 +24,6 @@ export class Purchase {
 
     public toJSON() {
         return {
-            id: this.id,
             userId: this.userId,
             productId: this.productId,
             price: this.price,

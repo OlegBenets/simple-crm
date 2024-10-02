@@ -4,6 +4,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ProductDataService } from '../../services/product-data.service';
 import { data } from 'cypress/types/jquery';
 import { PurchaseService } from '../../services/purchase-data.service';
+import { Product } from '../../models/product.class';
+import { User } from '../../models/user.class';
+import { Purchase } from '../../models/purchase.class';
 
 @Component({
   selector: 'app-dashboard',
@@ -63,42 +66,90 @@ export class DashboardComponent {
     responsive: true
   }
 
+  topSellingProduct: string = '';
+  topBuyer: string = '';
+  totalTarget: number = 150700;
+  totalValue: number = 0;
+  totalDeals: number = 0;
+  allPurchases: Purchase[] = [];
+
   constructor(public purchaseService: PurchaseService,public userService: UserService, public productService: ProductDataService) {}
 
   async ngOnInit(): Promise<void> {
-    await this.loadData(); 
-    this.generatePurchases();
+    this.loadDashboardData();
   }
 
-  async loadData(): Promise<void> {
-    try {
-      await Promise.all([
-        this.userService.subUserList(), 
-        this.productService.subProductList()
-      ]);
+  async loadDashboardData() {
+    this.topSellingProduct = await this.getTopSellingProduct();
+    this.topBuyer = await this.getTopBuyer();
+    this.totalValue =  this.getTotalValue();
+  }
 
-      if (this.userService.allUsers.length === 0) {
-        console.error('Keine Benutzer gefunden!');
+  async getTopSellingProduct(): Promise<string> {
+ let productSalesMap: { [productId: string]: number } = {};
+
+    this.allPurchases.forEach(purchase => {
+      if (!productSalesMap[purchase.productId]) {
+        productSalesMap[purchase.productId] = 0;
       }
+      productSalesMap[purchase.productId] += purchase.quantity;
+    });
 
-      if (this.productService.allProducts.length === 0) {
-        console.error('Keine Produkte gefunden!');
+    let topProductId = '';
+    let highestQuantity = 0;
+
+    for (const [productId, quantity] of Object.entries(productSalesMap)) {
+      if (quantity > highestQuantity) {
+        topProductId = productId;
+        highestQuantity = quantity;
       }
-
-    } catch (error) {
-      console.error('Fehler beim Laden der Daten:', error);
     }
+
+    let topProduct = this.productService.allProducts.find(product => product.id === topProductId);
+    return topProduct ? topProduct.name : 'Unbekannt';
   }
 
-  async generatePurchases() {
-    if (this.userService.allUsers.length > 0 && this.productService.allProducts.length > 0) {
-      const user = this.userService.allUsers[0]; // Beispiel: Nimm den ersten Benutzer
-      const products = this.productService.allProducts; // Alle Produkte
-      await this.purchaseService.generateAndSavePurchases(user, products);
-    } else {
-      console.error('Keine Benutzer oder Produkte gefunden!');
+  async getTopBuyer(): Promise<string> {
+    let userSpendingMap: { [userId: string]: number } = {};
+    
+    this.allPurchases.forEach(purchase => {
+      if (!userSpendingMap[purchase.userId]) {
+        userSpendingMap[purchase.userId] = 0;
+      }
+      userSpendingMap[purchase.userId] += purchase.totalValue;
+    });
+
+    let bestBuyerId = '';
+    let highestValue = 0;
+    
+    for (const [userId, totalValue] of Object.entries(userSpendingMap)) {
+      if (totalValue > highestValue) {
+        bestBuyerId = userId;
+        highestValue = totalValue;
+      }
     }
+
+    let bestBuyer = this.userService.allUsers.find(user => user.id === bestBuyerId);
+    return bestBuyer ? bestBuyer.firstName : 'Unbekannt';
   }
+
+  getTotalValue(): number {
+    return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
+  }
+
+  async purchaseForUser() {
+    if (this.userService.allUsers.length === 0) {
+      console.error('Keine Benutzer verfügbar');
+      return;
+    }
+    let user = this.userService.allUsers[0];
+    await this.purchaseService.generateAndSavePurchaseForUser(user);
+  }
+
+  async triggerPurchase() {
+    await this.purchaseForUser();
+  }
+
 
   chartClicked(e:any):void {
 
