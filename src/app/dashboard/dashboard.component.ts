@@ -66,90 +66,17 @@ export class DashboardComponent {
     responsive: true
   }
 
-  topSellingProduct: string = '';
-  topBuyer: string = '';
-  totalTarget: number = 150700;
-  totalValue: number = 0;
-  totalDeals: number = 0;
   allPurchases: Purchase[] = [];
 
   constructor(public purchaseService: PurchaseService,public userService: UserService, public productService: ProductDataService) {}
 
-  async ngOnInit(): Promise<void> {
-    this.loadDashboardData();
-  }
-
-  async loadDashboardData() {
-    this.topSellingProduct = await this.getTopSellingProduct();
-    this.topBuyer = await this.getTopBuyer();
-    this.totalValue =  this.getTotalValue();
-  }
-
-  async getTopSellingProduct(): Promise<string> {
- let productSalesMap: { [productId: string]: number } = {};
-
-    this.allPurchases.forEach(purchase => {
-      if (!productSalesMap[purchase.productId]) {
-        productSalesMap[purchase.productId] = 0;
-      }
-      productSalesMap[purchase.productId] += purchase.quantity;
-    });
-
-    let topProductId = '';
-    let highestQuantity = 0;
-
-    for (const [productId, quantity] of Object.entries(productSalesMap)) {
-      if (quantity > highestQuantity) {
-        topProductId = productId;
-        highestQuantity = quantity;
-      }
-    }
-
-    let topProduct = this.productService.allProducts.find(product => product.id === topProductId);
-    return topProduct ? topProduct.name : 'Unbekannt';
-  }
-
-  async getTopBuyer(): Promise<string> {
-    let userSpendingMap: { [userId: string]: number } = {};
-    
-    this.allPurchases.forEach(purchase => {
-      if (!userSpendingMap[purchase.userId]) {
-        userSpendingMap[purchase.userId] = 0;
-      }
-      userSpendingMap[purchase.userId] += purchase.totalValue;
-    });
-
-    let bestBuyerId = '';
-    let highestValue = 0;
-    
-    for (const [userId, totalValue] of Object.entries(userSpendingMap)) {
-      if (totalValue > highestValue) {
-        bestBuyerId = userId;
-        highestValue = totalValue;
-      }
-    }
-
-    let bestBuyer = this.userService.allUsers.find(user => user.id === bestBuyerId);
-    return bestBuyer ? bestBuyer.firstName : 'Unbekannt';
-  }
-
-  getTotalValue(): number {
-    return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
-  }
-
-  async purchaseForUser() {
-    if (this.userService.allUsers.length === 0) {
-      console.error('Keine Benutzer verfügbar');
-      return;
-    }
-    let user = this.userService.allUsers[0];
-    await this.purchaseService.generateAndSavePurchaseForUser(user);
+  async purchaseForRandomUser() {
+    await this.purchaseService.saveRandomPurchasesForUser();
   }
 
   async triggerPurchase() {
-    await this.purchaseForUser();
+    await this.purchaseForRandomUser();
   }
-
 
   chartClicked(e:any):void {
 
