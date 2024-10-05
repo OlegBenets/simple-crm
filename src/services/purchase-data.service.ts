@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Purchase } from '../models/purchase.class';
 import { User } from '../models/user.class';
-import { addDoc, collection, getDocs, onSnapshot, updateDoc} from 'firebase/firestore';
+import { addDoc, collection, getDocs, onSnapshot, query, updateDoc, where} from 'firebase/firestore';
 import { UserService } from './user-data.service';
 import { ProductDataService } from './product-data.service';
 import { Product } from '../models/product.class';
@@ -35,6 +35,55 @@ export class PurchaseService {
       console.log(this.allPurchases);
     });
   }
+
+async fetchCurrentYearPurchases(): Promise<Purchase[]> {
+    let currentYear = new Date().getFullYear();
+    let purchases: Purchase[] = [];
+    
+    let purchasesRef = collection(this.firestore, 'purchases');
+    let q = query(purchasesRef, where('purchaseDate', '>=', new Date(currentYear, 0, 1))); 
+
+    let querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        let purchase = new Purchase({ 
+            ...data, 
+            id: doc.id,
+            purchaseDate: data['purchaseDate'].toDate()
+        });
+        purchases.push(purchase);
+    });
+
+    return purchases;
+}
+
+  async getTotalValue(): Promise<number> {
+    return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
+}
+
+async aggregateMonthlyPurchases(): Promise<number[]> {
+  let purchases = await this.fetchCurrentYearPurchases();
+  let monthlyTotals = Array(12).fill(0); 
+
+  purchases.forEach(purchase => {
+    let purchaseMonth = purchase.purchaseDate.getMonth(); 
+    monthlyTotals[purchaseMonth] += purchase.totalValue; 
+  });
+
+  return monthlyTotals;
+}
+
+async getMonthlyChartData(): Promise<any[]> {
+  let monthlyTotals = await this.aggregateMonthlyPurchases();
+  
+  return [
+    {
+      data: monthlyTotals,
+      label: 'Total Purchases',
+      backgroundColor: '#007f99',
+    }
+  ];
+}
 
   async saveRandomPurchasesForUser(multiple = false) {
     if (this.productService.allProducts.length === 0 || this.userService.allUsers.length === 0) {
@@ -148,10 +197,6 @@ export class PurchaseService {
       let bestBuyer = this.userService.allUsers.find(user => user.id === id);
       return bestBuyer ? bestBuyer.firstName : 'Unbekannt';
     }
-  }
-
-  async getTotalValue(): Promise<number> {
-      return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
   }
 
   ngOnDestroy() {

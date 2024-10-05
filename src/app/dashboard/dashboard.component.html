@@ -66,9 +66,11 @@
 
   <div class="canvas-container">
       <canvas class="doughnut"
-        baseChart
-        [data]="doughnutChartData"
+        [datasets]="doughnutChartData"
+        [labels]="doughnutChartLabels"
+        [legend]="doughnutChartLegend"
         [options]="doughnutChartOptions"
+        baseChart
         [type]="'doughnut'"
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"

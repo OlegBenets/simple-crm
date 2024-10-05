@@ -19,7 +19,7 @@ export class Purchase {
         this.price = priceAsNumber;
         this.quantity = obj ? obj.quantity : 0;
         this.totalValue = this.price * this.quantity; 
-        this.purchaseDate = obj ? obj.purchaseDate : new Date(); 
+        this.purchaseDate = obj ? (obj.purchaseDate instanceof Date ? obj.purchaseDate : new Date(obj.purchaseDate)) : new Date(); 
     }
 
     public toJSON() {
