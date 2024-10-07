@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ProductDataService } from '../../services/product-data.service';
 import { PurchaseService } from '../../services/purchase-data.service';
 import { Purchase } from '../../models/purchase.class';
+import { ChartDataset, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,26 +24,46 @@ export class DashboardComponent implements OnInit {
   barChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
   barChartLegend:boolean = true;
- 
-  barChartData:any[] = [];
+  barChartData: ChartDataset<'bar', number[]>[] = [];
 
 
-  doughnutChartOptions = {
-    responsive: true
-  };
   doughnutChartLabels:string[] = [];
   doughnutChartLegend:boolean = true;
-
-  doughnutChartData:any[] = []; 
-
+  doughnutChartData: ChartDataset<'doughnut', number[]>[] = []; 
 
   allPurchases: Purchase[] = [];
+  currentYear: number = new Date().getFullYear();
+  currentQuarter: any;
+
+  doughnutChartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    plugins: {
+      title: {
+          display: true,
+          text: `Product Sales in ${this.currentYear}`,
+          font: {
+              size: 16
+          }
+      },
+      legend: {
+          display: false,
+          position: 'top',
+      }
+  }
+  };
+
 
   constructor(public purchaseService: PurchaseService,public userService: UserService, public productService: ProductDataService) {}
 
   async ngOnInit() {
-    this.barChartData = await this.purchaseService.getMonthlyChartData();
-    // this.doughnutChartData = await this.purchaseService.getDoughnutChartData();
+    this.purchaseService.getBarChartData((data) => {
+      this.barChartData = data;
+  });
+    
+  this.purchaseService.getDoughnutChartData((data, labels) => {
+    this.doughnutChartData = data;
+    this.doughnutChartLabels = labels;
+  });
   }
 
   async purchaseForRandomUser() {
@@ -81,15 +102,11 @@ export class DashboardComponent implements OnInit {
     // this.barChartData = clone;
   }
 
-  //  getQuarter(d) {
-//     d = d || new Date();
-//     let m = Math.floor(d.getMonth() / 3) + 2;
-//     m -= m > 4 ? 4 : 0;
-//     let y = d.getFullYear() + (m == 1? 1 : 0);
-//     return [y,m];
-//   }
-  
-//   console.log(`The current US fiscal quarter is ${getQuarter().join('Q')}`);
-//   console.log(`1 July 2018 is ${getQuarter(new Date(2018,6,1)).join('Q')}`);
-
+  //  getQuarter(currentQuarter: any) {
+  //   currentQuarter = currentQuarter || new Date();
+  //   let m = Math.floor(currentQuarter.getMonth() / 3) + 2;
+  //   m -= m > 4 ? 4 : 0;
+  //   let y = currentQuarter.getFullYear() + (m == 1? 1 : 0);
+  //   return [y,m];
+  // }
 }

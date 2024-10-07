@@ -1,7 +1,7 @@
 <div class="dashboard-container">
   <section class="mt-32 mb-32">
     <header>
-      <h2>Data 2024</h2>
+      <h2>{{ currentYear }}</h2>
     </header>
     <div class="datas-container">
       <div class="top-container"> 
@@ -66,10 +66,10 @@
 
   <div class="canvas-container">
       <canvas class="doughnut"
-        [datasets]="doughnutChartData"
-        [labels]="doughnutChartLabels"
-        [legend]="doughnutChartLegend"
-        [options]="doughnutChartOptions"
+      [datasets]="doughnutChartData"
+      [labels]="doughnutChartLabels"
+      [legend]="doughnutChartLegend"
+      [options]="doughnutChartOptions"
         baseChart
         [type]="'doughnut'"
         (chartHover)="chartHovered($event)"

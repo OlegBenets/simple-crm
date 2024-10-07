@@ -2,10 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Purchase } from '../models/purchase.class';
 import { User } from '../models/user.class';
-import { addDoc, collection, getDocs, onSnapshot, query, updateDoc, where} from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, query, updateDoc, where} from 'firebase/firestore';
 import { UserService } from './user-data.service';
 import { ProductDataService } from './product-data.service';
 import { Product } from '../models/product.class';
+import { ChartDataset } from 'chart.js';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,13 @@ export class PurchaseService {
   allPurchases: Purchase[] = [];
   topSellingProduct: string = '';
   topBuyer: string = '';
-  totalTarget: string = this.formatAsEuro(157000);
+  totalTarget: string = this.formatAsEuro(257000);
   totalValue: string = '0.00 €';
   totalDeals: number = 0;
-  unsubPurchaseList;   
-
+  unsubSchribe: any;   
+  
   constructor(public userService: UserService, public productService: ProductDataService) {
-    this.unsubPurchaseList = this.subPurchaseList(); 
+    this.unsubSchribe = this.subPurchaseList(); 
   }
 
   subPurchaseList() {
@@ -36,53 +37,79 @@ export class PurchaseService {
     });
   }
 
-async fetchCurrentYearPurchases(): Promise<Purchase[]> {
+  subCurrentYearPurchases(callback: (purchases: Purchase[]) => void) {
     let currentYear = new Date().getFullYear();
-    let purchases: Purchase[] = [];
-    
-    let purchasesRef = collection(this.firestore, 'purchases');
-    let q = query(purchasesRef, where('purchaseDate', '>=', new Date(currentYear, 0, 1))); 
 
-    let querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        let data = doc.data();
-        let purchase = new Purchase({ 
-            ...data, 
-            id: doc.id,
-            purchaseDate: data['purchaseDate'].toDate()
+    onSnapshot(query(this.getPurchaseRef(), where('purchaseDate', '>=', new Date(currentYear, 0, 1))), (snapshot) => {
+        let purchases: Purchase[] = [];
+        snapshot.forEach((doc) => {
+            let data = doc.data();
+            let purchase = new Purchase({ 
+                ...data, 
+                id: doc.id,
+                purchaseDate: data['purchaseDate'].toDate()
+            });
+            purchases.push(purchase);
         });
-        purchases.push(purchase);
+        
+        callback(purchases);
+    });
+}
+
+async aggregateMonthlyPurchases(purchases: Purchase[]): Promise<number[]> {
+    let monthlyTotals = Array(12).fill(0); 
+
+    purchases.forEach(purchase => {
+        let purchaseMonth = purchase.purchaseDate.getMonth(); 
+        monthlyTotals[purchaseMonth] += purchase.totalValue; 
     });
 
-    return purchases;
+    return monthlyTotals;
 }
 
-  async getTotalValue(): Promise<number> {
-    return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
+getBarChartData(callback: (data: ChartDataset<'bar', number[]>[]) => void): void {
+  this.subCurrentYearPurchases(async (purchases) => {
+      let monthlyTotals = await this.aggregateMonthlyPurchases(purchases);
+
+      let data: ChartDataset<'bar', number[]>[] = [{
+          data: monthlyTotals,
+          label: 'Total Purchases in €',
+          backgroundColor: '#007f99',
+      }];
+
+      callback(data);
+  });
 }
 
-async aggregateMonthlyPurchases(): Promise<number[]> {
-  let purchases = await this.fetchCurrentYearPurchases();
-  let monthlyTotals = Array(12).fill(0); 
+async getDoughnutChartData(callback: (data: ChartDataset<'doughnut', number[]>[], labels: string[]) => void): Promise<void> {
+  this.subCurrentYearPurchases((purchases) => {
+      let productSales = this.calculateProductSales(purchases);
+      let labels = Object.keys(productSales).map(productId => this.getNameById('product', productId));
+      
+      let data: ChartDataset<'doughnut', number[]>[] = [{
+          data: Object.values(productSales),
+          backgroundColor: ['#007f99', '#00839e', '#0094b2', '#00a5c6', '#00b6db', '#00c9f2', '#00d4ff'],
+      }];
+      
+      callback(data, labels);
+  });
+}
+
+private calculateProductSales(purchases: Purchase[]): { [productId: string]: number } {
+  let productSales: { [productId: string]: number } = {};
 
   purchases.forEach(purchase => {
-    let purchaseMonth = purchase.purchaseDate.getMonth(); 
-    monthlyTotals[purchaseMonth] += purchase.totalValue; 
+      let productId = purchase.productId; 
+      let quantity = purchase.quantity; 
+
+      if (productSales[productId]) {
+          productSales[productId] += quantity;
+      } else {
+          productSales[productId] = quantity;
+      }
   });
 
-  return monthlyTotals;
-}
-
-async getMonthlyChartData(): Promise<any[]> {
-  let monthlyTotals = await this.aggregateMonthlyPurchases();
-  
-  return [
-    {
-      data: monthlyTotals,
-      label: 'Total Purchases',
-      backgroundColor: '#007f99',
-    }
-  ];
+  return productSales;
 }
 
   async saveRandomPurchasesForUser(multiple = false) {
@@ -125,6 +152,10 @@ async getMonthlyChartData(): Promise<any[]> {
   private getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  async getTotalValue(): Promise<number> {
+    return this.allPurchases.reduce((sum, purchase) => sum + purchase.totalValue, 0);
+}
 
   async savePurchases(purchases: Purchase[]) {
     for (let purchase of purchases) {
@@ -200,8 +231,8 @@ async getMonthlyChartData(): Promise<any[]> {
   }
 
   ngOnDestroy() {
-    if (this.unsubPurchaseList) {
-      this.unsubPurchaseList();
+    if (this.unsubSchribe) {
+      this.unsubSchribe();
     }
   }
 
