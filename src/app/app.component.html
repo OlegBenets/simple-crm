@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoginPage(); else loginPageTemplate">
+<ng-container *ngIf="!isLoginPage() && !isLoggingOut; else loginPageTemplate">
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
     <div class="logo-contaiener"><img src="./../assets/image/logo.png"></div>

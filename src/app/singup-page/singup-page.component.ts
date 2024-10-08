@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AdminService } from  '../../services/admin-data.service';
 import { Admin } from '../../models/admin.class';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-singup-page',
@@ -27,6 +28,7 @@ import { CommonModule } from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatIconModule
   ],
   templateUrl: './singup-page.component.html',
   styleUrl: './singup-page.component.scss'
@@ -37,6 +39,7 @@ export class SingupPageComponent {
   signupForm: FormGroup;
   passwordPattern: string = '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@!#\\$%^&*])[A-Za-z\\d@!#\\$%^&*]{8,}$';
   emailPattern: string = '^[a-z]+(\.[a-z]+)?@[a-z]{1,10}\.[a-z]{2,3}$';
+  hide = signal(true);
 
   constructor(private fb: FormBuilder, private adminService: AdminService, private router: Router) {
   
@@ -50,6 +53,11 @@ export class SingupPageComponent {
 
   ngOnInit(): void {
     this.adminService.subAdminList();
+  }
+
+  togglePassword(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   get firstNameControl() {
@@ -139,6 +147,7 @@ export class SingupPageComponent {
     if (!this.emailControl.errors && !this.passwordControl.errors && !this.firstNameControl.errors && !this.lastNameControl.errors) {
         const admin = new Admin(this.signupForm.value);
         await this.adminService.addAdmin(admin);
+        await this.adminService.logOut();
         this.router.navigate(['/login']);
       } else {
         this.emailControl.markAsTouched();

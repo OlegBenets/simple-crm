@@ -94,4 +94,11 @@
         }
       }
     }
+
+    .visibility-button {
+      @include dFlex($ai: center, $jc: center);
+      margin-right: 8px;
+      width: 50px !important;
+      height: auto !important;
+    }
   }

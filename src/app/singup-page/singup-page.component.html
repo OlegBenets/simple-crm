@@ -57,8 +57,20 @@
             formControlName="password"
             placeholder="Password"
             placeholder="Password"
+            [type]="hide() ? 'password' : 'text'"
             (input)="onInput()"
             (focus)="onFocus('password')"/>
+
+            
+          <button class="visibility-button"
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()">
+          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
 
             @if(passwordControl.invalid && passwordControl.touched) {
               <mat-error>{{ getErrorMessage('password') }}</mat-error>

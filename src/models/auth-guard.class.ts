@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   private auth = inject(Auth);
 
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    const user = this.auth.currentUser;
+    let user = this.auth.currentUser;
     if (user) {
       return true;
     } else {

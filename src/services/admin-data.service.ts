@@ -2,9 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Admin } from '../models/admin.class';
 import { Auth } from '@angular/fire/auth';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +14,9 @@ export class AdminService {
   private firebaseAuth: Auth = inject(Auth);
   allAdmins: Admin[] = [];
   unsubAdminList;
-  authStateListener: (() => void) | undefined;
 
-  constructor(private router: Router) {
+  constructor() {
     this.unsubAdminList = this.subAdminList();
-    this.initializeAuthStateListener();
-  }
-
-  private initializeAuthStateListener() {
-    this.authStateListener = onAuthStateChanged(this.firebaseAuth, (user) => {
-      if (user) {
-        this.router.navigate(['/dashboard']);
-      } else {
-      }
-    });
   }
 
   subAdminList() {
