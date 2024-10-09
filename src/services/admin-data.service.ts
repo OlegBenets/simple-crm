@@ -117,6 +117,10 @@ export class AdminService implements OnDestroy{
     }
   }
 
+  resetAnimationStatus() {
+    localStorage.removeItem('animationPlayed');
+  }
+
   // private updateAuthStatus(status: boolean) {
   //   this.isAuthenticated = status;
   //   // localStorage.setItem('isAuthenticated', status.toString());

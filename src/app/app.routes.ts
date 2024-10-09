@@ -21,4 +21,5 @@ export const routes: Routes = [
     { path: 'imprint', component: ImprintComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
     { path: 'signup', component: SingupPageComponent },
+    { path: '**', redirectTo: '/login' }
 ];

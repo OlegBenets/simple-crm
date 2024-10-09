@@ -51,8 +51,12 @@ export class LoginPageComponent {
   }
 
   ngOnInit(): void {
-    this.startAnimation();
     this.adminService.subAdminList();
+    this.checkAnimationStatus();
+
+    window.addEventListener('beforeunload', () => {
+      this.adminService.resetAnimationStatus(); 
+    });
   }
 
   togglePassword(event: MouseEvent) {
@@ -137,6 +141,7 @@ export class LoginPageComponent {
 
     if (!this.emailControl.errors && !this.passwordControl.errors) {
       await this.adminService.validateAdmin(this.emailControl.value, this.passwordControl.value);
+      this.adminService.resetAnimationStatus();
       this.router.navigate(['/dashboard']);
     } else {
       this.emailControl.markAsTouched();
@@ -164,5 +169,14 @@ export class LoginPageComponent {
         { y: '0%', opacity: 0 },
         { y: '0%', opacity: 1, duration: 1 }
       );
+  }
+
+  checkAnimationStatus() {
+    let animationPlayed = localStorage.getItem('animationPlayed');
+
+    if (!animationPlayed) {
+      this.startAnimation();
+      localStorage.setItem('animationPlayed', 'true');
+    }
   }
 }
