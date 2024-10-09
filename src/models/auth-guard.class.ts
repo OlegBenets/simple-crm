@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
-import { inject } from '@angular/core';
+import { AdminService } from '../services/admin-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard {
-  private auth = inject(Auth);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private adminService: AdminService) {}
 
   canActivate(): boolean {
-    let user = this.auth.currentUser;
-    if (user) {
+    if (this.adminService.isAuthenticated) {
       return true;
     } else {
       this.router.navigate(['/login']);
