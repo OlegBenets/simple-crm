@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Admin } from '../models/admin.class';
-import { Auth } from '@angular/fire/auth';
+import { Auth, User } from '@angular/fire/auth';
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
 import { Router } from '@angular/router';
@@ -16,32 +16,27 @@ export class AdminService implements OnDestroy{
   allAdmins: Admin[] = [];
   unsubAdminList;
   isAuthenticated = false;
-  unsubAuthState;
+  currentUser: User | null = null;
 
   constructor(private router: Router) {
     this.unsubAdminList = this.subAdminList();
-    // this.checkAuthStatus();
-    this.unsubAuthState = this.initializeAuthStateListener();
+    this.initializeAuthStateListener();
   }
 
-  private initializeAuthStateListener() {
-    let auth = getAuth();
-    return onAuthStateChanged(auth, (user) => {
-      this.isAuthenticated = !!user; 
-      if (!this.isAuthenticated) {
-        this.router.navigate(['/login']); 
-      }
-    });
-  }
-
-// private checkAuthStatus() {
-//   let storedStatus = localStorage.getItem('isAuthenticated');
-//   this.isAuthenticated = storedStatus === 'true';
-
-//   if (!this.isAuthenticated) {
-//     this.router.navigate(['/login']);
-//   }
-// }
+private initializeAuthStateListener() {
+  let auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      this.isAuthenticated = true;
+      this.currentUser = user;
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.isAuthenticated = false;
+      this.currentUser = null;
+      this.router.navigate(['/login']);    
+    }
+  });
+}
 
   subAdminList() {
     return onSnapshot(this.getAdminRef(), (snapshot) => {
@@ -61,25 +56,31 @@ export class AdminService implements OnDestroy{
       admin.id = userId;
   
       await setDoc(this.getSingleRef(userId), admin.toJSON()); 
-      // this.updateAuthStatus(true);
     } catch (err) {
       console.error(err);
       throw err;
     }
   }
 
-  async validateAdmin(email: string, password: string): Promise<Admin | null> {
+  async validateAdmin(email: string, password: string): Promise<Admin | null> {  
+    let auth = getAuth();
     try {
-      let auth = getAuth();
       await setPersistence(auth, browserSessionPersistence);
       let userCredential = await signInWithEmailAndPassword(auth, email, password);
-      let userId = userCredential.user.uid;
+      this.currentUser = userCredential.user;
 
+      let userId = userCredential.user.uid;
       let adminDoc = await this.getAdminById(userId);
-      // this.updateAuthStatus(true);
-      return adminDoc ? adminDoc : null;
-    } catch (error) {
-      console.error(error);
+
+      if (adminDoc) {
+        this.isAuthenticated = true; 
+        return adminDoc;
+      } else {
+        this.isAuthenticated = false;
+        return null;
+      }
+    } catch (err) {
+      console.error(err);
       return null;
     }
   }
@@ -93,8 +94,8 @@ export class AdminService implements OnDestroy{
       } else {
         return null;
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       return null;
     }
   }
@@ -102,16 +103,14 @@ export class AdminService implements OnDestroy{
   async logOut(): Promise<void> {
     try {
       await signOut(this.firebaseAuth);
-      // this.updateAuthStatus(false);
+      this.isAuthenticated = false;
+      this.currentUser = null;
     } catch (err) {
       throw err;
     }
   }
 
   ngOnDestroy() {
-    if (this.unsubAuthState) {
-      this.unsubAuthState();
-    }
     if (this.unsubAdminList) {
       this.unsubAdminList();
     }
@@ -120,14 +119,6 @@ export class AdminService implements OnDestroy{
   resetAnimationStatus() {
     localStorage.removeItem('animationPlayed');
   }
-
-  // private updateAuthStatus(status: boolean) {
-  //   this.isAuthenticated = status;
-  //   // localStorage.setItem('isAuthenticated', status.toString());
-  //   if (!status) {
-  //     this.router.navigate(['/login']);
-  //   }
-  // }
 
   private getAdminRef() {
     return collection(this.firestore, 'admins');

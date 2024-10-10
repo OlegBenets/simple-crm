@@ -26,23 +26,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class AppComponent {
   title = 'simple-crm';
-  isLoggingOut = false;
 
   constructor(public router: Router, private adminService: AdminService,) {}
 
   async logOut() {
-    this.isLoggingOut = true; 
     try {
       await this.adminService.logOut();
       this.router.navigate(['/login']);
     } catch (err) {
       console.log(err);
-    } finally {
-      this.isLoggingOut = false
     }
   }
 
   isLoginPage(): boolean {
-    return this.router.url === '/' || this.router.url === '/signup' || this.router.url === '/login';
+    return this.router.url === '/signup' || this.router.url === '/login';
   }
 }

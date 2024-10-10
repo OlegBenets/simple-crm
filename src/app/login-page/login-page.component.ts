@@ -140,9 +140,11 @@ export class LoginPageComponent {
     this.validatePassword();
 
     if (!this.emailControl.errors && !this.passwordControl.errors) {
-      await this.adminService.validateAdmin(this.emailControl.value, this.passwordControl.value);
-      this.adminService.resetAnimationStatus();
-      this.router.navigate(['/dashboard']);
+      let admin = await this.adminService.validateAdmin(this.emailControl.value, this.passwordControl.value);
+      if (admin) { 
+        this.adminService.resetAnimationStatus();
+        this.router.navigate(['/dashboard']); 
+      }
     } else {
       this.emailControl.markAsTouched();
       this.passwordControl.markAsTouched();
