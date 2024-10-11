@@ -4,7 +4,7 @@ import { Admin } from '../models/admin.class';
 import { Auth, User } from '@angular/fire/auth';
 import { browserSessionPersistence, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, setPersistence, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { setDoc } from 'firebase/firestore';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,25 +15,55 @@ export class AdminService implements OnDestroy{
   private firebaseAuth: Auth = inject(Auth);
   allAdmins: Admin[] = [];
   unsubAdminList;
+  unsubRoute: any;
   isAuthenticated = false;
   currentUser: User | null = null;
 
   constructor(private router: Router) {
     this.unsubAdminList = this.subAdminList();
+    this.trackRouteChanges();
     this.initializeAuthStateListener();
   }
 
 private initializeAuthStateListener() {
   let auth = getAuth();
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      this.isAuthenticated = true;
-      this.currentUser = user;
-      this.router.navigate(['/dashboard']);
+    this.updateUserStatus(user);
+    this.handleNavigation(user);
+  });
+}
+
+private updateUserStatus(user: User | null) {
+  if (user) {
+    this.isAuthenticated = true;
+    this.currentUser = user;
+  } else {
+    this.isAuthenticated = false;
+    this.currentUser = null;
+    localStorage.removeItem('lastRoute');
+  }
+}
+
+private handleNavigation(user: User | null) {
+  if (user) {
+    let savedRoute = localStorage.getItem('lastRoute');
+    if (savedRoute && savedRoute !== '/login') {
+      this.router.navigate([savedRoute]); 
     } else {
-      this.isAuthenticated = false;
-      this.currentUser = null;
-      this.router.navigate(['/login']);    
+      this.router.navigate(['/dashboard']);
+    }
+  } else {
+    this.router.navigate(['/login']);
+  }
+}
+
+private trackRouteChanges() {
+  this.unsubRoute = this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd) {
+      if (event.urlAfterRedirects !== '/login') {
+        localStorage.setItem('lastRoute', event.urlAfterRedirects);
+        console.log("Gespeicherte Route:", event.urlAfterRedirects);
+      }
     }
   });
 }
@@ -47,7 +77,6 @@ private initializeAuthStateListener() {
       });
     });
   }
-
 
   async addAdmin(admin: Admin): Promise<void> {
     try {
@@ -105,6 +134,7 @@ private initializeAuthStateListener() {
       await signOut(this.firebaseAuth);
       this.isAuthenticated = false;
       this.currentUser = null;
+      localStorage.removeItem('lastRoute'); 
     } catch (err) {
       throw err;
     }
@@ -113,6 +143,10 @@ private initializeAuthStateListener() {
   ngOnDestroy() {
     if (this.unsubAdminList) {
       this.unsubAdminList();
+    }
+
+    if (this.unsubRoute) {
+      this.unsubRoute.unsubscribe();
     }
   }
 
