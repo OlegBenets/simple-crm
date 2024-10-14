@@ -47,7 +47,7 @@
   </div>
   </section>
 
-  <button (click)="triggerPurchase()">Kauf tätigen</button>
+  <button class="buy-button" (click)="triggerPurchase()">Kauf tätigen</button>
 
   <div class="charts-container">
   <div class="canvas-container">
@@ -58,10 +58,7 @@
         [options]="barChartOptions"
         [legend]="barChartLegend"
         [type]="'bar'"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
       ></canvas>
-    <button (click)="randomize()">Update</button>
   </div>
 
   <div class="canvas-container">
@@ -72,10 +69,7 @@
       [options]="doughnutChartOptions"
         baseChart
         [type]="'doughnut'"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
       ></canvas>
-    <button (click)="randomize()">Update</button>
   </div>
 </div>
 </div>

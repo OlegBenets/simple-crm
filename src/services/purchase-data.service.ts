@@ -149,7 +149,7 @@ private calculateProductSales(purchases: Purchase[]): { [productId: string]: num
     return this.userService.allUsers[Math.floor(Math.random() * this.userService.allUsers.length)];
   }
 
-  private getRandomInt(min: number, max: number): number {
+  getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
