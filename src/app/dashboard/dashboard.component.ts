@@ -20,10 +20,23 @@ export class DashboardComponent implements OnInit {
   barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true,
+    plugins: {
+      title: {
+          display: true,
+          text: 'Total Purcases in €',
+          font: {
+              size: 16
+          }
+      },
+      legend: {
+          display: false,
+          position: 'top',
+      }
+  }
 };
   barChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
-  barChartLegend:boolean = true;
+  barChartLegend:boolean = false;
   barChartData: ChartDataset<'bar', number[]>[] = [];
 
 
@@ -56,6 +69,10 @@ export class DashboardComponent implements OnInit {
   constructor(public purchaseService: PurchaseService,public userService: UserService, public productService: ProductDataService) {}
 
   async ngOnInit() {
+    window.addEventListener('resize', () => {
+      this.updateLegendVisibility();
+    });
+
     this.purchaseService.getBarChartData((data) => {
       this.barChartData = data;
   });
@@ -72,5 +89,15 @@ export class DashboardComponent implements OnInit {
 
   async triggerPurchase() {
     await this.purchaseForRandomUser();
+  }
+
+  updateLegendVisibility() {
+    let screenWidth = window.innerWidth;
+    
+    if (screenWidth < 600) {
+      this.doughnutChartLegend = false;
+    } else if (screenWidth > 600) {
+      this.doughnutChartLegend = true;
+    }
   }
  }

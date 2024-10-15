@@ -33,7 +33,6 @@ export class PurchaseService {
         this.allPurchases.push(purchase);
       });
       this.updateDashboardMetrics();
-      console.log(this.allPurchases);
     });
   }
 
@@ -73,7 +72,6 @@ getBarChartData(callback: (data: ChartDataset<'bar', number[]>[]) => void): void
 
       let data: ChartDataset<'bar', number[]>[] = [{
           data: monthlyTotals,
-          label: 'Total Purchases in €',
           backgroundColor: '#007f99',
       }];
 
@@ -88,7 +86,7 @@ async getDoughnutChartData(callback: (data: ChartDataset<'doughnut', number[]>[]
       
       let data: ChartDataset<'doughnut', number[]>[] = [{
           data: Object.values(productSales),
-          backgroundColor: ['#007f99', '#00839e', '#0094b2', '#00a5c6', '#00b6db', '#00c9f2', '#00d4ff'],
+          backgroundColor: ['#007f99', '#00839e', '#0094b2', '#00a5c6', '#00b6db', '#00c9f2', '#00d4ff', '26deff', '41e0fc', '60e7ff', '7febff'],
       }];
       
       callback(data, labels);
@@ -166,7 +164,6 @@ private calculateProductSales(purchases: Purchase[]): { [productId: string]: num
         purchase.id = generatedId;
         await updateDoc(docRef, { id: generatedId });
 
-        console.log(docRef.id);
         this.allPurchases.push(purchase); 
       } catch (err) {
         console.error(err);

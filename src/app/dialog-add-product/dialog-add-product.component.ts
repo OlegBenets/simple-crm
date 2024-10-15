@@ -43,7 +43,6 @@ export class DialogAddProductComponent {
     await this.productService.addProduct(this.product);
         this.dialogRef.close();
         this.loading = false;
-        console.log(' added product ',this.product)
   }
 }
 

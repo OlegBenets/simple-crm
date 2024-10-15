@@ -62,7 +62,6 @@ private trackRouteChanges() {
     if (event instanceof NavigationEnd) {
       if (event.urlAfterRedirects !== '/login') {
         localStorage.setItem('lastRoute', event.urlAfterRedirects);
-        console.log("Gespeicherte Route:", event.urlAfterRedirects);
       }
     }
   });
