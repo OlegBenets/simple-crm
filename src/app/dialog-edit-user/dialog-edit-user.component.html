@@ -6,8 +6,8 @@
   <h2 mat-dialog-title>Edit User</h2>
   <mat-dialog-content class="pt-20">
     <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
-    <div>
-        <mat-form-field class="mr-16" appearance="outline">
+      <div class="input-fields-one-line">
+        <mat-form-field  appearance="outline">
             <mat-label>First Name</mat-label>
             <input
             [disabled]="loading"
@@ -45,8 +45,8 @@
               }
           </mat-form-field>
         </div>
-        <div>
-          <mat-form-field class="mr-16 full-width" appearance="outline">
+        <div class="input-fields">
+          <mat-form-field appearance="outline">
             <mat-label>E-Mail</mat-label>
             <input
             [disabled]="loading"
@@ -62,9 +62,8 @@
               <mat-error>Email is required</mat-error>
               }
           </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="mr-16 full-width" appearance="outline">
+
+          <mat-form-field appearance="outline">
             <mat-label>Birth Date</mat-label>
             <input 
             [disabled]="loading"

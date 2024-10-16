@@ -6,8 +6,8 @@
   <h2 mat-dialog-title>Add User</h2>
   <mat-dialog-content>
     <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
-      <div>
-        <mat-form-field class="mr-16 mt-32" appearance="outline">
+      <div class="input-fields-one-line">
+        <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
           <input
             [disabled]="loading"
@@ -26,7 +26,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="mt-32" appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input
             [disabled]="loading"
@@ -45,8 +45,9 @@
               }
         </mat-form-field>
       </div>
-      <div>
-        <mat-form-field class="mr-16 full-width" appearance="outline">
+
+      <div class="input-fields">
+        <mat-form-field appearance="outline">
           <mat-label>E-Mail</mat-label>
           <input
             [disabled]="loading"
@@ -62,9 +63,8 @@
               <mat-error>Email is required</mat-error>
               }
         </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field class="mr-16 full-width" appearance="outline">
+ 
+        <mat-form-field appearance="outline">
           <mat-label>Birth Date</mat-label>
           <input
             [disabled]="loading"
@@ -82,8 +82,7 @@
             <mat-error>Birth Date is required</mat-error>
             }
         </mat-form-field>
-      </div>
-      <div>
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Street + House No.</mat-label>
           <input
@@ -101,8 +100,9 @@
               }
         </mat-form-field>
       </div>
-      <div>
-        <mat-form-field class="mr-16" appearance="outline">
+
+      <div class="input-fields-one-line">
+        <mat-form-field appearance="outline">
           <mat-label>Zip code</mat-label>
           <input
             [disabled]="loading"

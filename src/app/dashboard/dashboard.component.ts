@@ -17,9 +17,27 @@ import { ChartDataset, ChartOptions } from 'chart.js';
 })
 export class DashboardComponent implements OnInit {
 
+  allPurchases: Purchase[] = [];
+  currentYear: number = new Date().getFullYear();
+  currentQuarter: any;
+
+  barChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  barChartLegend:boolean = false;
+  barChartData: ChartDataset<'bar', number[]>[] = [];
+  
   barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: 8,
+        }
+       }
+      }
+    },
     plugins: {
       title: {
           display: true,
@@ -34,19 +52,10 @@ export class DashboardComponent implements OnInit {
       }
   }
 };
-  barChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-  barChartLegend:boolean = false;
-  barChartData: ChartDataset<'bar', number[]>[] = [];
-
 
   doughnutChartLabels:string[] = [];
   doughnutChartLegend:boolean = true;
   doughnutChartData: ChartDataset<'doughnut', number[]>[] = []; 
-
-  allPurchases: Purchase[] = [];
-  currentYear: number = new Date().getFullYear();
-  currentQuarter: any;
 
   doughnutChartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
@@ -81,6 +90,8 @@ export class DashboardComponent implements OnInit {
     this.doughnutChartData = data;
     this.doughnutChartLabels = labels;
   });
+
+  this.updateLegendVisibility();
   }
 
   async purchaseForRandomUser() {
@@ -96,7 +107,7 @@ export class DashboardComponent implements OnInit {
     
     if (screenWidth < 600) {
       this.doughnutChartLegend = false;
-    } else if (screenWidth > 600) {
+    } else {
       this.doughnutChartLegend = true;
     }
   }

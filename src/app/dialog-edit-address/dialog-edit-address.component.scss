@@ -15,5 +15,37 @@
     @include dFlex($ai: none, $jc: none, $g: 12px);
     flex-direction: column;
     height: auto;
+
+    .input-fields-one-line {
+        @include dFlex($ai: none, $jc: space-between, $g: 12px);
+        width: 100%;
+
+        @media (max-width: 800px) {
+          @include dFlex($ai: none, $jc: space-between, $g: 8px);
+          flex-direction: column;
+        }
+
+        input {
+          width: 50%;
+
+          @media (max-width: 800px) {
+            width: 100%;
+          }
+        }
+      }
+
+      .input-fields {
+        @include dFlex($ai: none, $jc: none, $g: 12px);
+        flex-direction: column;
+        width: 100%;
+
+        @media (max-width: 800px) {
+          @include dFlex($ai: none, $jc: none, $g: 8px);
+        }
+  
+        input {
+          width: 100%;
+        }
+      }
     }
 }

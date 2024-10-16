@@ -29,6 +29,10 @@
         font-size: 54px;
         text-align: center;
       }
+
+      @media (max-width: 350px) {
+        line-height: 46px;
+      }
     }
   }
 
@@ -76,12 +80,6 @@
         @include dFlex($ai: none, $jc: none);
         flex-direction: column;
         width: 100%;
-
-        mat-form-field {
-          .mat-mdc-text-field-wrapper {
-            height: 50px !important;
-          }
-        }
 
         input {
           width: 100%;

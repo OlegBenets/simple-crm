@@ -1,15 +1,21 @@
-<ng-container *ngIf="!isLoginPage(); else loginPageTemplate">
+@if (!isLoginPage()) {
+<ng-container>
 <mat-drawer-container class="mat-drawer-container" autosize>
-  <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
-    <div class="logo-contaiener"><img src="./../assets/image/logo.png"></div>
+  <mat-drawer #drawer class="sidenav" [mode]="isMobileView ? 'over' : 'side'" [(opened)]="isDrawerOpen" mode="side">
+    <div class="logo-contaiener">
+      <img src="./../assets/image/logo.png">
+      @if (isMobileView && isDrawerOpen) {
+        <mat-icon class="menu-icon" (click)="toggleDrawer()">menu</mat-icon>
+      }
+    </div>
     <ul class="menu-items">
-      <li [routerLink]="['/dashboard']"><mat-icon>dashboard</mat-icon><b>Dashboard</b></li>
-      <li [routerLink]="['/user']"><mat-icon>person</mat-icon><b>User</b></li>
-      <li [routerLink]="['/products']"><mat-icon>shopping_bag</mat-icon><b>Products</b></li>
+      <li (click)="closeDrawerIfMobile()" [routerLink]="['/dashboard']"><mat-icon>dashboard</mat-icon><b>Dashboard</b></li>
+      <li (click)="closeDrawerIfMobile()" [routerLink]="['/user']"><mat-icon>person</mat-icon><b>User</b></li>
+      <li (click)="closeDrawerIfMobile()" [routerLink]="['/products']"><mat-icon>shopping_bag</mat-icon><b>Products</b></li>
     </ul>
     <div class="legals">
-      <a [routerLink]="['/imprint']">Imprint</a>
-      <a [routerLink]="['/privacy']">Privacy Policy</a>
+      <a (click)="closeDrawerIfMobile()" [routerLink]="['/imprint']">Imprint</a>
+      <a (click)="closeDrawerIfMobile()" [routerLink]="['/privacy']">Privacy Policy</a>
     </div>
   </mat-drawer>
 
@@ -17,7 +23,9 @@
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <div class="menu-container">
-        <mat-icon class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
+          @if (!isMobileView || isMobileView && !isDrawerOpen) {
+            <mat-icon class="menu-icon" (click)="toggleDrawer()">menu</mat-icon>
+          }
         <span>Simple CRM</span>
       </div>
           <mat-icon class="logout-icon" (click)="logOut()" matTooltip="logout">logout</mat-icon>
@@ -31,6 +39,8 @@
 </mat-drawer-container>
 </ng-container>
 
-<ng-template #loginPageTemplate>
-  <router-outlet></router-outlet>
-</ng-template>
+} @else {
+  <ng-template>
+    <router-outlet></router-outlet>
+  </ng-template>
+}

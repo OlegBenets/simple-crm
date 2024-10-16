@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminService } from '../services/admin-data.service';
@@ -24,10 +24,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'simple-crm';
+  @ViewChild('drawer') drawer!: MatDrawer;
+  isMobileView: boolean = false;
+  isDrawerOpen: boolean = true;  
 
   constructor(public router: Router, private adminService: AdminService,) {}
+
+  ngOnInit(): void {
+    this.checkScreenSize();
+    window.addEventListener('resize', () => {
+      this.checkScreenSize();
+    });
+  }
 
   async logOut() {
     try {
@@ -40,5 +50,23 @@ export class AppComponent {
 
   isLoginPage(): boolean {
     return this.router.url === '/signup' || this.router.url === '/login';
+  }
+
+  checkScreenSize() {
+    this.isMobileView = window.innerWidth < 800;
+    if (this.isMobileView) {
+      this.isDrawerOpen = false;
+    }
+  }
+
+  toggleDrawer() {
+    this.drawer.toggle();
+    this.isDrawerOpen = !this.isDrawerOpen;
+  }
+
+  closeDrawerIfMobile() {
+    if (this.isMobileView && this.isDrawerOpen) {
+      this.toggleDrawer();
+    }
   }
 }

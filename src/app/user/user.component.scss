@@ -2,6 +2,10 @@
 
 .add-user-button {
     @include position($t: none, $l: none, $r: 56px, $b: 56px);
+
+    @media (max-width: 800px) {
+        @include position($t: none, $l: none, $r: 32px, $b: 32px);
+    }
 }
 
 .no-users-message {
@@ -80,5 +84,12 @@
 
     button {
         border-radius: 24px;
+        font-size: 14px !important;
+        line-height: 16px !important;
+
+        @media (max-width: 800px) {
+            font-size: 12px !important;
+            line-height: 12px !important;
+        }
     }
 }

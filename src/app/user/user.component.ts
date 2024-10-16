@@ -32,11 +32,17 @@ import { UserService } from '../../services/user-data.service';
 export class UserComponent implements OnInit {
   user = new User();
   sortAscending: boolean = true;
+  isMobile: boolean = false;
 
   constructor(public dialog: MatDialog, public userService: UserService) {}
 
   ngOnInit() {
     this.userService.filteredUsers = this.userService.allUsers;
+
+    this.checkScreenSize();
+    window.addEventListener('resize', () => {
+      this.checkScreenSize();
+    });
   }
 
   openDialog() {
@@ -54,11 +60,15 @@ export class UserComponent implements OnInit {
 
     sortName() {
       this.userService.filteredUsers = this.userService.filteredUsers.sort((a, b) => {
-        const firstNameComparison = a.firstName.localeCompare(b.firstName);
+        let firstNameComparison = a.firstName.localeCompare(b.firstName);
         
         return this.sortAscending ? firstNameComparison : -firstNameComparison;
       });
   
       this.sortAscending = !this.sortAscending;
+    }
+
+    checkScreenSize() {
+      this.isMobile = window.innerWidth < 800;
     }
   }

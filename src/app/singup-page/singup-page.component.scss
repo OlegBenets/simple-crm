@@ -33,13 +33,28 @@
     @include dFlex($ai: center, $jc: flex-start, $g: 20px);
     flex-direction: column;
     width: calc(560px - 24px);
-    height: calc(680px - 64px);
+    height: calc(700px - 64px);
     padding: 32px 12px;
     border-radius: 10px;
+
+    @media (max-width: 600px) {
+      @include dFlex($ai: center, $jc: flex-start, $g: 16px);
+      width: calc(80% - 32px);
+      height: calc(auto - 48px);
+      padding: 24px 16px;
+    }
+
+    @media (max-width: 400px) {
+      width: calc(90% - 32px);
+    }
 
     h2 {
       font-size: 30px;
       font-weight: 700;
+
+      @media (max-width: 600px) {
+        font-size: 26px;
+      }
     }
 
     form {
@@ -49,12 +64,27 @@
       @include dFlex($ai: center, $jc: none);
       flex-direction: column;
 
+      @media (max-width: 600px) {
+        @include dFlex($ai: center, $jc: none, $g: 8px);
+        width: 100%;
+        padding: 0 0px;
+      }
+
       .input-fields-one-line {
         @include dFlex($ai: none, $jc: space-between,);
         width: 100%;
 
+        @media (max-width: 600px) {
+          @include dFlex($ai: none, $jc: space-between, $g: 8px);
+          flex-direction: column;
+        }
+
         input {
           width: 50%;
+
+          @media (max-width: 600px) {
+            width: 100%;
+          }
         }
       }
       
@@ -62,6 +92,10 @@
         @include dFlex($ai: none, $jc: none,);
         flex-direction: column;
         width: 100%;
+
+        @media (max-width: 600px) {
+          @include dFlex($ai: none, $jc: none, $g: 8px);
+        }
   
         input {
           width: 100%;
@@ -71,6 +105,11 @@
       button {
         width: 148px;
         height: 48px;
+
+        @media (max-width: 600px) {
+          width: 132px;
+          height: 38px;
+        }  
       }
     }
 
@@ -81,6 +120,10 @@
       h3 {
         font-size: 24px;
         font-weight: 500;
+
+        @media (max-width: 600px) {
+          font-size: 20px;
+        }  
       }
 
       a {
@@ -88,6 +131,10 @@
         font-weight: 400;
         color: #007f99;
         text-decoration: none;
+
+        @media (max-width: 600px) {
+          font-size: 16px;
+        }  
 
         &:hover {
           text-decoration: underline;
