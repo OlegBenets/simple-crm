@@ -10,10 +10,31 @@
 }
 
 form {
-    @include dFlex($ai: none, $jc: none, $g: 12px);
+    @include dFlex($ai: flex-start, $jc: none, $g: 12px);
     flex-direction: column;
-    width: 424px;
-    height: auto;
+    width: calc(460px - 24px);
+    height: 520px;
+    padding: 12px 12px 0 12px;
+
+    @media (max-width: 800px) {
+        width: calc(100% - 0px);
+        height: auto;
+        padding: 12px 0 0 0;
+      }
+
+      .input-fields {
+        @include dFlex($ai: none, $jc: none, $g: 12px);
+        flex-direction: column;
+        width: 100%;
+
+        @media (max-width: 800px) {
+          @include dFlex($ai: none, $jc: none, $g: 8px);
+        }
+  
+        input {
+          width: 100%;
+        }
+      }
 
     textarea {
         height: 100px;

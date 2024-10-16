@@ -1,86 +1,102 @@
 <div class="dialog-container">
-    @if(loading) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    }
+  @if(loading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
 
-    <h2 mat-dialog-title>Edit Description</h2>
-    <mat-dialog-content class="pt-20">
-      <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm)">
-    <mat-form-field class="mr-16 full-width" appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea 
-      [disabled]="loading"
-      type="text"
-      minlength="3"
-      maxlength="500"
-      #description="ngModel"
-      name="description"
-      [(ngModel)]="product.description"
-      matInput
-      placeholder="Description"
-      required></textarea>
+  <h2 mat-dialog-title>Edit Description</h2>
+  <mat-dialog-content class="pt-20">
+    <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm)">
+      <mat-form-field class="mr-16 full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          [disabled]="loading"
+          type="text"
+          minlength="3"
+          maxlength="500"
+          #description="ngModel"
+          name="description"
+          [(ngModel)]="product.description"
+          matInput
+          placeholder="Description"
+          required
+        ></textarea>
 
-      @if(description.invalid && description.touched) {
+        @if(description.invalid && description.touched) {
         <mat-error>Description is required</mat-error>
         }
-    </mat-form-field>
-
-    <div class="detail-container">
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Details</mat-label>
-        <div class="detail-input">
-        <input 
-          [disabled]="loading"
-          minlength="3"
-          maxlength="30"
-          #detail="ngModel"
-          name="detail"
-          [(ngModel)]="currentDetail"
-          matInput
-          placeholder="Add Detail">
-
-          <button [disabled]="loading" mat-button type="button" (click)="addDetail()">Add</button>
-        </div>
       </mat-form-field>
 
-      <div class="detail-list">
+      <div class="detail-container">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Details</mat-label>
+          <div class="detail-input">
+            <input
+              [disabled]="loading"
+              minlength="3"
+              maxlength="30"
+              #detail="ngModel"
+              name="detail"
+              [(ngModel)]="currentDetail"
+              matInput
+              placeholder="Add Detail"
+            />
+
+            <button
+              [disabled]="loading"
+              mat-button
+              type="button"
+              (click)="addDetail()"
+            >
+              Add
+            </button>
+          </div>
+        </mat-form-field>
+
+        <div class="detail-list">
           @for (detail of temporaryDetails; track detail) {
-            <ul>
-              <li>
-                  @if (editingDetail !== detail) {
-                      {{ detail }}
-                      <div class="icons-container">
-                          <mat-icon (click)="setEditing(detail)">edit</mat-icon>
-                          <mat-icon (click)="deleteDetail(detail)">delete</mat-icon>
-                      </div>
-                  } @else {
-                      <input
-                          class="edit-detail-input" 
-                          [(ngModel)]="editingValue" 
-                          #editDetail="ngModel"
-                          name="editDetail"
-                          minlength="3"
-                          maxlength="30"
-                          matInput>
-                          <div class="icons-container">
-                      <mat-icon (click)="finishEditing(detail)">check</mat-icon>
-                      <mat-icon (click)="cancelEditing()">cancel</mat-icon>
-                    </div>
-                  }
-              </li>
-            </ul>
+          <ul>
+            <li>
+              <div class="text-container">
+                {{ detail }}
+              </div>
+              @if (editingDetail !== detail) {
+              <div class="icons-container">
+                <mat-icon (click)="setEditing(detail)">edit</mat-icon>
+                <mat-icon (click)="deleteDetail(detail)">delete</mat-icon>
+              </div>
+              } @else {
+              <input
+                class="edit-detail-input"
+                [(ngModel)]="editingValue"
+                #editDetail="ngModel"
+                name="editDetail"
+                minlength="3"
+                maxlength="30"
+                matInput
+              />
+              <div class="icons-container">
+                <mat-icon (click)="finishEditing(detail)">check</mat-icon>
+                <mat-icon (click)="cancelEditing()">cancel</mat-icon>
+              </div>
+              }
+            </li>
+          </ul>
           }
+        </div>
+      </div>
 
-  </div>
-    </div>
-
-
-<mat-dialog-actions>
-  <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
-  <button [disabled]="loading || !productForm.form.valid"
-  mat-button
-  type="submit">Save</button>
-</mat-dialog-actions>
-</form>
-</mat-dialog-content>
+      <mat-dialog-actions>
+        <button [disabled]="loading" mat-button (click)="dialogRef.close()">
+          Cancel
+        </button>
+        <button
+          [disabled]="loading || !productForm.form.valid"
+          mat-button
+          type="submit"
+        >
+          Save
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
 </div>

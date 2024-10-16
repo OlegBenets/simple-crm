@@ -2,6 +2,10 @@
 
 .add-product-button {
     @include position($t: none, $l: none, $r: 56px, $b: 56px);
+
+    @media (max-width: 800px) {
+        @include position($t: none, $l: none, $r: 32px, $b: 32px);
+    }
 }
 
 .no-products-message {

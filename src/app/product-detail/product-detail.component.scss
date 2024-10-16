@@ -14,13 +14,6 @@
 
     .product-detail-container {
         @include dFlex($ai: center, $jc: flex-start);
-
-        .profile-image {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            object-fit: cover;
-        }
     }
 
     .menu-button-header {
@@ -32,6 +25,10 @@
     margin-left: 32px;
     @include dFlex($ai: flex-start, $jc: center);
     flex-direction: column;
+
+    @media (max-width: 800px) {
+        margin-left: 0;
+    }
 
     h2 {
         margin-bottom: 0;

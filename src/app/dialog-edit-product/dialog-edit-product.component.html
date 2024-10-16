@@ -6,8 +6,8 @@
   <h2 mat-dialog-title>Edit Product</h2>
   <mat-dialog-content class="pt-20">
     <form #productForm="ngForm" (ngSubmit)="saveProduct(productForm)">
-    <div>
-        <mat-form-field class="mr-16" appearance="outline">
+      <div class="input-fields-one-line">
+        <mat-form-field appearance="outline">
             <mat-label>Product Name</mat-label>
             <input 
             [disabled]="loading"

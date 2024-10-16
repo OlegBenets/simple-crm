@@ -12,8 +12,15 @@
 form {
     @include dFlex($ai: none, $jc: none, $g: 12px);
     flex-direction: column;
-    height: auto;
-    width: 424px;
+    width: calc(460px - 24px);
+    height: 520px;
+    padding: 12px 12px 0 12px;
+
+    @media (max-width: 800px) {
+        width: calc(100% - 0px);
+        height: auto;
+        padding: 12px 0 0 0;
+      }
 
     textarea {
         height: 150px;
@@ -53,17 +60,33 @@ form {
         width: calc(100% - 40px);
         padding: 0 0 0 20px;
 
+        @media (max-width: 800px) {
+            width: calc(100% - 0px);
+            padding: 0 0 0 0;
+          }
+
         li {
             @include dFlex($ai: center, $jc: space-between, $g: 0px);
             width: 100%;
             font-size: 16px;
-            white-space: nowrap;
-            overflow: hidden; 
-            text-overflow: ellipsis;
+
+            .text-container {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden; 
+                text-overflow: ellipsis;    
+            }
 
             .icons-container {
-                @include dFlex($ai: center, $jc: flex-end, $g: 0px);
+                @include dFlex($ai: center, $jc: flex-end, $g: 8px);
+                min-width: 60px;
                 width: 15%;
+
+                @media (max-width: 800px) {
+                    width: 30%;
+                    margin-left: 12px;
+                  }
+        
 
                 mat-icon {
                     cursor: pointer;

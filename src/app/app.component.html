@@ -1,5 +1,4 @@
-@if (!isLoginPage()) {
-<ng-container>
+<ng-container *ngIf="!isLoginPage(); else LoginPage">
 <mat-drawer-container class="mat-drawer-container" autosize>
   <mat-drawer #drawer class="sidenav" [mode]="isMobileView ? 'over' : 'side'" [(opened)]="isDrawerOpen" mode="side">
     <div class="logo-contaiener">
@@ -39,8 +38,6 @@
 </mat-drawer-container>
 </ng-container>
 
-} @else {
-  <ng-template>
+  <ng-template #LoginPage>
     <router-outlet></router-outlet>
   </ng-template>
-}

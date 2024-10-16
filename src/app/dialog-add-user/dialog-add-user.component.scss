@@ -12,7 +12,7 @@
 form {
     @include dFlex($ai: flex-start, $jc: none, $g: 12px);
     flex-direction: column;
-    width: calc(100% - 48px);
+    width: calc(100% - 24px);
     height: 520px;
     padding: 12px 12px 0 12px;
 
