@@ -25,7 +25,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'simple-crm';
   @ViewChild('drawer') drawer!: MatDrawer;
   isMobileView: boolean = false;
   isDrawerOpen: boolean = true;  

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Firestore, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Admin } from '../models/admin.class';
 import { Auth, User } from '@angular/fire/auth';
@@ -11,15 +11,13 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 
 export class AdminService implements OnDestroy{
-  private firestore: Firestore = inject(Firestore);
-  private firebaseAuth: Auth = inject(Auth);
   allAdmins: Admin[] = [];
   unsubAdminList;
   unsubRoute: any;
   isAuthenticated = false;
   currentUser: User | null = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private firestore: Firestore, private firebaseAuth: Auth) {
     this.unsubAdminList = this.subAdminList();
     this.trackRouteChanges();
     this.initializeAuthStateListener();

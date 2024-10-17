@@ -10,16 +10,10 @@ describe('UserDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        UserDetailComponent, 
-        RouterModule.forRoot([]), 
-    ],
-    providers: [
-      ...appConfig.providers 
-    ],
-    })
-    .compileComponents();
-    
+      imports: [UserDetailComponent, RouterModule.forRoot([])],
+      providers: [...appConfig.providers],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(UserDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

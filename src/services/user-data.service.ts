@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 
@@ -7,13 +7,12 @@ import { User } from '../models/user.class';
 })
 
 export class UserService {
-  private firestore: Firestore = inject(Firestore);
   allUsers: User[] = [];
   filteredUsers: User[] = [];
   user = new User();
   unsubUserList;
 
-  constructor() {
+  constructor(private firestore: Firestore) {
     this.unsubUserList = this.subUserList();
   }
 
@@ -74,6 +73,6 @@ async getSingleUser(userId: string) {
   }
 
   private getSingleDocRef(userId: string) {
-    return doc(this.getUserRef(), userId);
+    return doc(this.firestore, 'users', userId);
   }
 }

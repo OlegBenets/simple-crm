@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { Product } from '../models/product.class';
@@ -7,13 +7,12 @@ import { Product } from '../models/product.class';
   providedIn: 'root'
 })
 export class ProductDataService {
-  private firestore: Firestore = inject(Firestore);
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];
   product = new Product();
   unsubProductList;
 
-  constructor() {
+  constructor(private firestore: Firestore) {
     this.unsubProductList = this.subProductList();
   }
 
@@ -74,6 +73,6 @@ async getSingleProduct(productId: string) {
   }
 
   private getSingleDocRef(productId: string) {
-    return doc(this.getProductRef(), productId);
+    return doc(this.firestore, 'users', productId);
   }
 }

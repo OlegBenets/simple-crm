@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserComponent } from './user.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { appConfig } from '../app.config';
 
 describe('UserComponent', () => {
@@ -13,18 +17,17 @@ describe('UserComponent', () => {
       imports: [UserComponent, MatDialogModule],
       providers: [
         ...appConfig.providers,
-        { 
+        {
           provide: MatDialogRef,
-          useValue: {}
+          useValue: {},
         },
-        { 
+        {
           provide: MAT_DIALOG_DATA,
-          useValue: {}
-        }
+          useValue: {},
+        },
       ],
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

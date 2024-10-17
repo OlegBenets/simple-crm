@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { Purchase } from '../models/purchase.class';
 import { User } from '../models/user.class';
@@ -12,7 +12,6 @@ import { ChartDataset } from 'chart.js';
   providedIn: 'root'
 })
 export class PurchaseService {
-  private firestore: Firestore = inject(Firestore);
   allPurchases: Purchase[] = [];
   topSellingProduct: string = '';
   topBuyer: string = '';
@@ -21,7 +20,7 @@ export class PurchaseService {
   totalDeals: number = 0;
   unsubSchribe: any;   
   
-  constructor(public userService: UserService, public productService: ProductDataService) {
+  constructor(private firestore: Firestore, public userService: UserService, public productService: ProductDataService) {
     this.unsubSchribe = this.subPurchaseList(); 
   }
 
