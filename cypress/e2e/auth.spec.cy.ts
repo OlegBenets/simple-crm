@@ -5,7 +5,7 @@ describe('The Home Page', () => {
 })
 
 describe('Authentication Tests', () => {
-  it('should signup and login', () => {
+  it('should allow a user to sign up and then log in successfully', () => {
 
     cy.visit('/login');
     cy.contains('Sign up').click();
@@ -19,10 +19,7 @@ describe('Authentication Tests', () => {
     cy.get('button[type="submit"]').click(); 
     cy.url().should('include', '/login');
 
-    cy.get('input[formControlName="email"]').should('be.visible').click().type('johndoe@example.com'); 
-    cy.get('input[formControlName="password"]').should('be.visible').click().type('Password123!');
-   
-    cy.get('button[type="submit"]').click(); 
+    cy.login('johndoe@example.com', 'Password123!');
     cy.url().should('include', '/dashboard');
 
     cy.contains('All Users').should('be.visible');

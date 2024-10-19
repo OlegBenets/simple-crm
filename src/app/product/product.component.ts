@@ -48,5 +48,4 @@ export class ProductComponent implements OnInit {
       product.name.toLowerCase().includes(filterVal)
     );
     }
-
 }
