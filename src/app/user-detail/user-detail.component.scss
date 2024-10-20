@@ -27,6 +27,10 @@
     .menu-button-header {
         @include position($t: 10px,$l: none, $r: 10px, $b: none);
     }
+
+    .back-btn {
+        @include position($t: 10px,$l: 10px, $r: none, $b: none);
+    }
 }
 
 .user-details {

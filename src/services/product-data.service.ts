@@ -73,6 +73,6 @@ async getSingleProduct(productId: string) {
   }
 
   private getSingleDocRef(productId: string) {
-    return doc(this.firestore, 'users', productId);
+    return doc(this.firestore, 'products', productId);
   }
 }

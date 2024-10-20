@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Product } from '../../models/product.class';
 import { ProductDataService } from '../../services/product-data.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogEditProductComponent } from '../dialog-edit-product/dialog-edit-product.component';
 import { DialogEditDescriptionComponent } from '../dialog-edit-description/dialog-edit-description.component';
@@ -17,7 +17,8 @@ import { DialogEditDescriptionComponent } from '../dialog-edit-description/dialo
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterModule
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'

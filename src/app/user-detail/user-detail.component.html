@@ -2,6 +2,9 @@
   <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="userMenu">
     <mat-icon>more_vert</mat-icon>
   </button>
+  <button class="back-btn" [routerLink]="['/user/']" mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item (click)="editUserDetail()">Edit</button>
