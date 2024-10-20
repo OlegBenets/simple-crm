@@ -16,7 +16,7 @@
             name="street"
             [(ngModel)]="user.street"
             matInput
-            placeholder="Placeholder"
+            placeholder="Street + House No."
             required/>
 
             @if(street.invalid && street.touched) {
@@ -35,7 +35,7 @@
             name="zipCode"
             [(ngModel)]="user.zipCode"
             matInput
-            placeholder="Placeholder"
+            placeholder="Zip Code"
             required/>
 
             @if(zipCode.invalid && zipCode.touched) {
@@ -52,7 +52,7 @@
             name="city"
             [(ngModel)]="user.city"
             matInput
-            placeholder="Placeholder"
+            placeholder="City"
             required/>
 
             @if(city.invalid && city.touched) {

@@ -7,8 +7,8 @@
   </button>
 
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item (click)="editUserDetail()">Edit</button>
-    <button mat-menu-item (click)="deleteUser()">Delete User</button>
+    <button class="edit-user-btn" mat-menu-item (click)="editUserDetail()">Edit</button>
+    <button class="delete-user-btn" mat-menu-item (click)="deleteUser()">Delete User</button>
   </mat-menu>
 
   <div class="user-detail-container">
@@ -26,7 +26,7 @@
   </button>
 
   <mat-menu #userAddress="matMenu">
-    <button mat-menu-item (click)="editMenu()">Edit</button>
+    <button class="edit-address-btn" mat-menu-item (click)="editMenu()">Edit</button>
   </mat-menu>
 
   <mat-card-title>Address</mat-card-title>
