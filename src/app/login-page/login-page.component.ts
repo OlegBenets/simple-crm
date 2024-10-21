@@ -121,11 +121,10 @@ export class LoginPageComponent {
   }
 
   /**
-   * Validates email and password controls on input.
+   * Validates email controls on input.
    */
   onInput() {
     this.validateEmail();
-    this.validatePassword();
   }
 
   /**

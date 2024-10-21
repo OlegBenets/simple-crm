@@ -12,7 +12,7 @@
 }
 
 section {
-  @include dFlex($ai: none, $jc: none, $g: 48px);
+  @include dFlex($ai: center, $jc: none, $g: 48px);
   flex-direction: column;
   width: 100%;
 
@@ -23,6 +23,7 @@ section {
   header {
     @include dFlex($ai: center, $jc: center);
     text-align: center;
+    max-width: 920px;
     width: 100%;
     height: 64px;
     border: 0.1px solid rgb(247, 247, 247);
@@ -58,6 +59,7 @@ section {
 
     .top-container {
       @include dFlex($ai: center, $jc: space-evenly, $g: 56px);
+      max-width: 1920px;
       width: 100%;
 
       @media (max-width: 600px) {
@@ -68,10 +70,7 @@ section {
         @include dFlex($ai: center, $jc: space-evenly, $g: 12px);
         flex-direction: row;
         width: 50%;
-
-        @media (min-width: 2800px) {
-          height: 190px;
-        }
+        padding: 4px;
 
         @media (max-width: 1200px) {
           flex-direction: column;
@@ -90,11 +89,11 @@ section {
     }
 
     .second-container {
-      @include dFlex($ai: center, $jc: space-evenly, $g: 36px);
+      @include dFlex($ai: center, $jc: center, $g: 112px);
       width: 100%;
 
       @media (max-width: 600px) {
-        @include dFlex($ai: center, $jc: space-evenly, $g: 8px);
+        @include dFlex($ai: center, $jc: center, $g: 56px);
       }
     }
 
@@ -124,7 +123,7 @@ section {
 
       .border {
         border: 0.5px solid white;
-        height: 70px;
+        height: 50px;
 
         @media (min-width: 2800px) {
           height: 120px;
