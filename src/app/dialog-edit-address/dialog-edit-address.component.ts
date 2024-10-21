@@ -20,20 +20,33 @@ import { UserService } from '../../services/user-data.service';
     MatProgressBarModule,
   ],
   templateUrl: './dialog-edit-address.component.html',
-  styleUrl: './dialog-edit-address.component.scss'
+  styleUrl: './dialog-edit-address.component.scss',
 })
 export class DialogEditAddressComponent {
-  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>, public userService: UserService) {}
-  user: User= new User();
+  /**
+   * Constructs the DialogEditAddressComponent.
+   * @param dialogRef - Reference to the dialog to close it after saving the user's address.
+   * @param userService - The service to handle user data operations.
+   */
+  constructor(
+    public dialogRef: MatDialogRef<DialogEditAddressComponent>,
+    public userService: UserService
+  ) {}
+  user: User = new User();
   userId: string = '';
   loading: boolean = false;
 
-
+  /**
+   * Saves the user's address using the data from the form.
+   * This method checks if the form is valid, sets the loading state,
+   * and calls the user service to update the user's address.
+   * @param userForm - The form containing user address data.
+   */
   async saveUser(userForm: NgForm) {
     if (userForm.form.valid) {
-    this.loading = true;
+      this.loading = true;
 
-   await this.userService.updateUser(this.userId, this.user);
+      await this.userService.updateUser(this.userId, this.user);
       this.loading = false;
       this.dialogRef.close();
     }

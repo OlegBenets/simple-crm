@@ -1,11 +1,11 @@
-@import './../../styles.scss';
+@import "./../../styles.scss";
 
 .dashboard-container {
   @include dFlex($ai: start, $jc: space-between, $g: 32px);
   flex-direction: column;
   width: 100%;
   height: auto;
-  
+
   @media (min-width: 2800px) {
     @include dFlex($ai: start, $jc: space-between, $g: 204px);
   }
@@ -43,12 +43,12 @@ section {
       @media (min-width: 2800px) {
         font-size: 32px;
       }
-  }
+    }
 
-  span {
+    span {
       font-size: 20px;
       font-weight: 500;
-  }
+    }
   }
 
   .datas-container {
@@ -93,86 +93,85 @@ section {
       @include dFlex($ai: center, $jc: space-evenly, $g: 36px);
       width: 100%;
 
-      
       @media (max-width: 600px) {
         @include dFlex($ai: center, $jc: space-evenly, $g: 8px);
       }
     }
-    
-  article {
-        @include dFlex($ai: center, $jc: center, $g: 12px);
-        flex-direction: column;
-        text-align: center;
-        width: 300px;
-        height: 80px;
-        border: 0.1px solid rgb(247, 247, 247);
-        border-radius: 8px;
-        box-shadow: 0.2px 1px grey;
-        background-color: $blue;
-        color: white;
+
+    article {
+      @include dFlex($ai: center, $jc: center, $g: 12px);
+      flex-direction: column;
+      text-align: center;
+      width: 300px;
+      height: 80px;
+      border: 0.1px solid rgb(247, 247, 247);
+      border-radius: 8px;
+      box-shadow: 0.2px 1px grey;
+      background-color: $blue;
+      color: white;
+
+      @media (min-width: 2800px) {
+        height: 120px;
+      }
+
+      @media (max-width: 1200px) {
+        height: 100px;
+      }
+
+      @media (max-width: 600px) {
+        height: 120px;
+      }
+
+      .border {
+        border: 0.5px solid white;
+        height: 70px;
 
         @media (min-width: 2800px) {
           height: 120px;
         }
 
         @media (max-width: 1200px) {
-          height: 100px;
+          height: 0px;
+          width: 80%;
+        }
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 0;
+        text-align: center;
+
+        @media (min-width: 2800px) {
+          font-size: 32px;
+        }
+
+        @media (max-width: 1200px) {
+          font-size: 18px;
         }
 
         @media (max-width: 600px) {
-          height: 120px;
+          font-size: 16px;
+        }
+      }
+
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+
+        @media (min-width: 2800px) {
+          font-size: 24px;
         }
 
-        .border {
-          border: 0.5px solid white;
-          height: 70px;
-
-          @media (min-width: 2800px) {
-            height: 120px;
-          }
-
-          @media (max-width: 1200px) {
-            height: 0px;
-            width: 80%;
-          }
+        @media (max-width: 1200px) {
+          font-size: 16px;
         }
 
-        h2 {
-            font-size: 24px;
-            font-weight: 500;
-            margin: 0;
-            text-align: center;
-
-            @media (min-width: 2800px) {
-              font-size: 32px;
-            }
-
-            @media (max-width: 1200px) {
-              font-size: 18px;
-            }
-
-            @media (max-width: 600px) {
-              font-size: 16px;
-            }
+        @media (max-width: 600px) {
+          font-size: 14px;
         }
-
-        span {
-            font-size: 20px;
-            font-weight: 500;
-            text-align: center;
-
-            @media (min-width: 2800px) {
-              font-size: 24px;
-            }
-
-            @media (max-width: 1200px) {
-              font-size: 16px;
-            }
-
-            @media (max-width: 600px) {
-              font-size: 14px;
-            }
-        }
+      }
     }
   }
 }
@@ -186,13 +185,13 @@ section {
     max-width: 1000px !important;
     width: 100% !important;
     max-height: 450px !important;
-    min-height: 200px !important; 
+    min-height: 200px !important;
     height: auto !important;
   }
 
   .doughnut {
     max-width: 450px !important;
-    width: 100% !important; 
+    width: 100% !important;
     max-height: 450px !important;
     min-height: 100px !important;
     height: auto !important;
@@ -213,4 +212,3 @@ section {
 .buy-button {
   display: none;
 }
-

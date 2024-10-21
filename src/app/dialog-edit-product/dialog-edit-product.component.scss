@@ -1,36 +1,36 @@
-@import './../../styles.scss';
+@import "./../../styles.scss";
 
 .dialog-container {
-    position: relative;
+  position: relative;
 
-    mat-progress-bar {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        width: 100%;
-    }
+  mat-progress-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
 
-form {
+  form {
     @include dFlex($ai: none, $jc: none, $g: 12px);
     flex-direction: column;
 
     .input-fields-one-line {
-        @include dFlex($ai: none, $jc: space-between, $g: 12px);
-        width: 100%;
+      @include dFlex($ai: none, $jc: space-between, $g: 12px);
+      width: 100%;
+
+      @media (max-width: 800px) {
+        @include dFlex($ai: none, $jc: space-between, $g: 8px);
+        flex-direction: column;
+      }
+
+      input {
+        width: 50%;
 
         @media (max-width: 800px) {
-          @include dFlex($ai: none, $jc: space-between, $g: 8px);
-          flex-direction: column;
-        }
-
-        input {
-          width: 50%;
-
-          @media (max-width: 800px) {
-            width: 100%;
-          }
+          width: 100%;
         }
       }
-}
+    }
+  }
 }

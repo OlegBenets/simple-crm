@@ -1,56 +1,56 @@
-@import './../../styles.scss';
+@import "./../../styles.scss";
 
 .dialog-container {
-    position: relative;
+  position: relative;
 
-    mat-progress-bar {
-        @include position($t: 0, $l: 0, $r: 0, $b: none);
-        width: 100%;
-    }
+  mat-progress-bar {
+    @include position($t: 0, $l: 0, $r: 0, $b: none);
+    width: 100%;
+  }
 }
 
 form {
-    @include dFlex($ai: flex-start, $jc: none, $g: 12px);
-    flex-direction: column;
-    width: calc(100% - 24px);
-    height: 520px;
-    padding: 12px 12px 0 12px;
+  @include dFlex($ai: flex-start, $jc: none, $g: 12px);
+  flex-direction: column;
+  width: calc(100% - 24px);
+  height: 520px;
+  padding: 12px 12px 0 12px;
+
+  @media (max-width: 800px) {
+    width: calc(100% - 0px);
+    height: auto;
+    padding: 12px 0 0 0;
+  }
+
+  .input-fields-one-line {
+    @include dFlex($ai: none, $jc: space-between, $g: 12px);
+    width: 100%;
 
     @media (max-width: 800px) {
-        width: calc(100% - 0px);
-        height: auto;
-        padding: 12px 0 0 0;
-      }
+      @include dFlex($ai: none, $jc: space-between, $g: 8px);
+      flex-direction: column;
+    }
 
-    .input-fields-one-line {
-        @include dFlex($ai: none, $jc: space-between, $g: 12px);
+    input {
+      width: 50%;
+
+      @media (max-width: 800px) {
         width: 100%;
-
-        @media (max-width: 800px) {
-          @include dFlex($ai: none, $jc: space-between, $g: 8px);
-          flex-direction: column;
-        }
-
-        input {
-          width: 50%;
-
-          @media (max-width: 800px) {
-            width: 100%;
-          }
-        }
       }
+    }
+  }
 
-      .input-fields {
-        @include dFlex($ai: none, $jc: none, $g: 12px);
-        flex-direction: column;
-        width: 100%;
+  .input-fields {
+    @include dFlex($ai: none, $jc: none, $g: 12px);
+    flex-direction: column;
+    width: 100%;
 
-        @media (max-width: 800px) {
-          @include dFlex($ai: none, $jc: none, $g: 8px);
-        }
-  
-        input {
-          width: 100%;
-        }
-      }
+    @media (max-width: 800px) {
+      @include dFlex($ai: none, $jc: none, $g: 8px);
+    }
+
+    input {
+      width: 100%;
+    }
+  }
 }

@@ -4,54 +4,55 @@
       <h2>{{ currentYear }}</h2>
     </header>
     <div class="datas-container">
-      <div class="top-container"> 
-      <article>
-        <div>
-        <h2>All Users</h2>
-        <span>{{ userService.allUsers.length }}</span>
-      </div>
-      <div class="border"></div>
-      <div>
-        <h2>All Products</h2>
-        <span>{{ productService.allProducts.length }}</span>
-      </div>
-      </article>
+      <div class="top-container">
+        <article>
+          <div>
+            <h2>All Users</h2>
+            <span>{{ userService.allUsers.length }}</span>
+          </div>
+          <div class="border"></div>
+          <div>
+            <h2>All Products</h2>
+            <span>{{ productService.allProducts.length }}</span>
+          </div>
+        </article>
 
-      <article>
-        <div>
-        <h2>Top selling product</h2>
-        <span>{{ purchaseService.topSellingProduct }}</span>
+        <article>
+          <div>
+            <h2>Top selling product</h2>
+            <span>{{ purchaseService.topSellingProduct }}</span>
+          </div>
+          <div class="border"></div>
+          <div>
+            <h2>Top buyer</h2>
+            <span>{{ purchaseService.topBuyer }}</span>
+          </div>
+        </article>
       </div>
-      <div class="border"></div>
-      <div>
-        <h2>Top buyer</h2>
-        <span>{{ purchaseService.topBuyer }}</span>
-      </div>
-      </article>
-    </div>
 
-    <div class="second-container">
-      <article>
-        <h2>Total target</h2>
-        <span>{{ purchaseService.totalTarget }}</span>
-      </article>
-      <article>
-        <h2>Total value</h2>
-        <span>{{ purchaseService.totalValue }}</span>
-      </article>
-      <article>
-        <h2>Total deals</h2>
-        <span>{{purchaseService.allPurchases.length}}</span>
-      </article>
+      <div class="second-container">
+        <article>
+          <h2>Total target</h2>
+          <span>{{ purchaseService.totalTarget }}</span>
+        </article>
+        <article>
+          <h2>Total value</h2>
+          <span>{{ purchaseService.totalValue }}</span>
+        </article>
+        <article>
+          <h2>Total deals</h2>
+          <span>{{ purchaseService.allPurchases.length }}</span>
+        </article>
+      </div>
     </div>
-  </div>
   </section>
 
   <button class="buy-button" (click)="triggerPurchase()">Kauf tätigen</button>
 
   <div class="charts-container">
-  <div class="canvas-container">
-      <canvas class="bar"
+    <div class="canvas-container">
+      <canvas
+        class="bar"
         baseChart
         [datasets]="barChartData"
         [labels]="barChartLabels"
@@ -59,17 +60,18 @@
         [legend]="barChartLegend"
         [type]="'bar'"
       ></canvas>
-  </div>
+    </div>
 
-  <div class="canvas-container">
-      <canvas class="doughnut"
-      [datasets]="doughnutChartData"
-      [labels]="doughnutChartLabels"
-      [legend]="doughnutChartLegend"
-      [options]="doughnutChartOptions"
+    <div class="canvas-container">
+      <canvas
+        class="doughnut"
+        [datasets]="doughnutChartData"
+        [labels]="doughnutChartLabels"
+        [legend]="doughnutChartLegend"
+        [options]="doughnutChartOptions"
         baseChart
         [type]="'doughnut'"
       ></canvas>
+    </div>
   </div>
-</div>
 </div>

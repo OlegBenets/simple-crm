@@ -1,66 +1,65 @@
-@import './../../styles.scss';
-
+@import "./../../styles.scss";
 
 .user-detail-header {
-    position: relative;
-    @include dFlex($ai: flex-start, $jc: flex-end);
-    min-height: 250px;
-    background-color: rgba($color: #007f99, $alpha: 1.0);
-    color: white;
-    padding: 16px;
+  position: relative;
+  @include dFlex($ai: flex-start, $jc: flex-end);
+  min-height: 250px;
+  background-color: rgba($color: #007f99, $alpha: 1);
+  color: white;
+  padding: 16px;
 
-    .user-detail-container {
-        @include dFlex($ai: center, $jc: flex-start);
+  .user-detail-container {
+    @include dFlex($ai: center, $jc: flex-start);
 
-        .profile-image {
-            width: 100px;
-            height: auto;
-            border-radius: 50%;
-            object-fit: cover;
+    .profile-image {
+      width: 100px;
+      height: auto;
+      border-radius: 50%;
+      object-fit: cover;
 
-            @media (max-width: 800px) {
-                width: 80px;
-            }
-        }
+      @media (max-width: 800px) {
+        width: 80px;
+      }
     }
+  }
 
-    .menu-button-header {
-        @include position($t: 10px,$l: none, $r: 10px, $b: none);
-    }
+  .menu-button-header {
+    @include position($t: 10px, $l: none, $r: 10px, $b: none);
+  }
 
-    .back-btn {
-        @include position($t: 10px,$l: 10px, $r: none, $b: none);
-    }
+  .back-btn {
+    @include position($t: 10px, $l: 10px, $r: none, $b: none);
+  }
 }
 
 .user-details {
-    @include dFlex($ai: flex-start, $jc: center);
-    flex-direction: column;
-    margin-left: 32px;
+  @include dFlex($ai: flex-start, $jc: center);
+  flex-direction: column;
+  margin-left: 32px;
 
-    @media (max-width: 800px) {
-        margin-left: 18px;
+  @media (max-width: 800px) {
+    margin-left: 18px;
+  }
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
-
-    h2 {
-        margin-bottom: 0;
-    }
-
-    a {
-        color: white;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }  
+  }
 }
 
 .user-detail-data {
-    position: relative;
-    padding: 16px;
+  position: relative;
+  padding: 16px;
 
-    .menu-button {
-        @include position($t: 10px,$l: none, $r: 10px, $b: none);
-    }
+  .menu-button {
+    @include position($t: 10px, $l: none, $r: 10px, $b: none);
+  }
 }

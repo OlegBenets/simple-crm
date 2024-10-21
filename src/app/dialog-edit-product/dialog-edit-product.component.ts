@@ -20,33 +20,51 @@ import { Product } from '../../models/product.class';
     MatProgressBarModule,
   ],
   templateUrl: './dialog-edit-product.component.html',
-  styleUrl: './dialog-edit-product.component.scss'
+  styleUrl: './dialog-edit-product.component.scss',
 })
 export class DialogEditProductComponent {
-  constructor(public dialogRef: MatDialogRef<DialogEditProductComponent>, public productService: ProductDataService) {}
+  /**
+   * Constructs the DialogEditProductComponent.
+   * @param dialogRef - Reference to the dialog to close it after saving the product.
+   * @param productService - The service to handle product data operations.
+   */
+  constructor(
+    public dialogRef: MatDialogRef<DialogEditProductComponent>,
+    public productService: ProductDataService
+  ) {}
 
   product = new Product();
   productId = '';
   loading: boolean = false;
 
- async saveProduct(productForm: NgForm) {
-  if (productForm.form.valid) {
-    this.loading = true;
+  /**
+   * Saves the product with updated data.
+   * This method checks if the form is valid, sets the loading state, and calls the product service to update the product.
+   * @param productForm - The form containing product data.
+   */
+  async saveProduct(productForm: NgForm) {
+    if (productForm.form.valid) {
+      this.loading = true;
 
-   await this.productService.updateProduct(this.productId, this.product);
+      await this.productService.updateProduct(this.productId, this.product);
       this.loading = false;
       this.dialogRef.close();
+    }
   }
-    }
 
-    formatPrice() {
-      let value = this.product.price.toString().replace(/[^\d.,]/g, '');
-      value = value.replace(',', '.');
-    
-      if (value && !isNaN(parseFloat(value))) {
-        this.product.price = parseFloat(value).toFixed(2) + ' €';
-      } else {
-        this.product.price = '';
-      }
+  /**
+   * Formats the product price to ensure it is a valid monetary value.
+   * This method cleans the price input, replaces commas with dots, and formats it to two decimal places.
+   * If the price is invalid, it clears the price field.
+   */
+  formatPrice() {
+    let value = this.product.price.toString().replace(/[^\d.,]/g, '');
+    value = value.replace(',', '.');
+
+    if (value && !isNaN(parseFloat(value))) {
+      this.product.price = parseFloat(value).toFixed(2) + ' €';
+    } else {
+      this.product.price = '';
     }
+  }
 }

@@ -1,87 +1,98 @@
 <mat-card appearance="outlined" class="signup-container">
-    <h2>Sign Up</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="signup()">
-      <div class="input-fields-one-line">
-        <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="firstName"
-            placeholder="First Name"
-            (input)="onInput()"
-            (focus)="onFocus('firstName')"/>
+  <h2>Sign Up</h2>
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <div class="input-fields-one-line">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="firstName"
+          placeholder="First Name"
+          (input)="onInput()"
+          (focus)="onFocus('firstName')"
+        />
 
-            @if(firstNameControl.invalid && firstNameControl.touched) {
-              <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
-            }
-        </mat-form-field>
+        @if(firstNameControl.invalid && firstNameControl.touched) {
+        <mat-error>{{ getErrorMessage("firstName") }}</mat-error>
+        }
+      </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Last Name</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="lastName"
-            placeholder="Last Name"
-            (input)="onInput()"
-            (focus)="onFocus('lastName')"/>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="lastName"
+          placeholder="Last Name"
+          (input)="onInput()"
+          (focus)="onFocus('lastName')"
+        />
 
-            @if(lastNameControl.invalid && lastNameControl.touched) {
-              <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
-            }
-        </mat-form-field>
-      </div>
+        @if(lastNameControl.invalid && lastNameControl.touched) {
+        <mat-error>{{ getErrorMessage("lastName") }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-      <div class="input-fields">
-        <mat-form-field appearance="outline">
-          <mat-label>E-Mail</mat-label>
-          <input
-            matInput
-            formControlName="email"
-            placeholder="Email"
-            type="text"
-            (input)="onInput()"
-            (focus)="onFocus('email')"/>
+    <div class="input-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email"
+          type="text"
+          (input)="onInput()"
+          (focus)="onFocus('email')"
+        />
 
-            @if(emailControl.invalid && emailControl.touched) {
-              <mat-error>{{ getErrorMessage('email') }}</mat-error>
-            }
+        @if(emailControl.invalid && emailControl.touched) {
+        <mat-error>{{ getErrorMessage("email") }}</mat-error>
+        }
+      </mat-form-field>
 
-            </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Password"
+          placeholder="Password"
+          [type]="hide() ? 'password' : 'text'"
+          (input)="onInput()"
+          (focus)="onFocus('password')"
+        />
 
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            placeholder="Password"
-            placeholder="Password"
-            [type]="hide() ? 'password' : 'text'"
-            (input)="onInput()"
-            (focus)="onFocus('password')"/>
-
-            
-          <button class="visibility-button"
+        <button
+          class="visibility-button"
           mat-icon-button
           matSuffix
           type="button"
           (click)="togglePassword($event)"
           [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()">
-          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
 
-            @if(passwordControl.invalid && passwordControl.touched) {
-              <mat-error>{{ getErrorMessage('password') }}</mat-error>
-            }
-        </mat-form-field>
-      </div>
-      <button mat-flat-button color="primary" type="submit" [disabled]="signupForm.invalid">Sign Up</button>
-    </form>
-  
-    <div class="login-container">
-      <h3 class="mb-0">Already a User?</h3>
-      <a [routerLink]="['/']">Log in</a>
+        @if(passwordControl.invalid && passwordControl.touched) {
+        <mat-error>{{ getErrorMessage("password") }}</mat-error>
+        }
+      </mat-form-field>
     </div>
-  </mat-card>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="signupForm.invalid"
+    >
+      Sign Up
+    </button>
+  </form>
+
+  <div class="login-container">
+    <h3 class="mb-0">Already a User?</h3>
+    <a [routerLink]="['/']">Log in</a>
+  </div>
+</mat-card>

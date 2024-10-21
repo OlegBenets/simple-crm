@@ -39,6 +39,14 @@ export class LoginPageComponent {
   hide = signal(true);
   loginForm: FormGroup;
 
+  /**
+   * Constructs the LoginPageComponent.
+   * Initializes the form group and injects the necessary services.
+   *
+   * @param fb - FormBuilder service for managing form controls
+   * @param adminService - Service to handle admin data operations
+   * @param router - Router service for navigation
+   */
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
@@ -55,23 +63,37 @@ export class LoginPageComponent {
     this.checkAnimationStatus();
 
     window.addEventListener('beforeunload', () => {
-      this.adminService.resetAnimationStatus(); 
+      this.adminService.resetAnimationStatus();
     });
   }
 
+  /**
+   * Toggles the visibility of the password field.
+   *
+   * @param event - Mouse event for stopping propagation
+   */
   togglePassword(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
+  /**
+   * Returns the FormControl for email.
+   */
   get emailControl() {
     return this.loginForm.get('email') as FormControl;
   }
 
+  /**
+   * Returns the FormControl for password.
+   */
   get passwordControl() {
     return this.loginForm.get('password') as FormControl;
   }
 
+  /**
+   * Returns error messages for the email control based on validation.
+   */
   getEmailErrorMessage() {
     if (this.emailControl.hasError('required')) {
       return 'You must enter an email';
@@ -85,6 +107,9 @@ export class LoginPageComponent {
     return '';
   }
 
+  /**
+   * Returns error messages for the password control based on validation.
+   */
   getPasswordErrorMessage() {
     if (this.passwordControl.hasError('required')) {
       return 'Password is required';
@@ -95,22 +120,39 @@ export class LoginPageComponent {
     return '';
   }
 
+  /**
+   * Validates email and password controls on input.
+   */
   onInput() {
     this.validateEmail();
     this.validatePassword();
   }
 
+  /**
+   * Marks a form control as touched and updates its validity.
+   *
+   * @param field - The name of the form control field to focus
+   */
   onFocus(field: string) {
     let control = this.loginForm.get(field) as FormControl;
     control.markAsTouched();
     control.updateValueAndValidity();
   }
 
+  /**
+   * Validates the email control against the list of admins.
+   * Sets an error if the email does not exist in the list.
+   */
   private validateEmail() {
     let email = this.emailControl.value;
-    let admin = this.adminService.allAdmins.find((admin) => admin.email === email);
+    let admin = this.adminService.allAdmins.find(
+      (admin) => admin.email === email
+    );
 
-    if (this.emailControl.hasError('required') || this.emailControl.hasError('email')) {
+    if (
+      this.emailControl.hasError('required') ||
+      this.emailControl.hasError('email')
+    ) {
       return;
     }
 
@@ -121,6 +163,10 @@ export class LoginPageComponent {
     }
   }
 
+  /**
+   * Validates the password control against the email.
+   * Sets an error if the password does not match the email's password.
+   */
   private validatePassword() {
     let email = this.emailControl.value;
     let password = this.passwordControl.value;
@@ -135,15 +181,21 @@ export class LoginPageComponent {
     }
   }
 
+  /**
+   * Validates the login credentials and navigates to the dashboard on success.
+   */
   async login() {
     this.validateEmail();
     this.validatePassword();
 
     if (!this.emailControl.errors && !this.passwordControl.errors) {
-      let admin = await this.adminService.validateAdmin(this.emailControl.value, this.passwordControl.value);
-      if (admin) { 
+      let admin = await this.adminService.validateAdmin(
+        this.emailControl.value,
+        this.passwordControl.value
+      );
+      if (admin) {
         this.adminService.resetAnimationStatus();
-        this.router.navigate(['/dashboard']); 
+        this.router.navigate(['/dashboard']);
       }
     } else {
       this.emailControl.markAsTouched();
@@ -151,6 +203,9 @@ export class LoginPageComponent {
     }
   }
 
+  /**
+   * Starts the login animation using GSAP.
+   */
   startAnimation() {
     let startElement = document.querySelector('.animate-container');
     let loginElement = document.querySelector('.login-container');
@@ -173,6 +228,9 @@ export class LoginPageComponent {
       );
   }
 
+  /**
+   * Checks if the animation has already played and starts it if not.
+   */
   checkAnimationStatus() {
     let animationPlayed = localStorage.getItem('animationPlayed');
 

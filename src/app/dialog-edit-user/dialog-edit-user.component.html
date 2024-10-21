@@ -1,15 +1,15 @@
 <div class="dialog-container">
-    @if(loading) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    }
-  
+  @if(loading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
   <h2 mat-dialog-title>Edit User</h2>
   <mat-dialog-content class="pt-20">
     <form #userForm="ngForm" (ngSubmit)="saveUser(userForm)">
       <div class="input-fields-one-line">
-        <mat-form-field  appearance="outline">
-            <mat-label>First Name</mat-label>
-            <input
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input
             [disabled]="loading"
             minlength="3"
             maxlength="10"
@@ -19,16 +19,17 @@
             [(ngModel)]="user.firstName"
             matInput
             placeholder="First Name"
-            required/>
+            required
+          />
 
-            @if(firstName.invalid && firstName.touched) {
-              <mat-error>First Name is required</mat-error>
-              }
-          </mat-form-field>
-    
-          <mat-form-field appearance="outline">
-            <mat-label>Last Name</mat-label>
-            <input
+          @if(firstName.invalid && firstName.touched) {
+          <mat-error>First Name is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input
             [disabled]="loading"
             minlength="3"
             maxlength="14"
@@ -38,17 +39,18 @@
             [(ngModel)]="user.lastName"
             matInput
             placeholder="Last Name"
-            required/>
+            required
+          />
 
-            @if(lastName.invalid && lastName.touched) {
-              <mat-error>Last Name is required</mat-error>
-              }
-          </mat-form-field>
-        </div>
-        <div class="input-fields">
-          <mat-form-field appearance="outline">
-            <mat-label>E-Mail</mat-label>
-            <input
+          @if(lastName.invalid && lastName.touched) {
+          <mat-error>Last Name is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="input-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>E-Mail</mat-label>
+          <input
             [disabled]="loading"
             #email="ngModel"
             name="email"
@@ -56,34 +58,44 @@
             matInput
             placeholder="E-Mail"
             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-            required/>
+            required
+          />
 
-            @if(email.invalid && email.touched) {
-              <mat-error>Email is required</mat-error>
-              }
-          </mat-form-field>
+          @if(email.invalid && email.touched) {
+          <mat-error>Email is required</mat-error>
+          }
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Birth Date</mat-label>
-            <input 
+        <mat-form-field appearance="outline">
+          <mat-label>Birth Date</mat-label>
+          <input
             [disabled]="loading"
             name="birthDate"
-            [(ngModel)]="birthDate"
+            [(ngModel)]="user.birthDate"
             matInput
             placeholder="Birthdate"
             [matDatepicker]="datepicker"
-            required>
-            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker></mat-datepicker>
-          </mat-form-field>
-        </div>
-  <mat-dialog-actions>
-    <button [disabled]="loading" mat-button (click)="dialogRef.close();">Cancel</button>
-    <button
-    [disabled]="loading || !userForm.form.valid"
-    mat-button
-    type="submit">Save</button>
-</mat-dialog-actions>
-</form>
-</mat-dialog-content>
-  </div>
+            required
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions>
+        <button [disabled]="loading" mat-button (click)="dialogRef.close()">
+          Cancel
+        </button>
+        <button
+          [disabled]="loading || !userForm.form.valid"
+          mat-button
+          type="submit"
+        >
+          Save
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
+</div>

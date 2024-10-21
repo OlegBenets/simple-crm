@@ -19,7 +19,8 @@
             [(ngModel)]="user.firstName"
             matInput
             placeholder="First Name"
-            required/>
+            required
+          />
 
           @if(firstName.invalid && firstName.touched) {
           <mat-error>First Name is required</mat-error>
@@ -38,11 +39,12 @@
             [(ngModel)]="user.lastName"
             matInput
             placeholder="Last Name"
-            required/>
+            required
+          />
 
-            @if(lastName.invalid && lastName.touched) {
-              <mat-error>Last Name is required</mat-error>
-              }
+          @if(lastName.invalid && lastName.touched) {
+          <mat-error>Last Name is required</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -57,30 +59,35 @@
             matInput
             placeholder="E-Mail"
             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-            required/>
+            required
+          />
 
-            @if(email.invalid && email.touched) {
-              <mat-error>Email is required</mat-error>
-              }
+          @if(email.invalid && email.touched) {
+          <mat-error>Email is required</mat-error>
+          }
         </mat-form-field>
- 
+
         <mat-form-field appearance="outline">
           <mat-label>Birth Date</mat-label>
           <input
             [disabled]="loading"
             #birthDate="ngModel"
             name="birthDate"
-            [(ngModel)]="birthDate"
+            [(ngModel)]="user.birthDate"
             matInput
             placeholder="Birthdate"
             [matDatepicker]="datepicker"
-            required/>
-          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            required
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #datepicker></mat-datepicker>
 
           @if(birthDate.invalid && birthDate.touched) {
-            <mat-error>Birth Date is required</mat-error>
-            }
+          <mat-error>Birth Date is required</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
@@ -93,11 +100,12 @@
             [(ngModel)]="user.street"
             matInput
             placeholder="Street + House No."
-            required/>
+            required
+          />
 
-            @if(street.invalid && street.touched) {
-              <mat-error>Street is required</mat-error>
-              }
+          @if(street.invalid && street.touched) {
+          <mat-error>Street is required</mat-error>
+          }
         </mat-form-field>
       </div>
 
@@ -113,11 +121,12 @@
             [(ngModel)]="user.zipCode"
             matInput
             placeholder="Zip Code"
-            required/>
+            required
+          />
 
-            @if(zipCode.invalid && zipCode.touched) {
-              <mat-error>Zip Code is required</mat-error>
-              }
+          @if(zipCode.invalid && zipCode.touched) {
+          <mat-error>Zip Code is required</mat-error>
+          }
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>City</mat-label>
@@ -130,19 +139,30 @@
             [(ngModel)]="user.city"
             matInput
             placeholder="City"
-            required/>
+            required
+          />
 
-            @if(city.invalid && city.touched) {
-              <mat-error>City is required</mat-error>
-              }
+          @if(city.invalid && city.touched) {
+          <mat-error>City is required</mat-error>
+          }
         </mat-form-field>
       </div>
       <mat-dialog-actions>
-        <button [disabled]="loading" mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+        <button
+          [disabled]="loading"
+          mat-button
+          type="button"
+          (click)="dialogRef.close()"
+        >
+          Cancel
+        </button>
         <button
           [disabled]="loading || !userForm.form.valid"
           mat-button
-          type="submit">Save</button>
+          type="submit"
+        >
+          Save
+        </button>
       </mat-dialog-actions>
     </form>
   </mat-dialog-content>

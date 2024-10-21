@@ -14,22 +14,19 @@
           placeholder="Email"
           type="text"
           (input)="onInput()"
-          (focus)="onFocus('email')"/>
+          (focus)="onFocus('email')"
+        />
 
-        @if(emailControl.hasError('required') && (emailControl.dirty || emailControl.touched)) {
-          <mat-error>
-            You must enter an email
-          </mat-error>
-        }
-        @if(emailControl.hasError('email') && (emailControl.dirty || emailControl.touched)) {
-          <mat-error>
-            Not a valid email
-          </mat-error>
-        }
-        @if(emailControl.hasError('emailNotExists') && !emailControl.hasError('required') && !emailControl.hasError('email') && (emailControl.dirty || emailControl.touched)) {
-          <mat-error>
-            No account found with this email
-          </mat-error>
+        @if(emailControl.hasError('required') && (emailControl.dirty ||
+        emailControl.touched)) {
+        <mat-error> You must enter an email </mat-error>
+        } @if(emailControl.hasError('email') && (emailControl.dirty ||
+        emailControl.touched)) {
+        <mat-error> Not a valid email </mat-error>
+        } @if(emailControl.hasError('emailNotExists') &&
+        !emailControl.hasError('required') && !emailControl.hasError('email') &&
+        (emailControl.dirty || emailControl.touched)) {
+        <mat-error> No account found with this email </mat-error>
         }
       </mat-form-field>
 
@@ -41,31 +38,38 @@
           placeholder="Password"
           [type]="hide() ? 'password' : 'text'"
           (input)="onInput()"
-          (focus)="onFocus('password')"/>
+          (focus)="onFocus('password')"
+        />
 
-          <button class="visibility-button"
+        <button
+          class="visibility-button"
           mat-icon-button
           matSuffix
           type="button"
           (click)="togglePassword($event)"
           [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()">
-          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
 
-        @if(passwordControl.hasError('required') && (passwordControl.dirty || passwordControl.touched)) {
-          <mat-error>
-            Password is required
-          </mat-error>
-        }
-        @if(passwordControl.hasError('invalidPassword') && (passwordControl.dirty || passwordControl.touched)) {
-          <mat-error>
-            wrong password
-          </mat-error>
+        @if(passwordControl.hasError('required') && (passwordControl.dirty ||
+        passwordControl.touched)) {
+        <mat-error> Password is required </mat-error>
+        } @if(passwordControl.hasError('invalidPassword') &&
+        (passwordControl.dirty || passwordControl.touched)) {
+        <mat-error> wrong password </mat-error>
         }
       </mat-form-field>
     </div>
-    <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">Log in</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Log in
+    </button>
   </form>
 
   <div class="sing-up-container">

@@ -1,45 +1,62 @@
 <mat-card class="product-detail-header">
-    <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="productMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <button class="back-btn" [routerLink]="['/products/']" mat-icon-button>
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-  
-    <mat-menu #productMenu="matMenu">
-      <button class="edit-product-btn" mat-menu-item (click)="editProduct()">Edit</button>
-      <button class="delete-product-btn" mat-menu-item (click)="deleteProduct()">Delete Product</button>
-    </mat-menu>
-  
-    <div class="product-detail-container">
-      <div class="product-details">
-        <h2>{{ product.name }}</h2>
-        <b>{{ product.price }}</b>
-      </div>
-    </div>
-  </mat-card>
-  
-  <mat-card class="mt-32 product-detail-data">
-    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="productAddress">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-  
-    <mat-menu #productAddress="matMenu">
-      <button class="edit-description-btn" mat-menu-item (click)="editDescription()">Edit</button>
-    </mat-menu>
-  
-    <mat-card-title class="mt-32">Description</mat-card-title>
-    <mat-card-content>
-      {{ product.description }}
-    </mat-card-content>
+  <button
+    class="menu-button-header"
+    mat-icon-button
+    [matMenuTriggerFor]="productMenu"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <button class="back-btn" [routerLink]="['/products/']" mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-    <mat-card-title class="mt-32">Details</mat-card-title>
-    <mat-card-content>
-      <ul>
-          @for (detail of product.detail; track detail) {
-          <li>{{ detail }}</li>
-          }
-        </ul>
-    </mat-card-content>
-  </mat-card>
-  
+  <mat-menu #productMenu="matMenu">
+    <button class="edit-product-btn" mat-menu-item (click)="editProduct()">
+      Edit
+    </button>
+    <button class="delete-product-btn" mat-menu-item (click)="deleteProduct()">
+      Delete Product
+    </button>
+  </mat-menu>
+
+  <div class="product-detail-container">
+    <div class="product-details">
+      <h2>{{ product.name }}</h2>
+      <b>{{ product.price }}</b>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="mt-32 product-detail-data">
+  <button
+    class="menu-button"
+    mat-icon-button
+    [matMenuTriggerFor]="productAddress"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #productAddress="matMenu">
+    <button
+      class="edit-description-btn"
+      mat-menu-item
+      (click)="editDescription()"
+    >
+      Edit
+    </button>
+  </mat-menu>
+
+  <mat-card-title class="mt-32">Description</mat-card-title>
+  <mat-card-content>
+    {{ product.description }}
+  </mat-card-content>
+
+  <mat-card-title class="mt-32">Details</mat-card-title>
+  <mat-card-content>
+    <ul>
+      @for (detail of product.detail; track detail) {
+      <li>{{ detail }}</li>
+      }
+    </ul>
+  </mat-card-content>
+</mat-card>

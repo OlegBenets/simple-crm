@@ -24,28 +24,51 @@ import { Product } from '../../models/product.class';
     CommonModule,
     RouterModule,
     MatFormField,
-    MatInputModule
+    MatInputModule,
   ],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+  styleUrl: './product.component.scss',
 })
 export class ProductComponent implements OnInit {
   product = new Product();
 
-  constructor(public dialog: MatDialog, public productService: ProductDataService) {}
+  /**
+   * Constructs the ProductComponent.
+   *
+   * @param dialog - MatDialog service for opening dialogs
+   * @param productService - Service to manage product data and operations
+   */
+  constructor(
+    public dialog: MatDialog,
+    public productService: ProductDataService
+  ) {}
 
+  /**
+   * Lifecycle hook that is called after the component is initialized.
+   * Initializes the filtered products with all available products.
+   */
   ngOnInit() {
     this.productService.filteredProducts = this.productService.allProducts;
   }
 
+  /**
+   * Opens a dialog for adding a new product.
+   */
   openDialog() {
-    this.dialog.open(DialogAddProductComponent)
+    this.dialog.open(DialogAddProductComponent);
   }
 
+  /**
+   * Applies a filter to the list of products based on the user's input.
+   *
+   * @param event - The input event containing the filter value
+   */
   applyFilter(event: Event) {
-    const filterVal = (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
-    this.productService.filteredProducts = this.productService.allProducts.filter( product => 
-      product.name.toLowerCase().includes(filterVal)
-    );
-    }
+    const filterVal =
+      (event.target as HTMLInputElement).value.trim().toLowerCase() || '';
+    this.productService.filteredProducts =
+      this.productService.allProducts.filter((product) =>
+        product.name.toLowerCase().includes(filterVal)
+      );
+  }
 }

@@ -1,13 +1,19 @@
 <div class="filter-container mb-32">
-  <mat-form-field class="full-width mb-32">     
-    <input matInput (keyup)="applyFilter($event)" 
-    placeholder="Search Name or City" autocomplete="off">
+  <mat-form-field class="full-width mb-32">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Search Name or City"
+      autocomplete="off"
+    />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
   <section>
     <div class="example-button-row button-container">
-      <button (click)="sortName()" mat-flat-button color="primary">First Name A-Z</button>
+      <button (click)="sortName()" mat-flat-button color="primary">
+        First Name A-Z
+      </button>
       <!-- <button mat-flat-button color="primary">Revenue Ascending</button>
       <button mat-flat-button color="primary">Revenue Descending</button> -->
     </div>
@@ -21,26 +27,33 @@
       <th>Name</th>
       <th>E-mail</th>
       @if (!isMobile) {
-        <th>City</th>
+      <th>City</th>
       }
     </tr>
-        <tr *ngFor="let user of userService.filteredUsers" [routerLink]="['/user/' + user.id]">
-          <td>{{user.firstName}} {{user.lastName}}</td>
-          <td>{{user.email}}</td>
-          @if (!isMobile) {
-            <td>{{user.city}}</td>
-          }
-        </tr>
+    <tr
+      *ngFor="let user of userService.filteredUsers"
+      [routerLink]="['/user/' + user.id]"
+    >
+      <td>{{ user.firstName }} {{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      @if (!isMobile) {
+      <td>{{ user.city }}</td>
+      }
+    </tr>
   </table>
 </mat-card>
 } @else {
-  <div class="no-users-message">
-    <h3>No Users in the List</h3>
-  </div>
+<div class="no-users-message">
+  <h3>No Users in the List</h3>
+</div>
 }
 
-<button (click)="openDialog()" class="add-user-button" mat-fab color="primary" matTooltip="add user">
-    <mat-icon>add</mat-icon>
-  </button>
-
-
+<button
+  (click)="openDialog()"
+  class="add-user-button"
+  mat-fab
+  color="primary"
+  matTooltip="add user"
+>
+  <mat-icon>add</mat-icon>
+</button>

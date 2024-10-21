@@ -1,31 +1,43 @@
 <div class="filter-container mb-32">
-    <mat-form-field class="full-width mb-32">     
-      <input matInput (keyup)="applyFilter($event)" 
-      placeholder="Search Product Name" autocomplete="off">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
-  </div>
-  
-  
-  @if(productService.filteredProducts.length > 0) {
-  <mat-card>
-    <table class="full-width product-table">
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-      </tr>
-          <tr *ngFor="let product of productService.filteredProducts" [routerLink]="['/products/' + product.id]">
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-          </tr>
-    </table>
-  </mat-card>
+  <mat-form-field class="full-width mb-32">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Search Product Name"
+      autocomplete="off"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
+@if(productService.filteredProducts.length > 0) {
+<mat-card>
+  <table class="full-width product-table">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+    <tr
+      *ngFor="let product of productService.filteredProducts"
+      [routerLink]="['/products/' + product.id]"
+    >
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+    </tr>
+  </table>
+</mat-card>
 } @else {
-    <div class="no-products-message">
-      <h3>No Products in the List</h3>
-    </div>
-  }
-  
-  <button (click)="openDialog()" class="add-product-button" mat-fab color="primary" matTooltip="add product">
-      <mat-icon>add</mat-icon>
-    </button>
+<div class="no-products-message">
+  <h3>No Products in the List</h3>
+</div>
+}
+
+<button
+  (click)="openDialog()"
+  class="add-product-button"
+  mat-fab
+  color="primary"
+  matTooltip="add product"
+>
+  <mat-icon>add</mat-icon>
+</button>

@@ -1,5 +1,9 @@
 <mat-card class="user-detail-header">
-  <button class="menu-button-header" mat-icon-button [matMenuTriggerFor]="userMenu">
+  <button
+    class="menu-button-header"
+    mat-icon-button
+    [matMenuTriggerFor]="userMenu"
+  >
     <mat-icon>more_vert</mat-icon>
   </button>
   <button class="back-btn" [routerLink]="['/user/']" mat-icon-button>
@@ -7,8 +11,12 @@
   </button>
 
   <mat-menu #userMenu="matMenu">
-    <button class="edit-user-btn" mat-menu-item (click)="editUserDetail()">Edit</button>
-    <button class="delete-user-btn" mat-menu-item (click)="deleteUser()">Delete User</button>
+    <button class="edit-user-btn" mat-menu-item (click)="editUserDetail()">
+      Edit
+    </button>
+    <button class="delete-user-btn" mat-menu-item (click)="deleteUser()">
+      Delete User
+    </button>
   </mat-menu>
 
   <div class="user-detail-container">
@@ -26,7 +34,9 @@
   </button>
 
   <mat-menu #userAddress="matMenu">
-    <button class="edit-address-btn" mat-menu-item (click)="editMenu()">Edit</button>
+    <button class="edit-address-btn" mat-menu-item (click)="editMenu()">
+      Edit
+    </button>
   </mat-menu>
 
   <mat-card-title>Address</mat-card-title>
